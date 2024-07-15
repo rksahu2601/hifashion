@@ -2,6 +2,10 @@
   @tailwind components;
   @tailwind utilities;
 
+  .contain {
+    @apply max-w-[80rem] mx-auto px-4
+  }
+
   @layer base {
     :root {
       --background: 0 0% 100%;
@@ -67,3 +71,4 @@
       @apply bg-background text-foreground;
     }
   }
+  

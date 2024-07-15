@@ -1,5 +1,5 @@
 import Navbar from '@/components/store/navbar/Navbar';
-import React from 'react'
+import "@/app/globals.css"
 
 export default function layout({
   children,
@@ -7,7 +7,7 @@ export default function layout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className='overflow-y-hidden'>
+    <div className='max-md:overflow-x-hidden'>
       <Navbar />
       {children}
     </div>

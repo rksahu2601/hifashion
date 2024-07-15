@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { ChevronDown } from "lucide-react";
 
-const categories = [
+export const categories = [
   {
     id: 1,
     name: "Shirts",

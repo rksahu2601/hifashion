@@ -6,7 +6,7 @@ import { animate, motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 export default function MobileMenu() {
-  const [showNav, setShowNav] = useState(true);
+  const [showNav, setShowNav] = useState(false);
   // const variants = {
   //   initial: {
   //     width: 0
