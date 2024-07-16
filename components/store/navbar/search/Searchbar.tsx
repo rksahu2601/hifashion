@@ -1,6 +1,6 @@
 "use client";
 
-import { Search, SearchCheckIcon, SearchSlashIcon } from "lucide-react";
+import { Search} from "lucide-react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useState } from "react";
