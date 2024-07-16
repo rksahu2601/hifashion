@@ -9,7 +9,7 @@ import {
 import Image from 'next/image';
 import { useState } from 'react';
 
-const images = ['/test4.jpg', '/test1.jpg'];
+const images = ['/test1.jpg', '/test4.jpg'];
 
 export default function ProductCard() {
   const [imgUrl, setImgUrl] = useState(images[0]);
