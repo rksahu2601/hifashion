@@ -7,7 +7,7 @@ import Searchbar from './search/Searchbar'
 
 export default function Navbar() {
   return (
-    <nav className='fixed z-[999] h-[3rem] top-0 w-full border-b'>
+    <nav className='fixed z-[999] h-[4rem] top-0 w-full border-b bg-white'>
       <div className='contain h-full mx-auto flex items-center justify-between'>
         <div className="flex items-center gap-6">
           <Logo />
