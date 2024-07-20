@@ -43,7 +43,7 @@ export default function MobileProductsFilter() {
         <span>Filter</span> <ArrowUpDown className="w-4 h-4 ml-2" />
       </div>
       {openFilter && (
-        <div className="absolute top-8 z-20 bg-white rounded-md shadow-lg border p-4 right-[100%]">
+        <div className="absolute top-8 z-20 bg-white rounded-md shadow-lg border p-4 right-0">
           <div className="mb-3">
             <h2 className="uppercase font-medium mb-3 border-b-2 border-gray-400">
               Gender

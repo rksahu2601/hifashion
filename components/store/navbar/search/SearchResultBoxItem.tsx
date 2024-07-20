@@ -14,7 +14,7 @@ export default function SearchResultBoxItem({setOpenSearchDropdown}:PropType) {
   const router = useRouter()
 
   const handleClick =()=>{
-    router.push("/")
+    router.push("/product/2")
     setOpenSearchDropdown(false)
     console.log("clicked")
   }
