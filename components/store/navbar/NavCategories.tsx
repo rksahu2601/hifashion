@@ -14,15 +14,15 @@ export const categories = [
     name: "Shirts",
   },
   {
-    id: 1,
+    id: 2,
     name: "Shoes",
   },
   {
-    id: 1,
+    id: 3,
     name: "Hoodies",
   },
   {
-    id: 1,
+    id: 4,
     name: "Bags",
   },
 ];
