@@ -4,7 +4,7 @@ export default function Home() {
   return (
     <div className="flex justify-center items-center h-screen overflow-y-hidden gap-2">
       <Link href="/store" className="px-4 py-2 rounded bg-black text-white">Store</Link>
-      <Link href="/else" className="px-4 py-2 rounded bg-cyan-600 text-white">Store 2</Link>
+      <Link href="/dashboard" className="px-4 py-2 rounded bg-cyan-600 text-white">Admin</Link>
     </div>
 
   );

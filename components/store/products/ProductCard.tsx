@@ -24,7 +24,7 @@ export default function ProductCard() {
       >
         <Image className='object-cover' src={imgUrl} alt='' fill />
         <div className='absolute z-10 flex items-center justify-between w-full p-2 md:p-4'>
-          <span className='uppercase bg-blue-600/30 px-3 py-1 text-xs rounded-full text-blue-600 font-bold'>
+          <span className='uppercase bg-secondary/30 px-3 py-1 text-xs rounded-full text-secondary font-bold'>
             New
           </span>
           <span className='text-muted-foreground cursor-pointer'>
@@ -40,7 +40,7 @@ export default function ProductCard() {
             <span className='text-muted-foreground text-xs'>Clothes</span>
             <span className='block text-2xl md:text-3xl font-semibold'>$200</span>
           </div>
-          <button className='bg-blue-600 text-white rounded p-2'>
+          <button className='bg-secondary text-white rounded p-2 active:scale-75 transition duration-500  '>
             <ShoppingBagIcon className='w-4 h-4' />
           </button>
         </div>

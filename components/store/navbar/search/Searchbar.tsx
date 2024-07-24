@@ -28,10 +28,6 @@ export default function Searchbar() {
   
 // }, [inPutRef])
 
-
-  console.log(openSearchDropdown)
-
-
   return (
     <div>
       {/* for large screens */}

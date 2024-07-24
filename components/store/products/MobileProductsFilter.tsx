@@ -39,12 +39,12 @@ export default function MobileProductsFilter() {
   const [openFilter, setOpenFilter] = useState(false);
   return (
     <div  className="relative">
-      <div onClick={()=>setOpenFilter((prev)=>!prev)} className="text-muted-foreground flex items-center text-sm border border-gray-300 px-2 py-1 rounded-full hover:text-black hover:border-gray-400 outline-none cursor-pointer">
+      <div onClick={()=>setOpenFilter((prev)=>!prev)} className="text-muted-foreground flex items-center text-sm border border-gray-300 px-2 py-1 rounded-full hover:text-black hover:border-gray-400 outline-none cursor-pointer ">
         <span>Filter</span> <ArrowUpDown className="w-4 h-4 ml-2" />
       </div>
       {openFilter && (
-        <div className="absolute top-8 z-20 bg-white rounded-md shadow-lg border p-4 right-0">
-          <div className="mb-3">
+        <div className="absolute top-8 z-20 bg-white rounded-md shadow-lg border p-4 right-0 min-w-[12rem]">
+          <div className="md:hidden mb-3">
             <h2 className="uppercase font-medium mb-3 border-b-2 border-gray-400">
               Gender
             </h2>
@@ -63,7 +63,7 @@ export default function MobileProductsFilter() {
               </li>
             </ul>
           </div>
-          <div className="mb-3">
+          <div className="md:hidden mb-3">
             <h2 className="uppercase font-medium mb-6 border-b-2 border-gray-400">
               colors
             </h2>
@@ -91,7 +91,7 @@ export default function MobileProductsFilter() {
               })}
             </ul>
           </div>
-          <button onClick={()=>setOpenFilter(false)} className="w-full px-3 py-1 text-white text-sm rounded bg-cyan-600">Apply</button>
+          <button onClick={()=>setOpenFilter(false)} className="w-full px-3 py-1 text-white text-sm rounded bg-secondary font-semibold">Apply</button>
         </div>
       )}
     </div>

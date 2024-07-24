@@ -15,11 +15,11 @@ export default function ProductDetails() {
           reiciendis!
         </p>
         <div className="flex items-center gap-2">
-          <Star className="w-4 h-4 text-cyan-600" />
-          <Star className="w-4 h-4 text-cyan-600" />
-          <Star className="w-4 h-4 text-cyan-600" />
-          <Star className="w-4 h-4 text-cyan-600" />
-          <Star className="w-4 h-4 text-cyan-600" />
+          <Star className="w-4 h-4 text-primary" />
+          <Star className="w-4 h-4 text-primary" />
+          <Star className="w-4 h-4 text-primary" />
+          <Star className="w-4 h-4 text-primary" />
+          <Star className="w-4 h-4 text-primary" />
         </div>
       </div>
       <div className="my-6 text-2xl md:text-3xl font-bold">$300.00</div>
