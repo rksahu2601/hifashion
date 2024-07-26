@@ -1,21 +1,23 @@
 'use client';
 import {
-  BaggageClaim,
-  BaggageClaimIcon,
   Heart,
   ShoppingBagIcon,
-  ShoppingBasket,
 } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
+import { motion } from 'framer-motion';
 
 const images = ['/test1.jpg', '/test4.jpg'];
 
 export default function ProductCard() {
   const [imgUrl, setImgUrl] = useState(images[0]);
   return (
-    <article className=' overflow-hidden rounded-lg border border-slate-300'>
+    <motion.article
+    initial={{ opacity: 0, scale:.5 }}
+  whileInView={{ opacity: 1, scale:1 }}
+  transition={{ type: "tween"}}
+  viewport={{ once: true }} className=' overflow-hidden rounded-lg border border-slate-300'>
       <Link href={`product/1`}>
       <div
         onMouseOver={() => setImgUrl(images[1])}
@@ -45,6 +47,6 @@ export default function ProductCard() {
           </button>
         </div>
       </div>
-    </article>
+    </motion.article>
   );
 }

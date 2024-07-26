@@ -1,9 +1,13 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import CustomInput from "../CustomInput";
 import Button from "@/components/Button";
+
+type PropsType={
+  setOpenPopUp: Dispatch<SetStateAction<boolean>>;
+}
 
 enum PaymentTypes {
   CASH = "Cash on Delivery",
@@ -17,7 +21,7 @@ const PaymentTypesArr = [
   PaymentTypes.PAYPAL,
 ];
 
-export default function CheckoutOrderSummary() {
+export default function CheckoutOrderSummary({setOpenPopUp}:PropsType) {
   const [paymentType, setPaymentType] = useState<PaymentTypes>(
     PaymentTypes.CASH
   );
@@ -54,50 +58,65 @@ export default function CheckoutOrderSummary() {
           ))}
         </div>
       </div>
-      {paymentType === PaymentTypes.CARD && <div className="mt-6 md:mt-8">
-        <div></div>
-        <form>
-            <CustomInput label="Email" name="email" type="email" placeholder="Your email address" className="mb-4" required />
-            <CustomInput label="Card Holder Name" className="mb-4" name="cardHolderName" placeholder="John Doe" required />
-            <CustomInput label="Card Number" name="cardNumber" placeholder="3554****54336" required />
+      {paymentType === PaymentTypes.CARD && (
+        <div className="mt-6 md:mt-8">
+          <div></div>
+          <form>
+            <CustomInput
+              label="Email"
+              name="email"
+              type="email"
+              placeholder="Your email address"
+              className="mb-4"
+              required
+            />
+            <CustomInput
+              label="Card Holder Name"
+              className="mb-4"
+              name="cardHolderName"
+              placeholder="John Doe"
+              required
+            />
+            <CustomInput
+              label="Card Number"
+              name="cardNumber"
+              placeholder="3554****54336"
+              required
+            />
             <div className="w-full flex flex-col md:flex-row gap-4 md:items-center my-4">
-        <CustomInput
-          label="Expiry"
-          name="expiryDate"
-          placeholder=""
-          required
-          type="date"
-        />
-        <CustomInput
-          label="CVC"
-          name="cvc"
-          placeholder="443"
-          required
-        />
+              <CustomInput
+                label="Expiry"
+                name="expiryDate"
+                placeholder=""
+                required
+                type="date"
+              />
+              <CustomInput label="CVC" name="cvc" placeholder="443" required />
+            </div>
+          </form>
+        </div>
+      )}
+      <div className="mt-6 md:mt-8">
+        <div className="flex items-center justify-between mb-3 opacity-70">
+          <p className="font-semibold">Sub Total</p>
+          <p className="font-semibold">$547.00</p>
+        </div>
+        <div className="flex items-center justify-between mb-3 opacity-70">
+          <p className="font-semibold">Coupon Discount</p>
+          <p className="font-semibold">$-50.00</p>
+        </div>
+        <div className="flex items-center justify-between mb-3 opacity-70">
+          <p className="font-semibold">Shipping Cost</p>
+          <p className="font-semibold">$50.00</p>
+        </div>
       </div>
-        </form>
-        </div>}
-        <div className="mt-6 md:mt-8">
-            <div className="flex items-center justify-between mb-3 opacity-70">
-                <p className="font-semibold">Sub Total</p>
-                <p className="font-semibold">$547.00</p>
-            </div>
-            <div className="flex items-center justify-between mb-3 opacity-70">
-                <p className="font-semibold">Coupon Discount</p>
-                <p className="font-semibold">$-50.00</p>
-            </div>
-            <div className="flex items-center justify-between mb-3 opacity-70">
-                <p className="font-semibold">Shipping Cost</p>
-                <p className="font-semibold">$50.00</p>
-            </div>
+      <div className="mt-6 md:mt-8">
+        <div className="flex items-center justify-between mb-3">
+          <p className="font-semibold">Total</p>
+          <p className="font-semibold">$547.00</p>
         </div>
-        <div className="mt-6 md:mt-8">
-            <div className="flex items-center justify-between mb-3">
-                <p className="font-semibold">Total</p>
-                <p className="font-semibold">$547.00</p>
-            </div>
-            <Button label="Pay $547.00" solid className="w-full" />
-        </div>
+        <Button onClick={()=>setOpenPopUp(true)} label="Pay $547.00" solid className="w-full" />
+      </div>
     </motion.section>
   );
 }

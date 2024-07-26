@@ -1,11 +1,7 @@
-import CheckoutOrderSummary from '@/components/store/checkout/CheckoutOrderSummary'
-import ReviewOrder from '@/components/store/checkout/ReviewOrder'
+import Checkout from "@/components/store/checkout/Checkout";
 
-export default function Checkout() {
+export default function CheckoutPage() {
   return (
-    <div className='contain mt-[5rem] pb-6 grid gap-6 md:grid-cols-12 items-start'>
-        <ReviewOrder />
-        <CheckoutOrderSummary />
-    </div>
+    <Checkout />
   )
 }

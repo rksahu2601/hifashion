@@ -1,9 +1,24 @@
+"use client"
+
 import Link from 'next/link'
 import CustomInput from '../CustomInput'
 import Button from '@/components/Button'
 
+import { motion } from 'framer-motion';
+
 export default function CartOrderSummary() {
+    const variants = {
+        initial: { opacity: 0, y: 40 },
+        animate: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+      };
+
   return (
+    
+    <motion.section
+    variants={variants}
+    initial="initial"
+    whileInView="animate"
+     className='border shadow rounded-md p-3 md:p-4 col-span-4'>
     <div className='p-2 md:py-8 md:px-4 flex flex-col justify-center'>
         <h1 className='text-2xl md:text-3xl font-semibold '>Order Summary</h1>
         <hr className='my-4 md:my-6 bg-gray-600'/>
@@ -26,5 +41,7 @@ export default function CartOrderSummary() {
         </div>
         <Link href="/checkout" className='px-4 py-2 text-white bg-secondary hover:bg-secondary/80 text-sm md:text-base font-semibold text-center rounded-full active:scale-75 transition duration-500'>CHECKOUT</Link>
     </div>
+    </motion.section>
+    
   )
 }
