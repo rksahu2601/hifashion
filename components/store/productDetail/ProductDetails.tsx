@@ -31,6 +31,15 @@ export default function ProductDetails() {
           Dont miss it
         </p>
       </div>
+      <div className="my-6">
+        <h2 className="text-xl font-semibold">Choose a color</h2>
+        <div className="flex gap-1 items-center mt-3">
+          <div className="w-7 aspect-square border-2 border-transparent hover:border-gray-300 rounded-full grid place-items-center cursor-pointer"><div className="aspect-square w-5 bg-red-600 rounded-full border border-gray-400"></div></div>
+          <div className="w-7 aspect-square border-2 border-transparent hover:border-gray-300 rounded-full grid place-items-center cursor-pointer"><div className="aspect-square w-5 bg-blue-600 rounded-full border border-gray-400"></div></div>
+          <div className="w-7 aspect-square border-2 border-transparent hover:border-gray-300 rounded-full grid place-items-center cursor-pointer"><div className="aspect-square w-5 bg-yellow-400 rounded-full border border-gray-400"></div></div>
+          <div className="w-7 aspect-square  border-2 hover:border-gray-300 border-gray-400 rounded-full grid place-items-center cursor-pointer"><div className="aspect-square w-5 bg-white rounded-full border border-gray-400"></div></div>
+        </div>
+      </div>
       <div className="flex items-center my-6 gap-3 lg:w-[60%]">
         <Button label="Buy Now" solid className="flex-1" />
         <Button label="Add To Cart" className="flex-1" />

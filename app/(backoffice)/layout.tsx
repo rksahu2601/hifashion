@@ -1,4 +1,5 @@
-import React from 'react'
+import Admin from '@/components/backoffice/Admin';
+import Navbar from '../../components/backoffice/navbar/Navbar';
 
 export default function layout({
   children,
@@ -6,8 +7,8 @@ export default function layout({
   children: React.ReactNode;
 }>) {
   return (
-    <div>dashboard layout
+    <Admin>
       {children}
-    </div>
+    </Admin>
   )
 }

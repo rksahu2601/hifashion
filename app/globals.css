@@ -2,9 +2,35 @@
   @tailwind components;
   @tailwind utilities;
 
-  .contain {
-    @apply max-w-[80rem] mx-auto px-4
+  *::placeholder{
+    @apply text-xs
   }
+
+  .contain {
+    @apply max-w-[90rem] mx-auto px-4 
+  }
+  .dashboradContain {
+    @apply max-w-[96rem] mx-auto px-4 
+  }
+
+  .box-shadow {
+    box-shadow: 0px 0px 20px rgba(1, 41, 112, 0.1);
+  }
+  /* .sidebar {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    bottom: 0;
+    width: 300px;
+    z-index: 996;
+    transition: all 0.3s;
+    padding: 20px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #aab7cf transparent;
+    box-shadow: 0px 0px 20px rgba(1, 41, 112, 0.1);
+    background-color: #fff;
+  } */
 
   @layer base {
     :root {

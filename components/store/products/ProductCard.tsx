@@ -14,7 +14,7 @@ export default function ProductCard() {
   const [imgUrl, setImgUrl] = useState(images[0]);
   return (
     <motion.article
-    initial={{ opacity: 0, scale:.5 }}
+    initial={{ opacity: 0, scale:.8 }}
   whileInView={{ opacity: 1, scale:1 }}
   transition={{ type: "tween"}}
   viewport={{ once: true }} className=' overflow-hidden rounded-lg border border-slate-300'>
