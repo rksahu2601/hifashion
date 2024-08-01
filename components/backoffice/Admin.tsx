@@ -11,12 +11,14 @@ export default function Admin({children}: {
 const [showSideBar, setShowSideBar] = useState(false)
 
   return (
-    <div className="bg-[#f6f9ff] text-[#444444]">
+    <div className="">
       <Navbar setShowSideBar={setShowSideBar}/>
       <div className='mt-16 flex gap-6'>
         <Sidebar showSideBar={showSideBar} />
-      <main className={cn("py-5 px-8", showSideBar && "md:ml-80")}>{children}</main>
+      <main className={cn("py-5 px-8 w-full", showSideBar && "md:ml-80")}>{children}</main>
       </div>
     </div>
   )
 }
+
+// bg-[#f6f9ff] text-[#444444]

@@ -1,11 +1,26 @@
 "use client";
+import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
-import { Grid, Grid2X2 } from "lucide-react";
+import { ChevronDown, Grid, Grid2X2 } from "lucide-react";
 import Link from "next/link";
+import { ReactElement, useState } from "react";
+import SidebarLinks from "./SidebarLink";
+import SidebarLink from "./SidebarLink";
+
 
 type SideBarType = {
   showSideBar: boolean;
 };
+
+export type TsidebarLink ={
+  label: string;
+  href: string;
+  icon: ReactElement;
+  subLinks: {
+    label: string;
+    href: string;
+  }[] | null;
+}
 
 const sideBarLinks = [
   {
@@ -33,9 +48,16 @@ const sideBarLinks = [
     href: "#",
     icon: <Grid />,
   },
+  {
+    label: "Categories",
+    subLinks: null,
+    href: "/dashboard/categories",
+    icon: <Grid />,
+  },
 ];
 
 export default function Sidebar({ showSideBar }: SideBarType) {
+
   const variants = {
     close: {
       x: "-100%",
@@ -52,23 +74,11 @@ export default function Sidebar({ showSideBar }: SideBarType) {
       variants={variants}
       initial="close"
       animate={showSideBar ? "open" : "close"}
-      className="h-screen w-80 bg-white box-shadow z-[990] fixed top-16 left-0 p-5"
+      className="h-screen w-80 bg-white border-r z-[990] fixed top-16 left-0 p-5"
     >
       <ul>
         {sideBarLinks.map((link, i) => (
-          <li key={i}>
-            <div className="flex items-center gap-2 bg-primary/5 mb-3 py-3 px-4 rounded-md text-primary">
-              <span>{link.icon}</span>
-              <Link href={link.href} className="font-semibold">{link.label}</Link>
-            </div>
-            {link.subLinks &&
-              <div>
-                {link.subLinks.map((subLink, i) => (
-                <Link key={i} href={subLink.href}>
-                  {subLink.label}
-                </Link>
-              ))}</div>}
-          </li>
+          <SidebarLink key={i} link={link} />
         ))}
       </ul>
     </motion.nav>
