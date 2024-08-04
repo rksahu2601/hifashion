@@ -20,8 +20,6 @@ export default function SidebarLink({ link }: TSidebarProps) {
 
   const linkArr = link.href.split("/");
 
-  console.log(linkArr);
-
   const subLinksVariants = {
     close: {
       height: 0,

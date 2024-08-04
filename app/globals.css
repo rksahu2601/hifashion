@@ -16,6 +16,18 @@
   .box-shadow {
     box-shadow: 0px 0px 20px rgba(1, 41, 112, 0.1);
   }
+
+  .dropzone {
+    @apply py-6 
+  }
+
+  .dropzone label {
+    @apply text-sm text-primary
+  }
+
+  .dropzone button {
+    @apply bg-secondary
+  }
   /* .sidebar {
     position: fixed;
     top: 60px;

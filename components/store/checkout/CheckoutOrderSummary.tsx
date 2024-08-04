@@ -2,8 +2,8 @@
 
 import { motion } from "framer-motion";
 import { Dispatch, SetStateAction, useState } from "react";
-import CustomInput from "../CustomInput";
 import Button from "@/components/Button";
+import CardPaymentForm from "@/components/forms/CardPaymentForm";
 
 type PropsType={
   setOpenPopUp: Dispatch<SetStateAction<boolean>>;
@@ -49,7 +49,7 @@ export default function CheckoutOrderSummary({setOpenPopUp}:PropsType) {
             <div key={type} className="mb-3">
               <input
                 type="radio"
-                onClick={() => setPaymentType(type)}
+                onChange={() => setPaymentType(type)}
                 checked={type === paymentType}
                 className="mr-2"
               />
@@ -59,42 +59,7 @@ export default function CheckoutOrderSummary({setOpenPopUp}:PropsType) {
         </div>
       </div>
       {paymentType === PaymentTypes.CARD && (
-        <div className="mt-6 md:mt-8">
-          <div></div>
-          <form>
-            <CustomInput
-              label="Email"
-              name="email"
-              type="email"
-              placeholder="Your email address"
-              className="mb-4"
-              required
-            />
-            <CustomInput
-              label="Card Holder Name"
-              className="mb-4"
-              name="cardHolderName"
-              placeholder="John Doe"
-              required
-            />
-            <CustomInput
-              label="Card Number"
-              name="cardNumber"
-              placeholder="3554****54336"
-              required
-            />
-            <div className="w-full flex flex-col md:flex-row gap-4 md:items-center my-4">
-              <CustomInput
-                label="Expiry"
-                name="expiryDate"
-                placeholder=""
-                required
-                type="date"
-              />
-              <CustomInput label="CVC" name="cvc" placeholder="443" required />
-            </div>
-          </form>
-        </div>
+        <CardPaymentForm />
       )}
       <div className="mt-6 md:mt-8">
         <div className="flex items-center justify-between mb-3 opacity-70">

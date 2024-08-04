@@ -1,15 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import CustomInput from "../CustomInput";
 import Button from "@/components/Button";
 
 import { motion } from "framer-motion";
-import CustomSelect from "../CustomSelect";
 
 export default function CartOrderSummary() {
-
-const selectOptions = ["Standard Delivery - $5.00", "Premium Delivery - $10.00"]
+  const selectOptions = [
+    "Standard Delivery - $5.00",
+    "Premium Delivery - $10.00",
+  ];
 
   const variants = {
     initial: { opacity: 0, y: 40 },
@@ -30,13 +30,32 @@ const selectOptions = ["Standard Delivery - $5.00", "Premium Delivery - $10.00"]
           <h2>Items 3</h2>
           <p>$457.98</p>
         </div>
-        <CustomSelect name="deliveryOption" label="Delivery Options" options={selectOptions} />
-        <CustomInput
-          label="PROMO CODE"
-          name="promoCode"
-          className=""
-          placeholder="Enter your code"
-        />
+
+        <div className="flex flex-col gap-3 mb-8">
+          <label htmlFor="deliveryOption" className="font-semibold">
+            Delivery Options
+          </label>
+          <select
+            id="deliveryOption"
+            className="w-full border p-2 rounded focus:outline-none focus:border-secondary placeholder:text-sm bg-transparent"
+          >
+            {selectOptions.map((option) => (
+              <option key={option} className="">
+                {option}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="flex flex-col gap-2 items-start flex-1">
+          <label htmlFor="promoCode" className="font-semibold">
+            PROMO CODE
+          </label>
+          <input
+            id="promoCode"
+            placeholder="Enter your code"
+            className="w-full border border-slate-300 p-2 rounded focus:outline-none focus:border-secondary placeholder:text-sm"
+          />
+        </div>
         <Button solid label="APPLY" className="my-6 w-fit" />
         <div className="flex items-center justify-between font-semibold md:text-lg uppercase mb-4 md:mb-8">
           <h2 className="uppercase">Total cost</h2>
