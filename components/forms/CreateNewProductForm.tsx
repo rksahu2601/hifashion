@@ -32,7 +32,7 @@ export default function CreateNewProductForm() {
   const [variant, setVariant] = useState("");
   const [showVariantInput, setShowVariantInput] = useState(false)
 
-  const [imageUrls, setImageUrls] = useState([]);
+  const [imageUrls, setImageUrls] = useState<String[]>([]);
 
   const selectOptions = ["Bags", "Hoodies"];
 
@@ -246,7 +246,7 @@ export default function CreateNewProductForm() {
               {imageUrls.map((url, i)=>{
                 return (
                   <div key={i} className={cn("relative rounded-md overflow-hidden", imageUrls.length === 3 ? "first:row-span-2" : imageUrls.length === 4 ? "row-span-1" : imageUrls.length === 2 ? "row-span-1 col-span-3" : "row-span-full col-span-full")}>
-                    <Image className="object-cover" src={url} fill alt="" />
+                    <Image className="object-cover" src={url as string} fill alt="" />
                     <div className="group opacity-0 hover:opacity-100 absolute inset-0 bg-slate-900 bg-opacity-50 grid place-items-center"><button type="button" onClick={()=>setImageUrls(prev=>prev.filter(item=>item!==url))} className="bg-white shadow text-sm p-1 rounded-sm font-medium translate-y-20 opacity-0 group-hover:translate-y-0 group-hover:opacity-100">Remove</button></div>
                   </div>
                 )
