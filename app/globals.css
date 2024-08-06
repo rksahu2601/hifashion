@@ -2,6 +2,10 @@
   @tailwind components;
   @tailwind utilities;
 
+  *{
+    @apply transition duration-500
+  }
+
   *::placeholder{
     @apply text-xs
   }
@@ -18,15 +22,19 @@
   }
 
   .dropzone {
-    @apply py-6 
+    @apply py-6
   }
 
   .dropzone label {
-    @apply text-sm text-primary
+    @apply text-xs text-primary
+  }
+
+  .dropzone.product label {
+    @apply text-xs text-primary hidden
   }
 
   .dropzone button {
-    @apply bg-secondary
+    @apply bg-secondary px-3 py-2 w-fit h-fit text-xs
   }
   /* .sidebar {
     position: fixed;

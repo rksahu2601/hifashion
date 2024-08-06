@@ -38,7 +38,7 @@ export default function SidebarLink({ link }: TSidebarProps) {
         href={link.href}
         className={cn(
           "flex items-center justify-between gap-2 py-3 px-4 rounded-md text-primary text-sm hover:translate-x-[5px] transition duration-500",
-          pathNameArr[2] === linkArr[2] ? "bg-primary/5" : ""
+          pathNameArr[2] === linkArr[2] ? "bg-white" : ""
         )}
       >
         <div className="flex items-center gap-2">
@@ -70,7 +70,7 @@ export default function SidebarLink({ link }: TSidebarProps) {
               <Link
                 className={cn(
                   "hover:translate-x-[5px] transition duration-500 py-2 px-4 rounded-md text-primary text-sm",
-                  pathNameArr[2] === sublinkArr[2] ? "bg-primary/5" : ""
+                  pathNameArr[2] === sublinkArr[2] ? "bg-white font-semibold" : ""
                 )}
                 key={i}
                 href={subLink.href}

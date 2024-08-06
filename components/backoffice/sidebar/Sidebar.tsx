@@ -1,7 +1,7 @@
 "use client";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
-import { ChevronDown, Grid, Grid2X2 } from "lucide-react";
+import { BadgePlus, ChevronDown, Grid, Grid2X2, ListIcon, ShoppingBasket, User, Variable } from "lucide-react";
 import Link from "next/link";
 import { ReactElement, useState } from "react";
 import SidebarLinks from "./SidebarLink";
@@ -46,13 +46,25 @@ const sideBarLinks = [
       },
     ],
     href: "#",
-    icon: <Grid />,
+    icon: <ShoppingBasket />,
   },
   {
     label: "Categories",
     subLinks: null,
     href: "/dashboard/categories",
-    icon: <Grid />,
+    icon: <ListIcon />,
+  },
+  {
+    label: "Custormers",
+    subLinks: null,
+    href: "/dashboard/categories",
+    icon: <User />,
+  },
+  {
+    label: "Coupons",
+    subLinks: null,
+    href: "/dashboard/categories",
+    icon: <BadgePlus />,
   },
 ];
 
@@ -84,15 +96,3 @@ export default function Sidebar({ showSideBar }: SideBarType) {
     </motion.nav>
   );
 }
-
-// {
-//   sideBarLinks.map((link, i)=>(
-//     <div key={i}>
-//       {link.icon}
-//       <Link href={link.href}>{link.label}</Link>
-//       {link.subLinks && link.subLinks.map((subLink, i)=>(
-//         <Link key={i} href={subLink.href}>{subLink.label}</Link>
-//       ))}
-//     </div>
-//   ))
-// }

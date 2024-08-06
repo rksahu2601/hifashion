@@ -10,17 +10,21 @@ type InputType = {
     placeholder: string;
     required?: boolean;
     mutedLabel?: boolean;
+    isPrice?: boolean;
     register: UseFormRegister<FieldValues>;
     errors: FieldErrors<FieldValues>;
 }
 
 
 
-export default function CustomInput({label, name, type="text", className, placeholder, required, mutedLabel, register, errors}: InputType) {
+export default function CustomInput({label, name, type="text", className, placeholder, required, mutedLabel, register, errors, isPrice}: InputType) {
   return (
     <div className="flex flex-col gap-2 items-start flex-1">
-        <label htmlFor={name} className={cn("font-semibold", mutedLabel ? "text-sm text-slate-500" : "" )}>{label}{required && <span className="text-red-600">*</span>}</label>
-        <input {...register(name)} id={name}  placeholder={placeholder} className={cn("w-full border border-slate-300 p-2 rounded focus:outline-none focus:border-secondary placeholder:text-sm", className)} type={type} />
+        <label htmlFor={name} className={cn("font-semibold", mutedLabel ? "text-sm text-slate-500 " : "" )}>{label}{required && <span className="text-red-600">*</span>}</label>
+        <div className={cn("w-full", isPrice ? "flex items-center gap-2 border border-slate-300 p-1 rounded" : "")}> 
+          {isPrice && <div className="bg-slate-100 py-1 px-4 rounded font-semibold text-slate-500">$</div>}
+        <input {...register(name)} id={name}  placeholder={placeholder} className={cn("w-full border border-slate-300 rounded focus:outline-none placeholder:text-sm", isPrice ? "border-transparent " : "border-slate-300 focus:border-secondary p-2", className)} type={type} />
+        </div>
         {errors[name] && <div className="flex items-center text-rose-600 gap-1">
             <Ban className="w-3 h-3" />
             <p className="text-xs  ">
