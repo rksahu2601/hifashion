@@ -1,3 +1,4 @@
+import AuthBtns from './AuthBtns'
 import CartIcon from './CartIcon'
 import Logo from './Logo'
 import MobileMenu from './mobileMenu/MobileMenu'
@@ -20,6 +21,7 @@ export default function Navbar() {
           <Searchbar />
           <ProfileIcon />
           <CartIcon />
+          <AuthBtns />
           <MobileMenu />
         </div>
       </div>

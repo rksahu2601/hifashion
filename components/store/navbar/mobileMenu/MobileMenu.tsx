@@ -2,8 +2,8 @@
 
 import { MenuSquare, X } from "lucide-react";
 import React, { useState } from "react";
-import { animate, motion } from "framer-motion";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 export default function MobileMenu() {
   const [showNav, setShowNav] = useState(false);
@@ -29,6 +29,10 @@ export default function MobileMenu() {
         <button onClick={() => setShowNav(false)}>
           <X className="w-6 h-6" />
         </button>
+        <div className="h-full flex flex-col justify-between">
+          <h2>Links</h2>
+        <Link className="text-white w-full rounded px-3 py-2 bg-secondary hover:shadow transition-smooth mb-16" href="/signin">Sign In</Link>
+        </div>
       </nav>
     </>
   );

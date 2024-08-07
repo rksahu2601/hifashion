@@ -19,7 +19,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={dmsans.className}>
         {children}
-        <Toaster />
+        <Toaster position="top-left"/>
       </body>
     </html>
   );
