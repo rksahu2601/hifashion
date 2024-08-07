@@ -2,7 +2,8 @@
   @tailwind components;
   @tailwind utilities;
 
-  *{
+
+  .transition-smooth {
     @apply transition duration-500
   }
 

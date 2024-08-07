@@ -1,10 +1,8 @@
 "use client";
-import { cn } from "@/lib/utils";
+
 import { motion } from "framer-motion";
-import { BadgePlus, ChevronDown, Grid, Grid2X2, ListIcon, ShoppingBasket, User, Variable } from "lucide-react";
-import Link from "next/link";
-import { ReactElement, useState } from "react";
-import SidebarLinks from "./SidebarLink";
+import { BadgePlus, Grid2X2, ListIcon, ShoppingBasket, User } from "lucide-react";
+import { ReactElement } from "react";
 import SidebarLink from "./SidebarLink";
 
 
@@ -55,15 +53,15 @@ const sideBarLinks = [
     icon: <ListIcon />,
   },
   {
-    label: "Custormers",
+    label: "Orders",
     subLinks: null,
-    href: "/dashboard/categories",
+    href: "/dashboard/orders",
     icon: <User />,
   },
   {
     label: "Coupons",
     subLinks: null,
-    href: "/dashboard/categories",
+    href: "/dashboard/coupons",
     icon: <BadgePlus />,
   },
 ];
