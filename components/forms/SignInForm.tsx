@@ -9,22 +9,37 @@ import Button from "../Button"
 import { z } from "zod"
 import Link from "next/link"
 import { motion } from 'framer-motion';
+import toast from "react-hot-toast"
+import { login } from "@/actions/authActions"
+import { useState } from "react"
 
-const formSchema = z.object({
+export const signInFormSchema = z.object({
     email: z.string().email(),
     password: z.string().min(6, "minimum of 6 characters!")
 })
 
 export default function SignInForm() {
+    const [loading, setLoading] = useState(false);
+
 const router = useRouter()
 
 const {register, reset, handleSubmit, formState: {errors}} = useForm<FieldValues>({
-    resolver: zodResolver(formSchema)
+    resolver: zodResolver(signInFormSchema)
 })
 
-const onSubmit = (data: FieldValues)=>{
-    console.log(data)
-    reset()
+const onSubmit = async (data: FieldValues)=>{
+    try {
+        setLoading(true);
+        await login(data);
+        setLoading(false);
+        reset();
+        toast.success("Sign in successful");
+      } catch (error) {
+        setLoading(false);
+        toast.error("Something went wrong!");
+      } finally {
+        setLoading(false);
+      }
 }
 
   return (
@@ -62,7 +77,7 @@ const onSubmit = (data: FieldValues)=>{
                         errors={errors}
                         type="password"
                     />
-                    <Button className="mt-4 bg-secondary border-secondary py-3" solid label="Sign in" />
+                    <Button disabled={loading} className="mt-4 bg-secondary border-secondary py-3" solid label={loading ? "Signing in..." :"Sign in"} />
                    </div>
                    <div className="mt-6 text-center text-gray-500">
                     Dont have an account ? <Link className="font-semibold text-secondary" href="/signup">Sign up</Link>

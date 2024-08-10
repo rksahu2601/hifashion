@@ -1,9 +1,13 @@
+"use client"
+
+import { signout } from '@/actions/authActions'
 import Link from 'next/link'
 
 export default function AuthBtns() {
   return (
-    <div>
+    <div className="flex items-center gap-3">
         <Link className="hidden md:block border rounded px-3 py-2 hover:border-slate-400 hover:shadow transition-smooth ml-2" href="/signin">Sign In</Link>
+        <button onClick={()=>signout()} className="hidden md:block border rounded px-3 py-2 hover:border-slate-400 hover:shadow transition-smooth ml-2" >Sign out</button>
     </div>
   )
 }
