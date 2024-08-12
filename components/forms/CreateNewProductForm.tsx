@@ -53,10 +53,6 @@ export default function CreateNewProductForm() {
       value: "#0000FF",
     },
     {
-      name: "Red",
-      value: "#FF0000",
-    },
-    {
       name: "Yellow",
       value: "#FFFF00",
     },
@@ -184,7 +180,7 @@ export default function CreateNewProductForm() {
               <p className="font-semibold text-sm text-slate-500">
                 Select Available Colors
               </p>
-              <div className="flex flex-wrap gap-2 items-center mt-3">
+              <div className="flex flex-wrap justify-center gap-2 items-center mt-3">
                 {ColorVariant.map((color) => {
                   const isSelected = selectedColors.some(
                     (item) => item === color.value
