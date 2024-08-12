@@ -20,11 +20,9 @@ export const signUpFormSchema = z.object({
   lastname: z.string().min(2, "minimum of 2 characters!"),
 });
 
-export type signUpT = typeof signUpFormSchema
+export type TsignUp = typeof signUpFormSchema;
 
-
-
-export default function SignUpForm() {
+export default function SignUpForm({message}:{message: string | undefined}) {
   const [loading, setLoading] = useState(false);
 
   const router = useRouter();
@@ -43,10 +41,10 @@ export default function SignUpForm() {
 
     try {
       setLoading(true);
-      await signup(data);
+      const res = await signup(data);
+      console.log('SignUp submit func', res)
       setLoading(false);
       // reset();
-      toast.success("Sign in successful");
     } catch (error) {
       console.log(error)
       setLoading(false);
@@ -113,7 +111,8 @@ export default function SignUpForm() {
               errors={errors}
               type="password"
             />
-            <Button disabled={loading} className="mt-4 bg-secondary border-secondary py-3" solid label={loading ? "Signing un..." :"Sign Up"} />
+            {message && <p className="text-center text-red-600 mt-3">{message}</p>}
+            <Button disabled={loading} className="mt-4 bg-secondary border-secondary py-3" solid loading={loading} label={loading ? "Signing up..." :"Sign Up"} />
           </div>
           <div className="mt-6 text-center text-gray-500">
             Already have an account ?{" "}

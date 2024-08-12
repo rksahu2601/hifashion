@@ -18,7 +18,7 @@ export const signInFormSchema = z.object({
     password: z.string().min(6, "minimum of 6 characters!")
 })
 
-export default function SignInForm() {
+export default function SignInForm({message}:{message: string | undefined}) {
     const [loading, setLoading] = useState(false);
 
 const router = useRouter()
@@ -33,7 +33,7 @@ const onSubmit = async (data: FieldValues)=>{
         await login(data);
         setLoading(false);
         reset();
-        toast.success("Sign in successful");
+        // toast.success("Sign in successful");
       } catch (error) {
         setLoading(false);
         toast.error("Something went wrong!");
@@ -77,7 +77,8 @@ const onSubmit = async (data: FieldValues)=>{
                         errors={errors}
                         type="password"
                     />
-                    <Button disabled={loading} className="mt-4 bg-secondary border-secondary py-3" solid label={loading ? "Signing in..." :"Sign in"} />
+                    {message && <p className="text-center text-red-600 mt-3">{message}</p>}
+                    <Button disabled={loading} className="mt-4 bg-secondary border-secondary py-3" solid loading={loading} label={loading ? "Signing in..." :"Sign in"} />
                    </div>
                    <div className="mt-6 text-center text-gray-500">
                     Dont have an account ? <Link className="font-semibold text-secondary" href="/signup">Sign up</Link>

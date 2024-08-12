@@ -9,7 +9,7 @@ import Searchbar from './search/Searchbar'
 
 export default async function Navbar() {
   const supabase = createClient()
-  const {data: user} = await supabase.auth.getUser()
+  const {data: {user}} = await supabase.auth.getUser()
 
   return (
     <nav className='fixed z-[999] h-[4rem] top-0 w-full border-b bg-white'>

@@ -23,7 +23,7 @@ export async function login(data: FieldValues) {
   const { error } = await supabase.auth.signInWithPassword(signInData)
 
   if (error) {
-    redirect('/signin?message=could not sign you in, something went wrong')
+    redirect(`/signin?message=${error.message}`)
   }
 
   revalidatePath('/', 'layout')
@@ -43,14 +43,11 @@ export async function signup(data: FieldValues) {
     password: data.password
   }
 
-  // check if email exists
-
 //   create user
   const { error, data: user } = await supabase.auth.signUp(signUpData)
 
   if (error) {
-    console.log(error)
-    redirect('/signup?message=could not sign you up, something went wrong')
+    redirect(`/signup?message=${error.message}`)
   }
 
   const userId = user.user?.id

@@ -1,6 +1,7 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
+import { redirect } from "next/navigation";
 
 export async function createProfile(data: {
   firstname: string;
@@ -12,10 +13,11 @@ export async function createProfile(data: {
 
   const { error } = await supabase
     .from("profiles")
-    .upsert({ id: data.userId, username: "Test", firstname: data.firstname,  updated_at: new Date().toISOString(), })
+    .upsert({ id: data.userId, firstname: data.firstname, lastname: data.lastname, updated_at: new Date().toISOString(), })
     .select();
 
     if(error){
         console.log("FROM PROFILE CREATE", error)
+        redirect(`/signup?message=${error.message}`)
     }
 }
