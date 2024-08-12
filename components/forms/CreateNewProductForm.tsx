@@ -8,11 +8,10 @@ import CustomTextarea from "../backoffice/CustomTextarea";
 import CustomSelect from "../backoffice/CustomSelect";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
-import { Plus, X } from "lucide-react";
-import { UploadDropzone } from "@/lib/uploadthing";
 import toast from "react-hot-toast";
-import Image from "next/image";
 import Button from "../Button";
+import ProductVariants from "./../backoffice/products/ProductVariants";
+import ProductImages from "../backoffice/products/ProductImages";
 
 const formSchema = z.object({
   productName: z.string().min(2, "minimum of 2 characters"),
@@ -20,7 +19,7 @@ const formSchema = z.object({
   category: z.string(),
   quantity: z.string(),
   sku: z.string(),
-  price: z.string().min(2, "add a price"),
+  price: z.string().min(2, "please add a price"),
 });
 
 // export type FormType = z.infer<typeof formSchema>;
@@ -30,7 +29,7 @@ export default function CreateNewProductForm() {
 
   const [variants, setVariants] = useState<String[]>([]);
   const [variant, setVariant] = useState("");
-  const [showVariantInput, setShowVariantInput] = useState(false)
+  const [showVariantInput, setShowVariantInput] = useState(false);
 
   const [imageUrls, setImageUrls] = useState<String[]>([]);
 
@@ -56,12 +55,6 @@ export default function CreateNewProductForm() {
     setSelectedColors(addedcolors);
   };
 
-  const addVariant = () => {
-    if(!variant) return
-    setVariants((prev)=>[variant, ...prev])
-    setVariant("")
-  };
-
   const {
     register,
     reset,
@@ -82,9 +75,9 @@ export default function CreateNewProductForm() {
     data.availableColors = selectedColors;
     data.variants = variants;
 
-    if(imageUrls.length < 1) {
-      toast.error("Upload at least one image")
-      return
+    if (imageUrls.length < 1) {
+      toast.error("Upload at least one image");
+      return;
     }
     data.images = imageUrls;
     console.log(data);
@@ -192,68 +185,17 @@ export default function CreateNewProductForm() {
             </div>
           </div>
         </section>
-        <section className="w-full mt-6">
-          <h1 className="text-xl font-semibold mb-4">Variants</h1>
-          <div className="border border-slate-300 p-4 rounded-md">
-            <div className="flex justify-between items-center mb-3">
-              <p className="font-medium">Product Variant</p>
-              <button onClick={()=>setShowVariantInput(prev=>!prev)} type="button"  className="text-primary text-sm flex gap-1 items-center font-semibold">
-                <Plus className="w-4 h-4" /> <span>Add variants</span>
-              </button>
-            </div>
-            {showVariantInput && <div className=" bg-white flex items-center gap-2">
-              <input
-              type="text"
-              value={variant}
-              onChange={(e)=>setVariant(e.target.value)}
-                placeholder="e.g: 46, 47 for shoes or White XL for clothes..."
-                className="w-full focus:outline-none h-9 hover:border-primary/40 hover:shadow-md border border-slate-300 rounded px-2"
-              />
-              <button disabled={!variant} onClick={addVariant} className="disabled:opacity-50 bg-primary rounded px-3 h-9 text-white" type="button">Add</button>
-            </div>}
-            <div className="flex flex-wrap gap-3">
-              {variants.length > 0 && variants.map((item, i)=>{
-                return(
-                  <div key={i} className="flex item-center gap-2 bg-secondary/20 rounded-full px-3 py-1 mt-3" >
-                    <button onClick={()=>setVariants(prev=>prev.filter(variant=>variant!==item))} type="button"><X className="w-4 h-4" /></button>
-                    <span className="text-secondary/60 font-semibold text-xs capitalize">{item}</span>
-                  </div>
-                )
-              })}
-            </div>
-          </div>
-        </section>
+        <ProductVariants
+          variant={variant}
+          setVariant={setVariant}
+          variants={variants}
+          setVariants={setVariants}
+          showVariantInput={showVariantInput}
+          setShowVariantInput={setShowVariantInput}
+        />
       </div>
       <div className="flex-1">
-        <section className="w-full">
-        <h1 className="text-xl font-semibold mb-4">Product Images</h1>
-          <div className={cn("border border-slate-300 p-4 rounded-md gap-3 mb-3 items-center grid-cols-6", imageUrls.length > 0 ? "xl:grid" : "")}>
-          {imageUrls.length < 4 && (
-            <UploadDropzone
-                className={cn("dropzone product text-xs h-full mb-3 xl:mb-0", imageUrls.length < 3 ? "col-span-3" : "col-span-2")}
-                endpoint="productImagesUploader"
-                onClientUploadComplete={(res) => {
-                  console.log("Files: ", res[0].url);
-                  if(res[0].url) setImageUrls(prev => [res[0].url, ...prev])
-                    else toast.error("Something went wrong!")
-                }}
-                onUploadError={(error: Error) => {
-                  console.log(error.message)
-                  toast.error("An error occured!")
-              }}
-            />)}
-            <div className={cn(" grid grid-cols-2 gap-3 grid-rows-2", imageUrls.length === 4 ? "col-span-full" : imageUrls.length < 3 ? "col-span-3" : "col-span-4", imageUrls.length > 0 && "h-[14rem] xl:h-[14rem]")}>
-              {imageUrls.map((url, i)=>{
-                return (
-                  <div key={i} className={cn("relative rounded-md overflow-hidden", imageUrls.length === 3 ? "first:row-span-2" : imageUrls.length === 4 ? "row-span-1" : imageUrls.length === 2 ? "row-span-1 col-span-3" : "row-span-full col-span-full")}>
-                    <Image className="object-cover" src={url as string} fill alt="" />
-                    <div className="group opacity-0 hover:opacity-100 absolute inset-0 bg-slate-900 bg-opacity-50 grid place-items-center"><button type="button" onClick={()=>setImageUrls(prev=>prev.filter(item=>item!==url))} className="bg-white shadow text-sm p-1 rounded-sm font-medium translate-y-20 opacity-0 group-hover:translate-y-0 group-hover:opacity-100">Remove</button></div>
-                  </div>
-                )
-              })}
-            </div>
-          </div>
-        </section>
+        <ProductImages imageUrls={imageUrls} setImageUrls={setImageUrls} />
         <section className="w-full mt-6">
           <h1 className="text-xl font-semibold mb-4">Shipping and Delivery</h1>
           <div className=" border border-slate-300 p-4 rounded-md">
@@ -281,7 +223,13 @@ export default function CreateNewProductForm() {
             />
           </div>
         </section>
-        <div className="w-full flex"><Button label="Add Product" solid className="border rounded bg-secondary border-none px-3 py-2 mt-4 ml-auto"/></div>
+        <div className="w-full flex">
+          <Button
+            label="Add Product"
+            solid
+            className="border rounded bg-secondary border-none px-3 py-2 mt-4 ml-auto"
+          />
+        </div>
       </div>
     </form>
   );

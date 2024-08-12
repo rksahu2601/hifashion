@@ -1,3 +1,4 @@
+import { createClient } from '@/lib/supabase/server'
 import AuthBtns from './AuthBtns'
 import CartIcon from './CartIcon'
 import Logo from './Logo'
@@ -6,7 +7,10 @@ import NavCategories from './NavCategories'
 import ProfileIcon from './ProfileIcon'
 import Searchbar from './search/Searchbar'
 
-export default function Navbar() {
+export default async function Navbar() {
+  const supabase = createClient()
+  const {data: user} = await supabase.auth.getUser()
+
   return (
     <nav className='fixed z-[999] h-[4rem] top-0 w-full border-b bg-white'>
       <div className='contain h-full mx-auto flex items-center justify-between'>
@@ -21,7 +25,7 @@ export default function Navbar() {
           <Searchbar />
           <ProfileIcon />
           <CartIcon />
-          <AuthBtns />
+          <AuthBtns user={user} />
           <MobileMenu />
         </div>
       </div>

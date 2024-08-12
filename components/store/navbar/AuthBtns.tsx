@@ -3,6 +3,8 @@
 import { signout } from '@/actions/authActions'
 import Link from 'next/link'
 
+// type PropType = { user: User | null }
+
 export default function AuthBtns() {
   return (
     <div className="flex items-center gap-3">
