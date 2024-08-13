@@ -25,7 +25,7 @@ const formSchema = z.object({
 // export type FormType = z.infer<typeof formSchema>;
 
 export default function CreateNewProductForm() {
-  const [selectedColors, setSelectedColors] = useState<String[]>([]);
+  const [selectedColor, setSelectedColor] = useState<String>("");
 
   const [variants, setVariants] = useState<String[]>([]);
   const [variant, setVariant] = useState("");
@@ -74,15 +74,6 @@ export default function CreateNewProductForm() {
     },
   ];
 
-  const selectColor = (colorValue: String) => {
-    let addedcolors;
-    const isAdded = selectedColors.some((item) => item === colorValue);
-    isAdded
-      ? (addedcolors = selectedColors.filter((item) => item !== colorValue))
-      : (addedcolors = [...selectedColors, colorValue]);
-    setSelectedColors(addedcolors);
-  };
-
   const {
     register,
     reset,
@@ -100,7 +91,7 @@ export default function CreateNewProductForm() {
   });
 
   const onSubmit = (data: FieldValues) => {
-    data.availableColors = selectedColors;
+    data.availableColor = selectedColor;
     data.variants = variants;
 
     if (imageUrls.length < 1) {
@@ -110,7 +101,7 @@ export default function CreateNewProductForm() {
     data.images = imageUrls;
     console.log(data);
     reset();
-    setSelectedColors([]);
+    setSelectedColor("");
   };
 
   return (
@@ -178,16 +169,14 @@ export default function CreateNewProductForm() {
           <div className="border border-slate-300 p-4 rounded-md">
             <div className="flex flex-col gap-2 items-start flex-1">
               <p className="font-semibold text-sm text-slate-500">
-                Select Available Colors
+                Select Available Color
               </p>
               <div className="flex flex-wrap justify-center gap-2 items-center mt-3">
                 {ColorVariant.map((color) => {
-                  const isSelected = selectedColors.some(
-                    (item) => item === color.value
-                  );
+                  const isSelected = selectedColor === color.value
                   return (
                     <div
-                      onClick={() => selectColor(color.value)}
+                      onClick={() => setSelectedColor(color.value)}
                       key={color.name}
                       className={cn(
                         "w-16 py-2 border-2 hover:border-primary rounded grid place-items-center cursor-pointer",
