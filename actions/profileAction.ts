@@ -6,7 +6,7 @@ import { redirect } from "next/navigation";
 export async function createProfile(data: {
   firstname: string;
   lastname: string;
-  userId: string | undefined;
+  userId: string;
 }) {
   const supabase = createClient();
   console.log("PROFILRE HERE")

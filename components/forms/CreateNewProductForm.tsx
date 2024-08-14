@@ -12,20 +12,32 @@ import toast from "react-hot-toast";
 import Button from "../Button";
 import ProductVariants from "./../backoffice/products/ProductVariants";
 import ProductImages from "../backoffice/products/ProductImages";
+import { createProduct } from "@/actions/productActions";
+import { TCategory } from "@/types/supabaseTypes";
 
 const formSchema = z.object({
   productName: z.string().min(2, "minimum of 2 characters"),
   productDescription: z.string().min(2, "minimum of 2 characters"),
   category: z.string(),
+  gender: z.string(),
   quantity: z.string(),
+  deliveryInfo: z.string(),
   sku: z.string(),
   price: z.string().min(2, "please add a price"),
 });
 
-// export type FormType = z.infer<typeof formSchema>;
+// export type FormType = z.infer<typeof formSchema>
 
-export default function CreateNewProductForm() {
+type PropType ={
+  categories: TCategory[] | null
+}
+
+export default function CreateNewProductForm({categories}:PropType) {
+  
+  const [loading, setLoading] = useState(false);
+
   const [selectedColor, setSelectedColor] = useState<String>("");
+  const [categoryId, setCategoryId] = useState<String>("");
 
   const [variants, setVariants] = useState<String[]>([]);
   const [variant, setVariant] = useState("");
@@ -33,7 +45,8 @@ export default function CreateNewProductForm() {
 
   const [imageUrls, setImageUrls] = useState<String[]>([]);
 
-  const selectOptions = ["Bags", "Hoodies"];
+  const categorySelectOptions = categories ? categories.map((cat)=>cat.name) : []
+  const genderOptions = ["male", "female", "both"]
 
   const ColorVariant = [
     {
@@ -84,14 +97,17 @@ export default function CreateNewProductForm() {
     defaultValues: {
       productName: "",
       productDescription: "",
-      category: "Hoodies",
+      category: "",
+      gender: "",
       quantity: "1",
+      deliveryInfo: "",
+      price: "",
       sku: "",
     },
   });
 
-  const onSubmit = (data: FieldValues) => {
-    data.availableColor = selectedColor;
+  const onSubmit = async (data: FieldValues) => {
+    data.color = selectedColor;
     data.variants = variants;
 
     if (imageUrls.length < 1) {
@@ -99,9 +115,24 @@ export default function CreateNewProductForm() {
       return;
     }
     data.images = imageUrls;
+
+    const categorySlug = categories?.find((cat)=>cat.name === data.category)?.slug
+    if(categorySlug) 
+      data.categorySlug = categorySlug;
     console.log(data);
-    reset();
-    setSelectedColor("");
+    try {
+      setLoading(true);
+      await createProduct(data);
+      setLoading(false);
+      reset();
+      setImageUrls([]);
+      setVariants([]);
+      setSelectedColor("");
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
+      toast.error("Something went wrong");
+    }
   };
 
   return (
@@ -137,7 +168,14 @@ export default function CreateNewProductForm() {
             <CustomSelect
               name="category"
               label="Category"
-              options={selectOptions}
+              options={categorySelectOptions}
+              mutedLabel
+              register={register}
+            />
+            <CustomSelect
+              name="gender"
+              label="Gender"
+              options={genderOptions}
               mutedLabel
               register={register}
             />
@@ -173,10 +211,10 @@ export default function CreateNewProductForm() {
               </p>
               <div className="flex flex-wrap justify-center gap-2 items-center mt-3">
                 {ColorVariant.map((color) => {
-                  const isSelected = selectedColor === color.value
+                  const isSelected = selectedColor === color.value;
                   return (
                     <div
-                      onClick={() => setSelectedColor(color.value)}
+                      onClick={() => setSelectedColor(prev=> color.value === prev ? "" : color.value)}
                       key={color.name}
                       className={cn(
                         "w-16 py-2 border-2 hover:border-primary rounded grid place-items-center cursor-pointer",
@@ -218,7 +256,7 @@ export default function CreateNewProductForm() {
           <div className=" border border-slate-300 p-4 rounded-md">
             <CustomTextarea
               label="Free delivery(optional)"
-              name="freeDelivery"
+              name="deliveryInfo"
               placeholder="eg: Free delievery to Ikeja, abuja etc..."
               mutedLabel
               register={register}
@@ -242,7 +280,9 @@ export default function CreateNewProductForm() {
         </section>
         <div className="w-full flex">
           <Button
-            label="Add Product"
+            loading={loading}
+            disabled={loading}
+            label={loading ? "Please wait..." : "Add Product"}
             solid
             className="border rounded bg-secondary border-none px-3 py-2 mt-4 ml-auto"
           />

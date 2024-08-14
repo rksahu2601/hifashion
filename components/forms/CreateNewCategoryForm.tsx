@@ -11,6 +11,8 @@ import Image from "next/image";
 import Button from "../Button";
 import toast from "react-hot-toast";
 import { createCategory } from "@/actions/categoryActions";
+import { generateSlug } from "@/lib/genSlug";
+import { deleteImage } from "@/actions/uploadThingActions";
 
 const formSchema = z.object({
   categoryName: z.string().min(2, "minimum of 2 characters"),
@@ -22,6 +24,12 @@ export type CatFormType = z.infer<typeof formSchema>;
 export default function CreateNewCategoryForm() {
   const [imageUrl, setImageUrl] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const removeImage = async (url: String) => {
+    setImageUrl("");
+    const key = url.split("/")[4]
+    await deleteImage(key)
+  };
 
   const {
     register,
@@ -42,8 +50,9 @@ export default function CreateNewCategoryForm() {
       return;
     }
     data.categoryImage = imageUrl;
+    data.slug = generateSlug(data.categoryName)
     console.log(data);
-    // const parsedData = formSchema.parse(data);
+    const parsedData = formSchema.parse(data);
     try {
       setLoading(true);
       await createCategory(data);
@@ -97,13 +106,15 @@ export default function CreateNewCategoryForm() {
               className=""
               alt="category image"
             />
-            <button
-              onClick={() => setImageUrl("")}
-              className="bg-white text-xs rounded py-1 px-2 font-semibold transition duration-50 absolute top-2 right-2 text-black hover:opacity-65"
-              type="button"
-            >
-              Remove
-            </button>
+            <div className="group opacity-0 hover:opacity-100 absolute inset-0 bg-slate-900 bg-opacity-50 grid place-items-center transition-smooth">
+                  <button
+                    type="button"
+                    onClick={() => removeImage(imageUrl)}
+                    className="bg-white shadow text-sm p-1 rounded-sm font-medium translate-y-20 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-smooth"
+                  >
+                    Remove
+                  </button>
+          </div>
           </div>
         ) : (
           <UploadDropzone
@@ -128,7 +139,6 @@ export default function CreateNewCategoryForm() {
             solid
             className="border rounded bg-secondary border-none px-3 py-2 mt-4 ml-auto"
           />
-          {/* <button type="submit" className="border rounded bg-secondary border-none px-3 py-2 mt-4 ml-auto">{loading ? "Please wait..." : "Create Category"}</button> */}
         </div>
       </div>
     </form>

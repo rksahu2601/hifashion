@@ -9,33 +9,129 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      categories: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: number
+          image: string | null
+          name: string | null
+          slug: string | null
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: number
+          image?: string | null
+          name?: string | null
+          slug?: string | null
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: number
+          image?: string | null
+          name?: string | null
+          slug?: string | null
+        }
+        Relationships: []
+      }
+      products: {
+        Row: {
+          category: string | null
+          categorySlug: string | null
+          color: string | null
+          created_at: string
+          deliveryInfo: string | null
+          description: string | null
+          gender: string | null
+          id: number
+          images: string[]
+          name: string | null
+          price: string | null
+          quantity: string | null
+          sku: string | null
+          variants: string[]
+        }
+        Insert: {
+          category?: string | null
+          categorySlug?: string | null
+          color?: string | null
+          created_at?: string
+          deliveryInfo?: string | null
+          description?: string | null
+          gender?: string | null
+          id?: number
+          images?: string[]
+          name?: string | null
+          price?: string | null
+          quantity?: string | null
+          sku?: string | null
+          variants?: string[]
+        }
+        Update: {
+          category?: string | null
+          categorySlug?: string | null
+          color?: string | null
+          created_at?: string
+          deliveryInfo?: string | null
+          description?: string | null
+          gender?: string | null
+          id?: number
+          images?: string[]
+          name?: string | null
+          price?: string | null
+          quantity?: string | null
+          sku?: string | null
+          variants?: string[]
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
+          address: string | null
           avatar_url: string | null
+          city: string | null
           firstname: string | null
           full_name: string | null
           id: string
+          lastname: string | null
+          phone: string | null
+          role: string
           updated_at: string | null
           username: string | null
           website: string | null
+          zipcode: string | null
         }
         Insert: {
+          address?: string | null
           avatar_url?: string | null
+          city?: string | null
           firstname?: string | null
           full_name?: string | null
           id: string
+          lastname?: string | null
+          phone?: string | null
+          role?: string
           updated_at?: string | null
           username?: string | null
           website?: string | null
+          zipcode?: string | null
         }
         Update: {
+          address?: string | null
           avatar_url?: string | null
+          city?: string | null
           firstname?: string | null
           full_name?: string | null
           id?: string
+          lastname?: string | null
+          phone?: string | null
+          role?: string
           updated_at?: string | null
           username?: string | null
           website?: string | null
+          zipcode?: string | null
         }
         Relationships: [
           {

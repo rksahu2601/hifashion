@@ -53,7 +53,8 @@ export async function signup(data: FieldValues) {
   const userId = user.user?.id
 
   // create user profile
-  await createProfile({firstname, lastname, userId })
+  if(userId)
+    await createProfile({firstname, lastname, userId })
 
   revalidatePath('/', 'layout')
   redirect('/signin')

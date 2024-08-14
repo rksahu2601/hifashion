@@ -1,5 +1,6 @@
 "use client";
 
+import { deleteImage } from "@/actions/uploadThingActions";
 import { UploadDropzone } from "@/lib/uploadthing";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
@@ -12,6 +13,12 @@ type PropType = {
 };
 
 export default function ProductImages({ imageUrls, setImageUrls }: PropType) {
+  const removeImage = async (url: String) => {
+    setImageUrls((prev) => prev.filter((item) => item !== url));
+    const key = url.split("/")[4]
+    await deleteImage(key)
+  };
+
   return (
     <section className="w-full">
       <h1 className="text-xl font-semibold mb-4">Product Images</h1>
@@ -29,7 +36,7 @@ export default function ProductImages({ imageUrls, setImageUrls }: PropType) {
             )}
             endpoint="productImagesUploader"
             onClientUploadComplete={(res) => {
-              console.log("Files: ", res[0].url);
+              console.log("Files: ", res[0]);
               if (res[0].url) setImageUrls((prev) => [res[0].url, ...prev]);
               else toast.error("Something went wrong!");
             }}
@@ -71,15 +78,11 @@ export default function ProductImages({ imageUrls, setImageUrls }: PropType) {
                   fill
                   alt=""
                 />
-                <div className="group opacity-0 hover:opacity-100 absolute inset-0 bg-slate-900 bg-opacity-50 grid place-items-center">
+                <div className="group opacity-0 hover:opacity-100 absolute inset-0 bg-slate-900 bg-opacity-50 grid place-items-center transition-smooth">
                   <button
                     type="button"
-                    onClick={() =>
-                      setImageUrls((prev) =>
-                        prev.filter((item) => item !== url)
-                      )
-                    }
-                    className="bg-white shadow text-sm p-1 rounded-sm font-medium translate-y-20 opacity-0 group-hover:translate-y-0 group-hover:opacity-100"
+                    onClick={() => removeImage(url)}
+                    className="bg-white shadow text-sm p-1 rounded-sm font-medium translate-y-20 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-smooth"
                   >
                     Remove
                   </button>
