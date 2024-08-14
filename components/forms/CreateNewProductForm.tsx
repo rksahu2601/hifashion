@@ -14,6 +14,7 @@ import ProductVariants from "./../backoffice/products/ProductVariants";
 import ProductImages from "../backoffice/products/ProductImages";
 import { createProduct } from "@/actions/productActions";
 import { TCategory } from "@/types/supabaseTypes";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   productName: z.string().min(2, "minimum of 2 characters"),
@@ -33,7 +34,7 @@ type PropType ={
 }
 
 export default function CreateNewProductForm({categories}:PropType) {
-  
+  const router = useRouter()
   const [loading, setLoading] = useState(false);
 
   const [selectedColor, setSelectedColor] = useState<String>("");
@@ -128,6 +129,7 @@ export default function CreateNewProductForm({categories}:PropType) {
       setImageUrls([]);
       setVariants([]);
       setSelectedColor("");
+      router.push("/dashboard/products")
     } catch (error) {
       setLoading(false);
       console.log(error);

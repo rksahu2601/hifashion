@@ -13,6 +13,7 @@ import toast from "react-hot-toast";
 import { createCategory } from "@/actions/categoryActions";
 import { generateSlug } from "@/lib/genSlug";
 import { deleteImage } from "@/actions/uploadThingActions";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   categoryName: z.string().min(2, "minimum of 2 characters"),
@@ -22,6 +23,7 @@ const formSchema = z.object({
 export type CatFormType = z.infer<typeof formSchema>;
 
 export default function CreateNewCategoryForm() {
+  const router = useRouter()
   const [imageUrl, setImageUrl] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -60,6 +62,7 @@ export default function CreateNewCategoryForm() {
       setLoading(false);
       reset();
       setImageUrl("");
+      router.push("/dashboard/categories")
     } catch (error) {
       setLoading(false);
       console.log(error);
