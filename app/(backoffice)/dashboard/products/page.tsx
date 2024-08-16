@@ -1,6 +1,8 @@
+import { DataTable } from '@/components/DataTable/data-table'
 import { createClient } from '@/lib/supabase/server'
-import Image from 'next/image'
-import Link from 'next/link'
+import { columns, statuses } from './table-data'
+import { deleteProduct } from '@/actions/productActions'
+import PageHeader from '@/components/backoffice/PageHeader'
 
 export default async function Products() {
   const supabase = createClient()
@@ -8,13 +10,8 @@ export default async function Products() {
 
   return (
     <div>
-      <Link href="/dashboard/products/new" className="px-3 py-2 border rounded">New</Link>
-      <div  className="mt-6">{products?.map(product=>(
-        <div key={product.id} className='flex items-center gap-3 my-3'>
-          <Image width={400} height={400} alt="" src={product.images[0] as string} className='w-[100px] aspect-square object-cover rounded-md'/>
-          <h2 className="font-semibold">{product.name}</h2>
-        </div>
-      ))}</div>
+      <PageHeader linkUrl='/dashboard/products/new' title='Products' />
+      {products && <DataTable deleteAction={deleteProduct} data={products} filterField="name" columns={columns} facetedFilterOptions={statuses} facetedFilterValue="status" facetedFilterTitle="Status"/>}
     </div>
   )
 }

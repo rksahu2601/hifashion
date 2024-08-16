@@ -51,6 +51,7 @@ export type Database = {
           price: string | null
           quantity: string | null
           sku: string | null
+          status: string | null
           variants: string[]
         }
         Insert: {
@@ -67,6 +68,7 @@ export type Database = {
           price?: string | null
           quantity?: string | null
           sku?: string | null
+          status?: string | null
           variants?: string[]
         }
         Update: {
@@ -83,6 +85,7 @@ export type Database = {
           price?: string | null
           quantity?: string | null
           sku?: string | null
+          status?: string | null
           variants?: string[]
         }
         Relationships: []

@@ -3,7 +3,7 @@ import CreateNewProductForm from "@/components/forms/CreateNewProductForm";
 import { createClient } from "@/lib/supabase/server";
 
 export default async function NewProduct() {
-  const supabase = await createClient()
+  const supabase = createClient()
   const {data: categories} = await supabase.from("categories").select()
   console.log(categories)
   
