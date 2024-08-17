@@ -37,7 +37,7 @@ export default function ProductImages({ imageUrls, setImageUrls }: PropType) {
             endpoint="productImagesUploader"
             onClientUploadComplete={(res) => {
               console.log("Files: ", res[0]);
-              if (res[0].url) setImageUrls((prev) => [res[0].url, ...prev]);
+              if (res[0].url) setImageUrls((prev) => [...prev, res[0].url]);
               else toast.error("Something went wrong!");
             }}
             onUploadError={(error: Error) => {

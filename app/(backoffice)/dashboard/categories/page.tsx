@@ -6,7 +6,7 @@ import { deleteCategory } from '@/actions/categoryActions'
 
 export default async function Products() {
   const supabase = createClient()
-  const {data: categories} = await supabase.from("categories").select()
+  const {data: categories} = await supabase.from("categories").select().order("created_at", {ascending: false})
 
   return (
     <div>

@@ -8,6 +8,7 @@ import { TCategory } from '@/types/supabaseTypes';
 import { deleteImage } from './uploadThingActions';
 
 type DataType = {
+    categoryId?: string;
     categoryName: string;
     categoryDescription: string;
     categoryImage: string;
@@ -24,6 +25,26 @@ export async function createCategory(data:DataType){
 
     try {
         const {error} = await supabase.from("categories").insert({name:data.categoryName, description: data.categoryDescription, image: data.categoryImage, slug: data.slug})
+        if(error){
+            console.log("category error", error);  
+        }
+    } catch (error) {
+        console.log( error);        
+    }
+  
+    revalidatePath('/dashboard/categories')
+  } 
+
+  export async function editCategory(data:DataType){
+    const supabase = createClient()
+
+    const user=await getUserSession()
+    if(!user || user.role !== "admin"){
+        throw new Error("Unathorized Access!")
+    }
+
+    try {
+        const {error} = await supabase.from("categories").update({name:data.categoryName, description: data.categoryDescription, image: data.categoryImage, slug: data.slug}).eq("id", data.categoryId)
         if(error){
             console.log("category error", error);  
         }

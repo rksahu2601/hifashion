@@ -9,6 +9,7 @@ import { deleteImage } from "./uploadThingActions";
 
 type DataType =
   | {
+    productId?: string; 
       productName: string;
       productDescription: string;
       category: string;
@@ -50,6 +51,42 @@ export async function createProduct(data: DataType) {
     if (error) {
       console.log("Product error", error);
     }
+  } catch (error) {
+    console.log(error);
+  }
+
+  revalidatePath("/dashboard/products");
+}
+
+export async function editProduct(data: DataType) {
+  const supabase = createClient();
+
+  console.log("EDIT", data)
+
+  const user = await getUserSession();
+  if (!user || user.role !== "admin") {
+    throw new Error("Unathorized Access!");
+  }
+
+  try {
+    const { error } = await supabase.from("products").update({
+      name: data.productName,
+      description: data.productDescription,
+      images: data.images,
+      category: data.category,
+      quantity: data.quantity,
+      sku: data.sku,
+      price: data.price,
+      color: data.color,
+      variants: data.variants,
+      categorySlug: data.categorySlug,
+      gender: data.gender,
+      deliveryInfo: data.deliveryInfo,
+    }).eq("id", data.productId)
+    if (error) {
+      console.log("Product edit error", error);
+    }
+
   } catch (error) {
     console.log(error);
   }

@@ -10,10 +10,11 @@ import { useState } from "react";
 import Image from "next/image";
 import Button from "../Button";
 import toast from "react-hot-toast";
-import { createCategory } from "@/actions/categoryActions";
+import { createCategory, editCategory } from "@/actions/categoryActions";
 import { generateSlug } from "@/lib/genSlug";
 import { deleteImage } from "@/actions/uploadThingActions";
 import { useRouter } from "next/navigation";
+import { TCategory } from "@/types/supabaseTypes";
 
 const formSchema = z.object({
   categoryName: z.string().min(2, "minimum of 2 characters"),
@@ -22,9 +23,13 @@ const formSchema = z.object({
 
 export type CatFormType = z.infer<typeof formSchema>;
 
-export default function CreateNewCategoryForm() {
+type PropType = {
+  category?: TCategory | null;
+};
+
+export default function CreateNewCategoryForm({category}:PropType) {
   const router = useRouter()
-  const [imageUrl, setImageUrl] = useState("");
+  const [imageUrl, setImageUrl] = useState(category?.image || "");
   const [loading, setLoading] = useState(false);
 
   const removeImage = async (url: String) => {
@@ -53,9 +58,23 @@ export default function CreateNewCategoryForm() {
     }
     data.categoryImage = imageUrl;
     data.slug = generateSlug(data.categoryName)
+    if (category) data.categoryId = category.id;
     console.log(data);
-    const parsedData = formSchema.parse(data);
-    try {
+    // const parsedData = formSchema.parse(data);
+
+    if(category){    try {
+      setLoading(true);
+      await editCategory(data);
+      toast.success("Category edited succesfully!.");
+      setLoading(false);
+      reset();
+      setImageUrl("");
+      router.push("/dashboard/categories")
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
+      toast.error("Something went wrong");
+    }}else{    try {
       setLoading(true);
       await createCategory(data);
       toast.success("Category created succesfully!.");
@@ -67,7 +86,7 @@ export default function CreateNewCategoryForm() {
       setLoading(false);
       console.log(error);
       toast.error("Something went wrong");
-    }
+    }}
   };
 
   return (
@@ -135,13 +154,19 @@ export default function CreateNewCategoryForm() {
           />
         )}
         <div className="w-full flex">
-          <Button
+{ category ?          <Button
             loading={loading}
             disabled={loading}
-            label={loading ? "Please wait..." : "Create Category"}
+            label={loading ? "Please wait..." : "Edit Category"}
             solid
             className="border rounded bg-secondary border-none px-3 py-2 mt-4 ml-auto"
-          />
+          /> : <Button
+          loading={loading}
+          disabled={loading}
+          label={loading ? "Please wait..." : "Create Category"}
+          solid
+          className="border rounded bg-secondary border-none px-3 py-2 mt-4 ml-auto"
+        /> }
         </div>
       </div>
     </form>

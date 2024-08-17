@@ -12,7 +12,7 @@ import toast from "react-hot-toast";
 import Button from "../Button";
 import ProductVariants from "./../backoffice/products/ProductVariants";
 import ProductImages from "../backoffice/products/ProductImages";
-import { createProduct, editProduct } from "@/actions/productActions";
+import { createProduct } from "@/actions/productActions";
 import { TCategory, TProducts } from "@/types/supabaseTypes";
 import { useRouter } from "next/navigation";
 
@@ -29,18 +29,16 @@ const formSchema = z.object({
 
 // export type FormType = z.infer<typeof formSchema>
 
-type PropType = {
+type PropType ={
   categories: TCategory[] | null;
-  product?: TProducts | null;
-};
+  product: TProducts | null;
+}
 
-export default function EditProductForm({ categories, product }: PropType) {
-  const router = useRouter();
+export default function EditProductForm({categories, product}:PropType) {
+  const router = useRouter()
   const [loading, setLoading] = useState(false);
 
-  const [selectedColor, setSelectedColor] = useState<String>(
-    product?.color || ""
-  );
+  const [selectedColor, setSelectedColor] = useState<String>(product?.color || "");
 
   const [variants, setVariants] = useState<String[]>(product?.variants || []);
   const [variant, setVariant] = useState("");
@@ -48,10 +46,8 @@ export default function EditProductForm({ categories, product }: PropType) {
 
   const [imageUrls, setImageUrls] = useState<String[]>(product?.images || []);
 
-  const categorySelectOptions = categories
-    ? categories.map((cat) => cat.name)
-    : [];
-  const genderOptions = ["male", "female", "both"];
+  const categorySelectOptions = categories ? categories.map((cat)=>cat.name) : []
+  const genderOptions = ["male", "female", "both"]
 
   const ColorVariant = [
     {
@@ -100,14 +96,14 @@ export default function EditProductForm({ categories, product }: PropType) {
   } = useForm<FieldValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      productName: product?.name || "",
-      productDescription: product?.description || "",
-      category: product?.category || "",
-      gender: product?.gender || "male",
-      quantity: product?.quantity || "1",
-      deliveryInfo: product?.deliveryInfo || "",
-      price: product?.price || "",
-      sku: product?.sku || "",
+      productName: product?.name,
+      productDescription: product?.description,
+      category: product?.category,
+      gender: product?.gender,
+      quantity: product?.quantity,
+      deliveryInfo: product?.deliveryInfo,
+      price: product?.price,
+      sku: product?.sku,
     },
   });
 
@@ -121,49 +117,24 @@ export default function EditProductForm({ categories, product }: PropType) {
     }
     data.images = imageUrls;
 
-    const categorySlug = categories?.find(
-      (cat) => cat.name === data.category
-    )?.slug;
-    if (categorySlug) data.categorySlug = categorySlug;
-
-    if (product) data.productId = product.id;
+    const categorySlug = categories?.find((cat)=>cat.name === data.category)?.slug
+    if(categorySlug) 
+      data.categorySlug = categorySlug;
     console.log(data);
-
-    if (product) {
-      console.log("edit")
-      try {
-        setLoading(true);
-        await editProduct(data);
-        setLoading(false);
-        reset();
-        setImageUrls([]);
-        setVariants([]);
-        setSelectedColor("");
-        toast.success("Product edited succesfully!.");
-        router.push("/dashboard/products");
-      } catch (error) {
-        setLoading(false);
-        console.log(error);
-        toast.error("Something went wrong");
-      }
-    } else {
-      console.log("create")
-      try {
-        setLoading(true);
-        await createProduct(data);
-        setLoading(false);
-        reset();
-        setImageUrls([]);
-        setVariants([]);
-        setSelectedColor("");
-        toast.success("Product created succesfully!.");
-        router.push("/dashboard/products");
-      } catch (error) {
-        setLoading(false);
-        console.log(error);
-        toast.error("Something went wrong");
-      }
-    }
+    // try {
+    //   setLoading(true);
+    //   await createProduct(data);
+    //   setLoading(false);
+    //   reset();
+    //   setImageUrls([]);
+    //   setVariants([]);
+    //   setSelectedColor("");
+    //   router.push("/dashboard/products")
+    // } catch (error) {
+    //   setLoading(false);
+    //   console.log(error);
+    //   toast.error("Something went wrong");
+    // }
   };
 
   return (
@@ -245,11 +216,7 @@ export default function EditProductForm({ categories, product }: PropType) {
                   const isSelected = selectedColor === color.value;
                   return (
                     <div
-                      onClick={() =>
-                        setSelectedColor((prev) =>
-                          color.value === prev ? "" : color.value
-                        )
-                      }
+                      onClick={() => setSelectedColor(prev=> color.value === prev ? "" : color.value)}
                       key={color.name}
                       className={cn(
                         "w-16 py-2 border-2 hover:border-primary rounded grid place-items-center cursor-pointer",
@@ -314,23 +281,13 @@ export default function EditProductForm({ categories, product }: PropType) {
           </div>
         </section>
         <div className="w-full flex">
-          {product ? (
-            <Button
-              loading={loading}
-              disabled={loading}
-              label={loading ? "Please wait..." : "Edit Product"}
-              solid
-              className="border rounded bg-secondary border-none px-3 py-2 mt-4 ml-auto"
-            />
-          ) : (
-            <Button
-              loading={loading}
-              disabled={loading}
-              label={loading ? "Please wait..." : "Add Product"}
-              solid
-              className="border rounded bg-secondary border-none px-3 py-2 mt-4 ml-auto"
-            />
-          )}
+          <Button
+            loading={loading}
+            disabled={loading}
+            label={loading ? "Please wait..." : "Add Product"}
+            solid
+            className="border rounded bg-secondary border-none px-3 py-2 mt-4 ml-auto"
+          />
         </div>
       </div>
     </form>
