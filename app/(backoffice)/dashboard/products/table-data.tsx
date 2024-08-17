@@ -84,7 +84,7 @@ export const columns: ColumnDef<TProducts>[] = [
   },
   {
     accessorKey: "gender",
-    header: "Gemder",
+    header: "Gender",
     cell: ({ row }) => {
       return (
         <div className="capitalize text-sm">
