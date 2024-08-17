@@ -84,7 +84,7 @@ export default function Sidebar({ showSideBar }: SideBarType) {
       variants={variants}
       initial="close"
       animate={showSideBar ? "open" : "close"}
-      className="min-h-screen w-80 bg-gray-100 border-r z-[990] fixed top-16 left-0 p-5"
+      className="h-screen w-80 bg-gray-100 border-r z-[990] fixed top-16 left-0 p-5"
     >
       <ul>
         {sideBarLinks.map((link, i) => (

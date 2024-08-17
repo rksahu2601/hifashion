@@ -27,15 +27,15 @@ type PropType = {
   category?: TCategory | null;
 };
 
-export default function CreateNewCategoryForm({category}:PropType) {
-  const router = useRouter()
+export default function CreateNewCategoryForm({ category }: PropType) {
+  const router = useRouter();
   const [imageUrl, setImageUrl] = useState(category?.image || "");
   const [loading, setLoading] = useState(false);
 
   const removeImage = async (url: String) => {
     setImageUrl("");
-    const key = url.split("/")[4]
-    await deleteImage(key)
+    const key = url.split("/")[4];
+    await deleteImage(key);
   };
 
   const {
@@ -46,8 +46,8 @@ export default function CreateNewCategoryForm({category}:PropType) {
   } = useForm<FieldValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      categoryName: "",
-      categoryDescription: "",
+      categoryName: category?.name ?? "",
+      categoryDescription: category?.description ?? "",
     },
   });
 
@@ -57,36 +57,40 @@ export default function CreateNewCategoryForm({category}:PropType) {
       return;
     }
     data.categoryImage = imageUrl;
-    data.slug = generateSlug(data.categoryName)
+    data.slug = generateSlug(data.categoryName);
     if (category) data.categoryId = category.id;
     console.log(data);
     // const parsedData = formSchema.parse(data);
 
-    if(category){    try {
-      setLoading(true);
-      await editCategory(data);
-      toast.success("Category edited succesfully!.");
-      setLoading(false);
-      reset();
-      setImageUrl("");
-      router.push("/dashboard/categories")
-    } catch (error) {
-      setLoading(false);
-      console.log(error);
-      toast.error("Something went wrong");
-    }}else{    try {
-      setLoading(true);
-      await createCategory(data);
-      toast.success("Category created succesfully!.");
-      setLoading(false);
-      reset();
-      setImageUrl("");
-      router.push("/dashboard/categories")
-    } catch (error) {
-      setLoading(false);
-      console.log(error);
-      toast.error("Something went wrong");
-    }}
+    if (category) {
+      try {
+        setLoading(true);
+        await editCategory(data);
+        toast.success("Category edited succesfully!.");
+        setLoading(false);
+        reset();
+        setImageUrl("");
+        router.push("/dashboard/categories");
+      } catch (error) {
+        setLoading(false);
+        console.log(error);
+        toast.error("Something went wrong");
+      }
+    } else {
+      try {
+        setLoading(true);
+        await createCategory(data);
+        toast.success("Category created succesfully!.");
+        setLoading(false);
+        reset();
+        setImageUrl("");
+        router.push("/dashboard/categories");
+      } catch (error) {
+        setLoading(false);
+        console.log(error);
+        toast.error("Something went wrong");
+      }
+    }
   };
 
   return (
@@ -129,14 +133,14 @@ export default function CreateNewCategoryForm({category}:PropType) {
               alt="category image"
             />
             <div className="group opacity-0 hover:opacity-100 absolute inset-0 bg-slate-900 bg-opacity-50 grid place-items-center transition-smooth">
-                  <button
-                    type="button"
-                    onClick={() => removeImage(imageUrl)}
-                    className="bg-white shadow text-sm p-1 rounded-sm font-medium translate-y-20 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-smooth"
-                  >
-                    Remove
-                  </button>
-          </div>
+              <button
+                type="button"
+                onClick={() => removeImage(imageUrl)}
+                className="bg-white shadow text-sm p-1 rounded-sm font-medium translate-y-20 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-smooth"
+              >
+                Remove
+              </button>
+            </div>
           </div>
         ) : (
           <UploadDropzone
@@ -154,19 +158,23 @@ export default function CreateNewCategoryForm({category}:PropType) {
           />
         )}
         <div className="w-full flex">
-{ category ?          <Button
-            loading={loading}
-            disabled={loading}
-            label={loading ? "Please wait..." : "Edit Category"}
-            solid
-            className="border rounded bg-secondary border-none px-3 py-2 mt-4 ml-auto"
-          /> : <Button
-          loading={loading}
-          disabled={loading}
-          label={loading ? "Please wait..." : "Create Category"}
-          solid
-          className="border rounded bg-secondary border-none px-3 py-2 mt-4 ml-auto"
-        /> }
+          {category ? (
+            <Button
+              loading={loading}
+              disabled={loading}
+              label={loading ? "Please wait..." : "Edit Category"}
+              solid
+              className="border rounded bg-secondary border-none px-3 py-2 mt-4 ml-auto"
+            />
+          ) : (
+            <Button
+              loading={loading}
+              disabled={loading}
+              label={loading ? "Please wait..." : "Create Category"}
+              solid
+              className="border rounded bg-secondary border-none px-3 py-2 mt-4 ml-auto"
+            />
+          )}
         </div>
       </div>
     </form>
