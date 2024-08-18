@@ -1,10 +1,9 @@
 import { getUserSession } from '@/lib/getSession';
-import { createClient } from '@/lib/supabase/server';
 import Link from 'next/link';
 
 export default async function Home() {
 const user = await getUserSession()
-console.log("user from home", user)
+// console.log("user from home", user)
 
   return (
     <div className="flex max-md:flex-col justify-center items-center h-screen overflow-y-hidden gap-2">

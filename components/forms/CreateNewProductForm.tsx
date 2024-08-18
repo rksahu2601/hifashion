@@ -15,6 +15,7 @@ import ProductImages from "../backoffice/products/ProductImages";
 import { createProduct, editProduct } from "@/actions/productActions";
 import { TCategory, TProducts } from "@/types/supabaseTypes";
 import { useRouter } from "next/navigation";
+import { ColorVariant } from "../constants";
 
 const formSchema = z.object({
   productName: z.string().min(2, "minimum of 2 characters"),
@@ -52,45 +53,6 @@ export default function EditProductForm({ categories, product }: PropType) {
     ? categories.map((cat) => cat.name)
     : [];
   const genderOptions = ["male", "female", "both"];
-
-  const ColorVariant = [
-    {
-      name: "White",
-      value: "#FFFFFF",
-    },
-    {
-      name: "Black",
-      value: "#000000",
-    },
-    {
-      name: "Red",
-      value: "#FF0000",
-    },
-    {
-      name: "Blue",
-      value: "#0000FF",
-    },
-    {
-      name: "Yellow",
-      value: "#FFFF00",
-    },
-    {
-      name: "Gray",
-      value: "#808080",
-    },
-    {
-      name: "Green",
-      value: "#008000",
-    },
-    {
-      name: "Purple",
-      value: "#800080",
-    },
-    {
-      name: "Navy",
-      value: "#000080",
-    },
-  ];
 
   const {
     register,

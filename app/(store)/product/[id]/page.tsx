@@ -10,19 +10,11 @@ export default function page() {
         <ProductImages />
         <ProductDetails />
     </section>
-    <section className='my-4 md:my-[6rem]'>
+    {/* <section className='my-4 md:my-[6rem]'>
         <h1 className='text-2xl md:text-3xl font-semibold'>Similar items you might like</h1>
         <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4  gap-3 md:gap-6 mt-3'>
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-      </div>
-    </section>
+        </div>
+    </section> */}
     </div>
   )
 }
