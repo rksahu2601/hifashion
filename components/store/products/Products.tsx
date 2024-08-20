@@ -4,19 +4,22 @@ import ProductsPaginaton from './ProductsPaginaton';
 
 type PropType = {
   products: TProducts[] | null;
+  page: number | undefined;
+  noOfPages: number;
 }
 
-export default function Products({products}:PropType) {
+export default function Products({products, page,noOfPages}:PropType) {
+
   return (
     <div className='md:col-span-4'>
-      <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-1'>
+      {products && products?.length > 0 ? <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-1'>
         {
           products?.map((product)=>(
             <ProductCard key={product.id} product={product}/>
           ))
         }
-      </div>
-      <ProductsPaginaton />
+      </div> : <div>Nothing to see here!</div>}
+      <ProductsPaginaton noOfPages={noOfPages} page={page} />
     </div>
   );
 }

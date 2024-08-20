@@ -1,19 +1,33 @@
 "use client";
 import { ColorVariant, genderOptions } from "@/components/constants";
-import { categories } from "../navbar/NavCategories";
+// import { categories } from "../navbar/NavCategories";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 
 type PropType = {
   gender: string | undefined;
   color: string | undefined;
+  sort: string | undefined;
 };
 
-export default function ProductsFilter({ gender, color }: PropType) {
+export const priceRange = [
+  {
+    id: 1,
+    label: "High to low",
+    value: "dsc",
+  },
+  {
+    id: 2,
+    label: "Low to High",
+    value: "asc",
+  },
+];
+
+export default function ProductsFilter({ gender, color, sort }: PropType) {
   return (
     <aside className="hidden md:block md:col-span-1">
       <div className="sticky top-20 w-full">
-        <div className="mb-6">
+        {/* <div className="mb-6">
           <h2 className="uppercase font-medium mb-3 border-b-2 border-gray-400">
             Categories
           </h2>
@@ -26,12 +40,12 @@ export default function ProductsFilter({ gender, color }: PropType) {
               );
             })}
           </ul>
-        </div>
+        </div> */}
         <div className="mb-6">
           <h2 className="uppercase font-medium mb-3 border-b-2 border-gray-400">
             Gender
           </h2>
-          <div>
+          <div className="flex items-center gap-2 flex-wrap">
             {genderOptions.map((gen) => {
               return (
                 <Link
@@ -39,16 +53,9 @@ export default function ProductsFilter({ gender, color }: PropType) {
                   href={`?${new URLSearchParams({
                     gender: gen,
                   })}`}
-                  className="flex items-center gap-2 hover:underline"
+                  className={cn("h-8 px-3 capitalize rounded-md flex items-center justify-center border border-slate-400 hover:bg-secondary hover:border-transparent hover:text-white transition-smooth", gen === gender && "text-white bg-secondary border-transparent" )}
                 >
-                  <span
-                    className={cn(
-                      "uppercase hover:underline animate-smooth",
-                      gen === gender && "text-red-500"
-                    )}
-                  >
                     {gen}
-                  </span>
                 </Link>
               );
             })}
@@ -63,8 +70,9 @@ export default function ProductsFilter({ gender, color }: PropType) {
             {ColorVariant.map((item) => {
               return (
                 <div 
+                style={{ borderColor: `${item.value}` }}
                 key={item.value}                
-                className={cn("w-8 grid place-items-center rounded-full aspect-square cursor-pointer border-2 hover:border-slate-600/40 transition-smooth", color === item.name ? "border-slate-600/80" : "border-transparent")}>
+                className={cn("w-8 grid place-items-center rounded-full aspect-square cursor-pointer hover:border-2 transition-smooth", color === item.name? "border-2" : "border-transparent")}>
    
                   <Link
                   href={`?${new URLSearchParams({
@@ -78,6 +86,26 @@ export default function ProductsFilter({ gender, color }: PropType) {
             })}
           </div>
         </div>
+        <div className="mb-6">
+            <h2 className="uppercase font-medium mb-3 border-b-2 border-gray-200">
+              Prices
+            </h2>
+            <div className="flex items-center gap-2 flex-wrap">
+            {priceRange.map((range) => {
+              return (
+                <Link
+                  key={range.id}
+                  href={`?${new URLSearchParams({
+                    sort: range.value,
+                  })}`}
+                  className={cn("h-8 px-3 capitalize rounded-md flex items-center justify-center border border-slate-400 hover:bg-secondary hover:border-transparent hover:text-white transition-smooth", sort === range.value && "text-white bg-secondary border-transparent" )}
+                >
+                    {range.label}
+                </Link>
+              );
+            })}
+          </div>
+          </div>
         <Link
         className="uppercase underline"
         href={`?${new URLSearchParams({})}`}

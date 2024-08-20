@@ -10,7 +10,6 @@ export const getUserSession = async ()=>{
 
     // get user profile
     const {data: profile, error}=await supabase.from("profiles").select().eq("id", user.id).single()
-    console.log("fetched profile",profile)
     if(error) throw new Error("Could not fetch user Profile!")
         return {
             email: user.email,

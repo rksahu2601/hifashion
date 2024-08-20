@@ -10,6 +10,8 @@ import Searchbar from './search/Searchbar'
 export default async function Navbar() {
   const supabase = createClient()
   const {data: {user}} = await supabase.auth.getUser()
+  const {data: categories} = await supabase.from("categories").select()
+
 
   return (
     <nav className='fixed z-[999] h-[4rem] top-0 w-full border-b bg-white'>
@@ -17,7 +19,7 @@ export default async function Navbar() {
         <div className="flex items-center gap-6">
           <Logo />
           <div className='hidden md:block'>
-          <NavCategories />
+          <NavCategories categories={categories}/>
           </div>
         </div>
  
