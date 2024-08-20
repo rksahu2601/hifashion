@@ -4,8 +4,8 @@ import ProductsPaginaton from './ProductsPaginaton';
 
 type PropType = {
   products: TProducts[] | null;
-  page: number | undefined;
-  noOfPages: number;
+  page?: number | undefined;
+  noOfPages?: number;
 }
 
 export default function Products({products, page,noOfPages}:PropType) {
