@@ -37,21 +37,11 @@
   .dropzone button {
     @apply bg-secondary px-3 py-2 w-fit h-fit text-xs
   }
-  /* .sidebar {
-    position: fixed;
-    top: 60px;
-    left: 0;
-    bottom: 0;
-    width: 300px;
-    z-index: 996;
-    transition: all 0.3s;
-    padding: 20px;
+  .sidebar {
     overflow-y: auto;
     scrollbar-width: thin;
     scrollbar-color: #aab7cf transparent;
-    box-shadow: 0px 0px 20px rgba(1, 41, 112, 0.1);
-    background-color: #fff;
-  } */
+  } 
 
   @layer base {
     :root {

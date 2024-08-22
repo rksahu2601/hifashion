@@ -28,7 +28,7 @@ export default async function Navbar() {
           <ProfileIcon />
           <CartIcon />
           <AuthBtns user={user} />
-          <MobileMenu user={user} />
+          <MobileMenu categories={categories} user={user} />
         </div>
       </div>
     </nav>

@@ -1,14 +1,18 @@
 import { ColorVariant } from "@/components/constants";
 import ProductsDisplay from "@/components/store/products/ProductsDisplay";
 import { createClient } from "@/lib/supabase/server";
-import { z } from "zod";
+import { redirect } from "next/navigation";
+import { object, z } from "zod";
 
 const urlSchema = z.object({
   gender: z.enum(["male", "female", "both"]).optional(),
   sort: z.enum(["asc", "dsc"]).optional(),
   color: z.string().optional(),
+  categorySlug: z.string().optional(),
   page: z.coerce.number().int().positive().optional(),
 });
+
+ type dataType = z.infer<typeof urlSchema>
 
 export default async function page({
   searchParams,
@@ -17,79 +21,67 @@ export default async function page({
 }) {
   const { data, error } = urlSchema.safeParse(searchParams);
 
+  if(error) {
+    console.log("error", error)
+    redirect("/store")
+  }
+
   const gender = data?.gender;
   const color = data?.color;
   const sort = data?.sort;
+  const categorySlug = data?.categorySlug;
   const page = data?.page ?? 1;
 
+  const filtereData = Object.fromEntries(Object.entries(data as dataType ).filter(([key])=>key !== "sort" && key !== "page"))
+  const colorValue = ColorVariant.find((col)=>col.name === color)?.value
+
+    let matchObj = filtereData;
+    if(data?.color){
+      matchObj={...matchObj, color: colorValue as string}
+    }
+
+    let orderObj ={
+      column: "created_at",
+      option: { ascending: false }
+    }
+
+    if(sort === "asc"){
+      orderObj ={
+        column: "price",
+        option: { ascending: true }
+      }
+    }
+    if(sort === "dsc"){
+      orderObj ={
+        column: "price",
+        option: { ascending: false }
+      }
+    }
+    
   const ITEMS_PER_PAGE = 6;
   const startIndex = ITEMS_PER_PAGE * (page - 1);
   const endIndex = ITEMS_PER_PAGE * page - 1;
 
-  let products;
-  let noOfCount;
-
   const supabase = createClient();
+  const {data: categories} = await supabase.from("categories").select()
 
-  const response = await supabase
+  const {data:products,count  } = await supabase
     .from("products")
     .select("*", { count: "exact" })
-    .order("created_at", { ascending: false })
+    .match(matchObj)
+    .order(orderObj.column, orderObj.option)
     .range(startIndex, endIndex);
-  products = response.data;
-  noOfCount = response.count;
 
-  if (gender) {
-    const { data, count } = await supabase
-      .from("products")
-      .select("*", { count: "exact" })
-      .order("created_at", { ascending: false })
-      .eq("gender", gender)
-      .range(startIndex, endIndex);
-    products = data;
-    noOfCount = count;
-  }
-  if (color) {
-    const color_object = ColorVariant.find((item) => item.name === color);
-    const { data, count } = await supabase
-      .from("products")
-      .select("*", { count: "exact" })
-      .order("created_at", { ascending: false })
-      .eq("color", color_object?.value!)
-      .range(startIndex, endIndex);
-    products = data;
-    noOfCount = count;
-  }
-  if (sort === "dsc") {
-    const { data, count } = await supabase
-      .from("products")
-      .select("*", { count: "exact" })
-      .order("price", { ascending: false })
-      .range(startIndex, endIndex);
-    products = data;
-    noOfCount = count;
-  }
-  if (sort === "asc") {
-    const { data, count } = await supabase
-      .from("products")
-      .select("*", { count: "exact" })
-      .order("price", { ascending: true })
-      .range(startIndex, endIndex);
-    products = data;
-    noOfCount = count;
-  }
-
-  const noOfPages = Math.ceil(noOfCount! / ITEMS_PER_PAGE);
+  const noOfPages = Math.ceil(count! / ITEMS_PER_PAGE);
 
   return (
     <main className="contain mt-11">
       <ProductsDisplay
         noOfPages={noOfPages}
         page={page}
-        color={color}
-        sort={sort}
-        gender={gender}
+        categorySlug={categorySlug}
         products={products}
+        categories={categories}
       />
     </main>
   );

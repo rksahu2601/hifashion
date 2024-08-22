@@ -6,36 +6,21 @@ import { motion } from "framer-motion";
 import { ColorVariant, genderOptions } from "@/components/constants";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-
-export const categories = [
-  {
-    id: 1,
-    name: "Shirts",
-  },
-  {
-    id: 2,
-    name: "Shoes",
-  },
-  {
-    id: 3,
-    name: "Hoodies",
-  },
-  {
-    id: 4,
-    name: "Bags",
-  },
-];
+import { useRouter, useSearchParams } from "next/navigation";
+import { Gender } from "@/store/sortingStore";
+import queryString from "query-string";
+import { TCategory } from "@/types/supabaseTypes";
 
 export const priceRange = [
   {
     id: 1,
     label: "High to low",
-    value: "hightolow",
+    value: "dsc",
   },
   {
     id: 2,
     label: "Low to High",
-    value: "lowtohigh",
+    value: "asc",
   },
 ];
 
@@ -51,13 +36,80 @@ const variants = {
 };
 
 type PropType = {
-  gender: string | undefined;
-  color: string | undefined;
-  sort: string | undefined;
+  categories: TCategory[] | null;
 };
 
-export default function MobileProductsFilter({ gender, color, sort }: PropType) {
+export default function MobileProductsFilter() {
   const [openFilter, setOpenFilter] = useState(false);
+
+  const params = useSearchParams()
+  const router = useRouter()
+  
+  const handleGender = ( gen: Gender)=>{
+    let currentQuery = {};
+  
+    if(params){
+      currentQuery = queryString.parse(params.toString())
+      console.log("current query", currentQuery);
+    }
+  
+    const updatedQuery:any = {
+      ...currentQuery, 
+        gender: gen
+    }
+  
+    if(params?.get("gender") === gen){
+      delete updatedQuery.gender
+    }
+  
+    const url = queryString.stringifyUrl({url: "/store", query: updatedQuery}, {skipNull: true})
+    router.push(url)
+    setOpenFilter(false)
+  
+  }
+  const handleSort = ( value: string)=>{
+    let currentQuery = {};
+  
+    if(params){
+      currentQuery = queryString.parse(params.toString())
+      console.log("current query", currentQuery);
+    }
+  
+    const updatedQuery:any = {
+      ...currentQuery, 
+        sort: value
+    }
+  
+    if(params?.get("sort") === value){
+      delete updatedQuery.sort
+    }
+  
+    const url = queryString.stringifyUrl({url: "/store", query: updatedQuery}, {skipNull: true})
+    router.push(url)
+    setOpenFilter(false)
+  }
+  const handleColor = ( value: string)=>{
+    let currentQuery = {};
+  
+    if(params){
+      currentQuery = queryString.parse(params.toString())
+      console.log("current query", currentQuery);
+    }
+  
+    const updatedQuery:any = {
+      ...currentQuery, 
+        color: value
+    }
+  
+    if(params?.get("color") === value){
+      delete updatedQuery.color
+    }
+  
+    const url = queryString.stringifyUrl({url: "/store", query: updatedQuery}, {skipNull: true})
+    router.push(url)
+    setOpenFilter(false)
+  }
+
   return (
     <div className="relative md:hidden">
       <div
@@ -83,23 +135,18 @@ export default function MobileProductsFilter({ gender, color, sort }: PropType) 
                 Gender
               </h2>
               <div className="flex items-center gap-2 flex-wrap">
-                {genderOptions.map((gen) => {
-                  return (
-                    <Link
-                      key={gen}
-                      href={`?${new URLSearchParams({
-                        gender: gen,
-                      })}`}
-                      className={cn(
-                        "h-8 px-3 capitalize rounded-md flex items-center justify-center border border-slate-400 hover:bg-secondary hover:border-transparent hover:text-white transition-smooth",
-                        gen === gender && "text-white bg-secondary"
-                      )}
-                    >
-                      {gen}
-                    </Link>
-                  );
-                })}
-              </div>
+            {genderOptions.map((gen) => {
+              return (
+                <button
+                onClick={()=>handleGender(gen)}
+                  key={gen}
+                  className={cn("h-6 px-2 capitalize rounded-md flex items-center justify-center border border-slate-400 hover:bg-secondary hover:border-transparent hover:text-white transition-smooth text-sm", gen === params.get("gender") && "text-white bg-secondary/50 border-transparent" )}
+                >
+                    {gen}
+                </button>
+              );
+            })}
+          </div>
             </div>
             <div className="mb-3">
               <h2 className="uppercase font-medium mb-6 border-b-2 border-gray-200">
@@ -107,30 +154,22 @@ export default function MobileProductsFilter({ gender, color, sort }: PropType) 
               </h2>
 
               <div className="flex flex-wrap items-center justify-start gap-2">
-                {ColorVariant.map((item) => {
-                  return (
-                    <div
-                      style={{ borderColor: `${item.value}` }}
-                      key={item.value}
-                      className={cn(
-                        "w-8 grid place-items-center rounded-full aspect-square cursor-pointer hover:border-2 transition-smooth",
-                        color === item.name ? "border-2" : "border-transparent"
-                      )}
-                    >
-                      <Link
-                        href={`?${new URLSearchParams({
-                          color: item.name,
-                        })}`}
-                        style={{ background: `${item.value}` }}
-                        className={cn(
-                          "w-6 rounded-full aspect-square",
-                          item.name === "White" && "border"
-                        )}
-                      ></Link>
-                    </div>
-                  );
-                })}
-              </div>
+            {ColorVariant.map((item) => {
+              return (
+                <div 
+                style={{ borderColor: `${item.value}` }}
+                key={item.value}                
+                className={cn("w-8 grid place-items-center rounded-full aspect-square cursor-pointer hover:border-2 transition-smooth", params.get("color") === item.name? "border-2" : "border-transparent")}>
+   
+                  <button
+                  onClick={()=>handleColor(item.name)}
+                  style={{ background: `${item.value}` }}
+                  className={cn("w-6 rounded-full aspect-square", item.name === "White" && "border")}
+                ></button>
+                </div>
+              );
+            })}
+          </div>
             </div>
             <div className="mb-6">
             <h2 className="uppercase font-medium mb-3 border-b-2 border-gray-200">
@@ -139,22 +178,20 @@ export default function MobileProductsFilter({ gender, color, sort }: PropType) 
             <div className="flex items-center gap-2 flex-wrap">
             {priceRange.map((range) => {
               return (
-                <Link
+                <button
+                onClick={()=>handleSort(range.value)}
                   key={range.id}
-                  href={`?${new URLSearchParams({
-                    sort: range.value,
-                  })}`}
-                  className={cn("h-8 px-3 capitalize rounded-md flex items-center justify-center border border-slate-400 hover:bg-secondary hover:border-transparent hover:text-white transition-smooth", sort === range.value && "text-white bg-secondary border-transparent" )}
+                  className={cn("h-6 px-2 text-sm capitalize rounded-md flex items-center justify-center border border-slate-400 hover:bg-secondary hover:border-transparent hover:text-white transition-smooth", params.get("sort") === range.value && "text-white bg-secondary/50 border-transparent" )}
                 >
                     {range.label}
-                </Link>
+                </button>
               );
             })}
           </div>
           </div>
             <Link
               onClick={() => setOpenFilter(false)}
-              className="uppercase underline"
+              className="uppercase underline text-sm"
               href={`?${new URLSearchParams({})}`}
             >
               Reset
