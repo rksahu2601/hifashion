@@ -5,45 +5,47 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import SearchResultBox from "./SearchResultBox";
+import { createClient } from "@/lib/supabase/client";
+import { TProducts } from "@/types/supabaseTypes";
 
 export default function Searchbar() {
   const [openSearchDropdown, setOpenSearchDropdown] = useState(false);
+  const [searchInput, setSearchInput] = useState<string | null>(null);
+  const [products, setProducts] = useState<TProducts[] | null>([]);
   const inPutRef = useRef<HTMLInputElement>(null)
 
-  const handleSearchBox = ()=>{
-    // const formFocused = inPutRef.current?.focus()
-    // setOpenSearchDropdown(formFocused ? true : false)
+  const supabase = createClient()
 
-    // console.log("block : ", openSearchDropdown)
-  }
-
-// useEffect(() => {
-//       const formFocused = inPutRef.current?.focus()
-//   if(formFocused){
-//     setOpenSearchDropdown(true)
-//   }else{
-//     setOpenSearchDropdown
-//   }
-
-  
-// }, [inPutRef])
+  useEffect(() => {
+    const  searchProduct=async()=>{
+      if(searchInput){
+          const {data: products} = await supabase.from("products").select().ilike("name", `%${searchInput}%`)
+          setProducts(products)
+      }
+      if(searchInput === null || searchInput === ""){
+        setProducts([])
+      }
+    }
+    searchProduct()
+  }, [searchInput])
 
   return (
     <div>
       {/* for large screens */}
-      <div onClick={handleSearchBox} className="relative">
+      <div className="relative">
         <div
         className="hidden md:flex items-center gap-3 bg-gray-100 px-3 py-1 rounded-full">
           <motion.input
           onFocus={()=>setOpenSearchDropdown(true)}
           // onBlur={()=>setOpenSearchDropdown(false)}
-          ref={inPutRef}
+            ref={inPutRef}
             initial={{
               width: "15rem",
             }}
             whileFocus={{
               width: "30rem",
             }}
+            onChange={(e)=>setSearchInput(e.target.value)}
             className=" bg-transparent outline-none focus:w-[13rem] transition placeholder:text-xs"
             placeholder="Search products..."
             type="search"
@@ -54,6 +56,8 @@ export default function Searchbar() {
         </div>
         {openSearchDropdown && (
           <SearchResultBox
+          searchInput={searchInput}
+          products={products}
             openSearchDropdown={openSearchDropdown}
             setOpenSearchDropdown={setOpenSearchDropdown}
           />
@@ -62,9 +66,9 @@ export default function Searchbar() {
 
       {/* for smaller screens */}
       <div className="flex items-center">
-        <Link href="/">
-          <Search className="md:hidden w-6 h-6 text-muted-foreground" />
-        </Link>
+        <button>
+          <Search onClick={()=>setOpenSearchDropdown(true)} className="md:hidden w-6 h-6 text-muted-foreground" />
+        </button>
       </div>
     </div>
   );

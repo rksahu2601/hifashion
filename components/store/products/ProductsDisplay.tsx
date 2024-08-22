@@ -19,8 +19,6 @@ export default function ProductsDisplay({
   categorySlug
 }: PropType) {
   const currentCategory = categories?.find((cat)=>cat.slug === categorySlug)
-  console.log("currentCategory", currentCategory, categorySlug);
-  
 
   return (
     <div>

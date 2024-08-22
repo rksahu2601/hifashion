@@ -2,13 +2,14 @@ import { ColorVariant } from "@/components/constants";
 import ProductsDisplay from "@/components/store/products/ProductsDisplay";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
-import { object, z } from "zod";
+import { z } from "zod";
 
 const urlSchema = z.object({
   gender: z.enum(["male", "female", "both"]).optional(),
   sort: z.enum(["asc", "dsc"]).optional(),
   color: z.string().optional(),
   categorySlug: z.string().optional(),
+  search: z.string().optional(),
   page: z.coerce.number().int().positive().optional(),
 });
 
@@ -27,12 +28,13 @@ export default async function page({
   }
 
   const gender = data?.gender;
+  const search = data?.search;
   const color = data?.color;
   const sort = data?.sort;
   const categorySlug = data?.categorySlug;
   const page = data?.page ?? 1;
 
-  const filtereData = Object.fromEntries(Object.entries(data as dataType ).filter(([key])=>key !== "sort" && key !== "page"))
+  const filtereData = Object.fromEntries(Object.entries(data as dataType ).filter(([key])=>key !== "sort" && key !== "page" && key !== "search"))
   const colorValue = ColorVariant.find((col)=>col.name === color)?.value
 
     let matchObj = filtereData;
@@ -65,10 +67,14 @@ export default async function page({
   const supabase = createClient();
   const {data: categories} = await supabase.from("categories").select()
 
+console.log("search", search);
+
+
   const {data:products,count  } = await supabase
     .from("products")
     .select("*", { count: "exact" })
     .match(matchObj)
+    .ilike("name", `%${search || ""}%`)
     .order(orderObj.column, orderObj.option)
     .range(startIndex, endIndex);
 

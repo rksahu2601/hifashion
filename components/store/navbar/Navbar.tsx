@@ -12,7 +12,6 @@ export default async function Navbar() {
   const {data: {user}} = await supabase.auth.getUser()
   const {data: categories} = await supabase.from("categories").select()
 
-
   return (
     <nav className='fixed z-[999] h-[4rem] top-0 w-full border-b bg-white'>
       <div className='contain h-full mx-auto flex items-center justify-between'>
