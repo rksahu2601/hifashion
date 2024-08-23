@@ -16,7 +16,7 @@ export type Database = {
           id: number
           image: string | null
           name: string | null
-          slug: string | null
+          slug: string
         }
         Insert: {
           created_at?: string
@@ -24,7 +24,7 @@ export type Database = {
           id?: number
           image?: string | null
           name?: string | null
-          slug?: string | null
+          slug: string
         }
         Update: {
           created_at?: string
@@ -32,14 +32,14 @@ export type Database = {
           id?: number
           image?: string | null
           name?: string | null
-          slug?: string | null
+          slug?: string
         }
         Relationships: []
       }
       products: {
         Row: {
           category: string | null
-          categorySlug: string | null
+          categorySlug: string
           color: string | null
           created_at: string
           deliveryInfo: string | null
@@ -56,7 +56,7 @@ export type Database = {
         }
         Insert: {
           category?: string | null
-          categorySlug?: string | null
+          categorySlug?: string
           color?: string | null
           created_at?: string
           deliveryInfo?: string | null
@@ -73,7 +73,7 @@ export type Database = {
         }
         Update: {
           category?: string | null
-          categorySlug?: string | null
+          categorySlug?: string
           color?: string | null
           created_at?: string
           deliveryInfo?: string | null
@@ -88,7 +88,15 @@ export type Database = {
           status?: string | null
           variants?: string[]
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "products_categorySlug_fkey"
+            columns: ["categorySlug"]
+            isOneToOne: false
+            referencedRelation: "categories"
+            referencedColumns: ["slug"]
+          },
+        ]
       }
       profiles: {
         Row: {
@@ -141,6 +149,48 @@ export type Database = {
             foreignKeyName: "profiles_id_fkey"
             columns: ["id"]
             isOneToOne: true
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      review: {
+        Row: {
+          comment: string | null
+          created_at: string
+          id: number
+          productId: number
+          rating: number | null
+          userId: string
+        }
+        Insert: {
+          comment?: string | null
+          created_at?: string
+          id?: number
+          productId: number
+          rating?: number | null
+          userId: string
+        }
+        Update: {
+          comment?: string | null
+          created_at?: string
+          id?: number
+          productId?: number
+          rating?: number | null
+          userId?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "review_productId_fkey"
+            columns: ["productId"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "review_userId_fkey"
+            columns: ["userId"]
+            isOneToOne: false
             referencedRelation: "users"
             referencedColumns: ["id"]
           },

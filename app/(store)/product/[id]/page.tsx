@@ -2,13 +2,20 @@ import ProductDetails from '@/components/store/productDetail/ProductDetails'
 import ProductImages from '@/components/store/productDetail/ProductImages'
 import React from 'react'
 import ProductCard from './../../../../components/store/products/ProductCard';
+import Reviews from './../../../../components/store/productDetail/Reviews';
+import { createClient } from '@/lib/supabase/server';
+import Details from '@/components/store/productDetail/Details';
 
-export default function page() {
+export default async function page({params:{id}}:{params:{id:number}}) {
+  const supabase = createClient()
+  const {data: product} = await supabase.from("products").select().eq("id",id ).single()
+    const {data: relatedProduct} = await supabase.from("products").select().eq("id",id ).eq("categorySlug", product?.categorySlug || "")
+
   return (
     <div className='contain mt-[5rem]'>
         <section className='flex flex-col lg:flex-row gap-9'>
-        <ProductImages />
-        <ProductDetails />
+        <ProductImages images={product?.images || []}/>
+        <Details product={product} />
     </section>
     {/* <section className='my-4 md:my-[6rem]'>
         <h1 className='text-2xl md:text-3xl font-semibold'>Similar items you might like</h1>

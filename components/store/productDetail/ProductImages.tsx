@@ -1,26 +1,47 @@
-import Image from "next/image";
-import React from "react";
+"use client"
 
-export default function ProductImages() {
+import { useRef } from "react";
+import Image from "next/image";
+
+import Autoplay from "embla-carousel-autoplay"
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel"
+
+export default function ProductImages({images}:{images: string[]}) {
+  const plugin = useRef(
+    Autoplay({ delay: 2000, stopOnInteraction: true })
+  )
+
   return (
     <div className="w-full">
-      <div className="relative w-full h-[25rem] mb-3 border rounded ">
-        <Image src="/test1.jpg" className="object-contain" fill alt="" />
-      </div>
-      <div className="flex items-center gap-3">
-        <div className="relative w-[8rem] aspect-square border-[3px] border-primary rounded cursor-pointer">
-          <Image src="/test1.jpg" className="object-cover" fill alt="" />
-        </div>
-        <div className="relative w-[8rem] aspect-square">
-          <Image src="/test1.jpg" fill alt="" />
-        </div>
-        <div className="relative w-[8rem] aspect-square">
-          <Image src="/test1.jpg" fill alt="" />
-        </div>
-        <div className="relative w-[8rem] aspect-square">
-          <Image src="/test1.jpg" fill alt="" />
-        </div>
-      </div>
+    <Carousel
+      plugins={[plugin.current]}
+      className=""
+      onMouseEnter={plugin.current.stop}
+      onMouseLeave={plugin.current.reset}
+      opts={{
+        align: "start",
+        loop: true,
+      }}
+    >
+      <CarouselContent>
+        {images.map((image, i) => (
+          <CarouselItem key={i}>
+            <div className="p-1">
+              <Image className="w-full object-cover" src={image || ""} width={500} height={500} alt="" />
+            </div>
+          </CarouselItem>
+        ))}
+      </CarouselContent>
+      <CarouselPrevious />
+      <CarouselNext />
+    </Carousel>
     </div>
+  
   );
 }
