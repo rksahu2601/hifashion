@@ -26,7 +26,7 @@ export default withUt({
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {
-          DEFAULT: "rgb(8 145 178)",
+          DEFAULT: "#1e1e1e",
           foreground: "hsl(var(--primary-foreground))",
         },
         secondary: {

@@ -1,6 +1,7 @@
 "use client"
 
 import CartItem from '@/components/store/cart/CartItem'
+import { useCartStore } from '@/store/sortingStore';
 import { motion } from 'framer-motion';
 
 export default function CartItems() {
@@ -8,6 +9,9 @@ export default function CartItems() {
         initial: { opacity: 0, y: 40 },
         animate: { opacity: 1, y: 0, transition: { duration: 0.5 } },
       };
+
+      const cart = useCartStore(state=>state.cart)
+      console.log("CARTITEM:", cart)
     
   return (
     <motion.section
@@ -20,10 +24,10 @@ export default function CartItems() {
           <h2 className='font-semibold text-2xl md:text-3xl'>3 items</h2>
         </div>
         <hr />
-        <CartItem />
-        <CartItem />
-        <CartItem />
-        <CartItem />
+        {cart.map((item, i)=>(
+          <CartItem key={i} cartItem={item} />
+        ))}
+
       </motion.section>
   )
 }

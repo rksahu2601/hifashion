@@ -1,3 +1,5 @@
+"use client"
+
 import {
   Bus,
   File,
@@ -8,25 +10,29 @@ import {
   StarOff,
   Truck,
 } from "lucide-react";
-import React from "react";
+import React, { useState } from "react";
 import SetQtyBtns from "../SetQtyBtns";
 import Button from "@/components/Button";
 import { TProducts } from "@/types/supabaseTypes";
+import { cn } from "@/lib/utils";
 
 type PropType = {
   product: TProducts | null;
 };
 
 export default function ProductDetails({ product }: PropType) {
+  const [showFullDesc, setShowFullDesc] = useState(false)
+  
   return (
     <div className="w-full">
       <div className="mb-4 md:mb-6">
-        <h1 className="text-2xl md:text-3xl font-medium mt-3">
+        <h1 className="text-2xl md:text-3xl font-medium">
           {product?.name}
         </h1>
-        <p className=" my-3 text-accent-foreground md:w-[80%] line-clamp-3">
+        <p className={cn(" mt-3 text-accent-foreground md:w-[80%] ", !showFullDesc && "line-clamp-3")}>
           {product?.description}
         </p>
+        <button onClick={()=>setShowFullDesc(prev=>!prev)} className="text-xs underline mb-3">{showFullDesc ? "show less" : "show more"}</button>
         <div className="flex items-center gap-2">
           <Star className="w-4 h-4 text-primary" />
           <Star className="w-4 h-4 text-primary" />
@@ -53,7 +59,7 @@ export default function ProductDetails({ product }: PropType) {
           <div className="flex gap-2 items-center mt-3 justify-start">{
             product.variants.map((variant, i)=>{
               return(
-                <div key={i} className="h-8 text-sm font-semibold flex items-center justify-center border-2 rounded-md cursor-pointer px-3 bg-white transition-smooth">{variant}</div>
+                <div key={i} className="h-8 text-sm font-semibold flex items-center justify-center border-2 rounded-md cursor-pointer px-3 bg-white hover:bg-primary hover:text-white transition-smooth hover:border-transparent">{variant}</div>
               )
             })
             }</div>

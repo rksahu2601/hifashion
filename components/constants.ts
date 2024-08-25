@@ -37,6 +37,14 @@ export const ColorVariant = [
       name: "Navy",
       value: "#000080",
     },
+    {
+      name: "Pink",
+      value: "#FFC0CB",
+    },
+    {
+      name: "Brown",
+      value: "#964B00",
+    },
   ];
 
  export const genderOptions = ["male", "female", "both"] as Gender[]

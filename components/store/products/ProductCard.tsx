@@ -1,5 +1,5 @@
 "use client";
-import { Heart, ShoppingBagIcon } from "lucide-react";
+import { Heart, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -7,6 +7,8 @@ import { motion } from "framer-motion";
 import { TProducts } from "@/types/supabaseTypes";
 import NairaSvg from "@/components/NairaSvg";
 import Button from "@/components/Button";
+import { useCartStore } from "@/store/sortingStore";
+import { cn } from "@/lib/utils";
 
 type PropType = {
   product: TProducts | null;
@@ -14,6 +16,10 @@ type PropType = {
 
 export default function ProductCard({ product }: PropType) {
   const [imgUrl, setImgUrl] = useState(product?.images[0]);
+  const [showVariants, setShowVariants] = useState(false);
+
+  const cart = useCartStore((state)=>state.cart)
+  const addToCart = useCartStore((state)=>state.addToCart)
 
   return (
     <motion.article
@@ -25,7 +31,13 @@ export default function ProductCard({ product }: PropType) {
     >
       <Link href={`product/${product?.id}`}>
         <div
-          onMouseOver={() => setImgUrl(product?.images.length! > 1 ? product?.images[1] : product?.images[0])}
+          onMouseOver={() =>
+            setImgUrl(
+              product?.images.length! > 1
+                ? product?.images[1]
+                : product?.images[0]
+            )
+          }
           onMouseLeave={() => setImgUrl(product?.images[0])}
           className="relative h-[14rem] md:h-[20rem]"
         >
@@ -44,19 +56,53 @@ export default function ProductCard({ product }: PropType) {
         <h2 className="text-base md:text-lg font-semibold truncate">
           {product?.name}
         </h2>
-        <div className="md:flex justify-between items-end">
-          <div>
-            <span className="text-muted-foreground text-xs">{product?.category}</span>
-            <h2 className="text-xl font-semibold flex gap-1 items-center ">
-              <NairaSvg />
-              <span>{product?.price}</span>
-            </h2>
+        {showVariants ? (
+          <div className="w-full h-full flex gap-2 items-end justify-between mt-auto">
+            <div className="w-full flex gap-2 items-end justify-start">
+            {product?.variants.map((variant, i) => {
+              const inCart = cart.some((item)=>item.id === product.id && item.variant === variant)
+
+              return (
+                <button
+                disabled={inCart}
+                onClick={()=>addToCart(product, variant)}
+                  key={i}
+                  className={cn("h-8 text-sm font-semibold flex items-center justify-center border-2 rounded-md cursor-pointer px-3 bg-white hover:bg-primary hover:text-white transition-smooth hover:border-transparent disabled:opacity-35 disabled:cursor-not-allowed")}
+                >
+                  {variant}
+                </button>
+              );
+            })}
           </div>
-          {/* <button className="bg-secondary text-white rounded p-2 active:scale-75 transition duration-500  ">
-            <ShoppingBagIcon className="w-4 h-4" />
-          </button> */}
-          <Button label="Add to cart" className="border-gray-400 py-1 rounded-none text-gray-900 max-md:mt-2 max-md:text-xs max-md:w-full" />
-        </div>
+          <button onClick={()=>setShowVariants(false)} className="w-7 aspect-square rounded-full border grid place-items-center hover:opacity-60 transition-smooth"><X className="w-4 h-4"/></button>
+          </div>
+        ) : (
+          <div className="md:flex justify-between items-end">
+            <div>
+              <span className="text-muted-foreground text-xs">
+                {product?.category}
+              </span>
+              <h2 className="text-xl font-semibold flex gap-1 items-center ">
+                <NairaSvg />
+                <span>{product?.price}</span>
+              </h2>
+            </div>
+            {product?.variants.length ? (
+              <Button 
+                onClick={()=>setShowVariants(true)}
+                label="Add to cart"
+                className="border-gray-400 py-1 rounded-none text-gray-900 max-md:mt-2 max-md:text-xs max-md:w-full"
+              />
+            ) : (
+              <Button
+                disabled={cart.some((item)=>item.id === product?.id)}
+                onClick={()=>addToCart(product as TProducts)}
+                label="Add to cart"
+                className="border-gray-400 py-1 rounded-none text-gray-900 max-md:mt-2 max-md:text-xs max-md:w-full"
+              />
+            )}
+          </div>
+        )}
       </div>
     </motion.article>
   );
