@@ -7,7 +7,7 @@ import { ColorVariant, genderOptions } from "@/components/constants";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Gender } from "@/store/sortingStore";
+import { Gender } from "@/store/cart-store";
 import queryString from "query-string";
 import { TCategory } from "@/types/supabaseTypes";
 

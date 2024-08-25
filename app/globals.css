@@ -37,7 +37,7 @@
   .dropzone button {
     @apply bg-secondary px-3 py-2 w-fit h-fit text-xs
   }
-  .sidebar {
+  .scroll-bar {
     overflow-y: auto;
     scrollbar-width: thin;
     scrollbar-color: #aab7cf transparent;

@@ -2,7 +2,7 @@
 import { ColorVariant, genderOptions } from "@/components/constants";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { Gender } from "@/store/sortingStore";
+import { Gender } from "@/store/cart-store";
 import { useRouter, useSearchParams } from "next/navigation";
 
 import queryString from "query-string"
@@ -120,7 +120,7 @@ const handleColor = ( value: string)=>{
 
   return (
     <aside className="hidden md:block md:col-span-1">
-      <div className="sticky top-20 w-full h-[80vh] sidebar">
+      <div className="sticky top-20 w-full h-[80vh] scroll-bar">
         <div className="mb-6">
           <h2 className="uppercase font-medium mb-3 border-b-2 border-gray-200">
             Categories

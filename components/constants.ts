@@ -1,4 +1,4 @@
-import { Gender } from "@/store/sortingStore";
+import { Gender } from "@/store/cart-store";
 
 export const ColorVariant = [
     {

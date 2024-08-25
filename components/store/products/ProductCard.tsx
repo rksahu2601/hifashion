@@ -7,8 +7,7 @@ import { motion } from "framer-motion";
 import { TProducts } from "@/types/supabaseTypes";
 import NairaSvg from "@/components/NairaSvg";
 import Button from "@/components/Button";
-import { useCartStore } from "@/store/sortingStore";
-import { cn } from "@/lib/utils";
+import { useCartStore } from "@/store/cart-store";
 
 type PropType = {
   product: TProducts | null;
@@ -20,6 +19,8 @@ export default function ProductCard({ product }: PropType) {
 
   const cart = useCartStore((state)=>state.cart)
   const addToCart = useCartStore((state)=>state.addToCart)
+
+
 
   return (
     <motion.article
@@ -39,9 +40,9 @@ export default function ProductCard({ product }: PropType) {
             )
           }
           onMouseLeave={() => setImgUrl(product?.images[0])}
-          className="relative bg-slate-100 h-[14rem] md:h-[20rem]"
+          className="relative bg-gray-100 h-[14rem] md:h-[20rem]"
         >
-          <Image className="object-cover" width={500} height={500} src={imgUrl as string} alt="" fill />
+          <Image className="object-cover" src={imgUrl as string} alt="" fill />
           <div className="absolute z-10 flex items-center justify-between w-full p-2 md:p-4">
             <span className="uppercase bg-secondary/30 px-3 py-1 text-xs rounded-full text-secondary font-bold">
               New
@@ -58,16 +59,16 @@ export default function ProductCard({ product }: PropType) {
         </h2>
         {showVariants ? (
           <div className="w-full h-full flex gap-2 items-end justify-between mt-auto">
-            <div className="w-full flex gap-2 items-end justify-start">
+            <div className="w-full flex flex-wrap gap-2 items-end justify-start">
             {product?.variants.map((variant, i) => {
               const inCart = cart.some((item)=>item.id === product.id && item.variant === variant)
 
               return (
                 <button
-                disabled={inCart}
-                onClick={()=>addToCart(product, variant)}
+                  disabled={inCart}
+                  onClick={()=>addToCart(product, variant)}
                   key={i}
-                  className={cn("h-8 text-sm font-semibold flex items-center justify-center border-2 rounded-md cursor-pointer px-3 bg-white hover:bg-primary hover:text-white transition-smooth hover:border-transparent disabled:opacity-35 disabled:cursor-not-allowed")}
+                  className="h-8 text-sm font-semibold flex items-center justify-center border-2 rounded-md cursor-pointer px-3 bg-white hover:bg-primary hover:text-white transition-smooth hover:border-transparent disabled:bg-primary disabled:border-transparent disabled:text-white disabled:cursor-not-allowed disabled:pointer-events-none"
                 >
                   {variant}
                 </button>
@@ -91,14 +92,14 @@ export default function ProductCard({ product }: PropType) {
               <Button 
                 onClick={()=>setShowVariants(true)}
                 label="Add to cart"
-                className="border-gray-400 py-1 rounded-none text-gray-900 max-md:mt-2 max-md:text-xs max-md:w-full"
+                className="border-gray-400 py-1.5 rounded-none text-gray-900 max-md:mt-2 max-md:text-xs max-md:w-full"
               />
             ) : (
               <Button
                 disabled={cart.some((item)=>item.id === product?.id)}
                 onClick={()=>addToCart(product as TProducts)}
                 label="Add to cart"
-                className="border-gray-400 py-1 rounded-none text-gray-900 max-md:mt-2 max-md:text-xs max-md:w-full"
+                className="border-gray-400 py-1.5 rounded-none text-gray-900 max-md:mt-2 max-md:text-xs max-md:w-full"
               />
             )}
           </div>
