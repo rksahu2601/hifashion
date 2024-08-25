@@ -39,9 +39,9 @@ export default function ProductCard({ product }: PropType) {
             )
           }
           onMouseLeave={() => setImgUrl(product?.images[0])}
-          className="relative h-[14rem] md:h-[20rem]"
+          className="relative bg-slate-100 h-[14rem] md:h-[20rem]"
         >
-          <Image className="object-cover" src={imgUrl as string} alt="" fill />
+          <Image className="object-cover" width={500} height={500} src={imgUrl as string} alt="" fill />
           <div className="absolute z-10 flex items-center justify-between w-full p-2 md:p-4">
             <span className="uppercase bg-secondary/30 px-3 py-1 text-xs rounded-full text-secondary font-bold">
               New

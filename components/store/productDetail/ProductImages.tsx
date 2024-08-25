@@ -33,7 +33,7 @@ export default function ProductImages({images}:{images: string[]}) {
         {images.map((image, i) => (
           <CarouselItem key={i}>
             <div className="p-1">
-              <Image className="w-full h-[20rem] lg:h-[40rem] object-cover" src={image || ""} width={500} height={500} alt="" />
+              <Image className="w-full bg-slate-100 h-[20rem] lg:h-[40rem] object-cover" src={image || ""} width={500} height={500} alt="" />
             </div>
           </CarouselItem>
         ))}

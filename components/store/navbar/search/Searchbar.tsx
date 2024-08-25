@@ -27,7 +27,7 @@ export default function Searchbar() {
       }
     }
     searchProduct()
-  }, [searchInput])
+  }, [searchInput, supabase])
 
   return (
     <div>
