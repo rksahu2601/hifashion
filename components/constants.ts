@@ -1,5 +1,3 @@
-import { Gender } from "@/store/sortingStore";
-
 export const ColorVariant = [
     {
       name: "White",
@@ -47,4 +45,4 @@ export const ColorVariant = [
     },
   ];
 
- export const genderOptions = ["male", "female", "both"] as Gender[]
+ export const genderOptions = ["male", "female", "both"]
