@@ -1,6 +1,7 @@
 import { TProducts } from '@/types/supabaseTypes'
 import { create } from 'zustand'
 
+export type Gender = "male" | "female" | "both";
 
 export interface TCartItem extends TProducts { 
     variant?: string;
