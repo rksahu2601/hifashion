@@ -26,9 +26,9 @@ export default function CartItem({cartItem}:{cartItem: TCartItem}) {
           </div>
           <div className="md:flex item-center gap-12">
             <SetQtyBtns cartItem={cartItem} />
-            <div  className='font-semibold mt-3 md:mt-0 text-right '>${cartItem.price}</div>
+            <div  className='font-semibold mt-3 md:mt-0 text-right '>${cartItem.price?.toFixed(2)}</div>
           </div>
-          <div className='font-semibold hidden md:block'>${+cartItem.price! * cartItem.qty}</div>
+          <div className='font-semibold hidden md:block'>${(cartItem?.price! * cartItem.qty).toFixed(2)}</div>
         </article>
   )
 }

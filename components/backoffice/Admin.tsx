@@ -14,7 +14,7 @@ const [showSideBar, setShowSideBar] = useState(false)
     <div className="">
       <Navbar setShowSideBar={setShowSideBar}/>
       <div className='mt-16 flex gap-6'>
-        <Sidebar showSideBar={showSideBar} />
+        <Sidebar setShowSideBar={setShowSideBar} showSideBar={showSideBar} />
       <main className={cn("py-5 px-3 w-full", showSideBar && "md:ml-80")}>{children}</main>
       </div>
     </div>

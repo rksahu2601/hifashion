@@ -1,13 +1,14 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { BadgePlus, Grid2X2, ListIcon, ShoppingBasket, User } from "lucide-react";
-import { ReactElement } from "react";
+import { BadgePlus, Component, LayoutDashboard, ReceiptText, ShoppingBasket, } from "lucide-react";
+import { Dispatch, ReactElement, SetStateAction } from "react";
 import SidebarLink from "./SidebarLink";
 
 
 type SideBarType = {
   showSideBar: boolean;
+  setShowSideBar: Dispatch<SetStateAction<boolean>>;
 };
 
 export type TsidebarLink ={
@@ -25,7 +26,7 @@ const sideBarLinks = [
     label: "Overview",
     subLinks: null,
     href: "/dashboard/overview",
-    icon: <Grid2X2 />,
+    icon: <LayoutDashboard />,
   },
   {
     label: "My Shop",
@@ -50,13 +51,13 @@ const sideBarLinks = [
     label: "Categories",
     subLinks: null,
     href: "/dashboard/categories",
-    icon: <ListIcon />,
+    icon: <Component />,
   },
   {
     label: "Orders",
     subLinks: null,
     href: "/dashboard/orders",
-    icon: <User />,
+    icon: <ReceiptText />,
   },
   {
     label: "Coupons",
@@ -66,7 +67,7 @@ const sideBarLinks = [
   },
 ];
 
-export default function Sidebar({ showSideBar }: SideBarType) {
+export default function Sidebar({ showSideBar, setShowSideBar }: SideBarType) {
 
   const variants = {
     close: {
@@ -88,7 +89,7 @@ export default function Sidebar({ showSideBar }: SideBarType) {
     >
       <ul>
         {sideBarLinks.map((link, i) => (
-          <SidebarLink key={i} link={link} />
+          <SidebarLink setShowSideBar={setShowSideBar} key={i} link={link} />
         ))}
       </ul>
     </motion.nav>

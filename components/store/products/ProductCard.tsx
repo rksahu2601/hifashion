@@ -85,7 +85,7 @@ export default function ProductCard({ product }: PropType) {
               </span>
               <h2 className="text-xl font-semibold flex gap-1 items-center ">
                 <NairaSvg />
-                <span>{product?.price}</span>
+                <span>{product?.price?.toFixed(2)}</span>
               </h2>
             </div>
             {product?.variants.length ? (

@@ -14,19 +14,19 @@ type PropType = {
 
 export default function ProductDetails({ product }: PropType) {
   const [showFullDesc, setShowFullDesc] = useState(false);
-  const [variant, setVariant] = useState<string | null>(null);
+  const [selectedVariant, setSelectedVariant] = useState<string | null>(null);
 
   const addToCart = useCartStore((state) => state.addToCart);
   const cart = useCartStore((state) => state.cart);
 
   const handleAddToCart = (product: TProducts)=>{
-      if(!variant){
+      if(!selectedVariant){
         toast.error("Select a variant")
         return;
       }
 
-      addToCart(product, variant)
-      setVariant(null)
+      addToCart(product, selectedVariant)
+      setSelectedVariant(null)
   }
 
   
@@ -78,9 +78,9 @@ export default function ProductDetails({ product }: PropType) {
               return (
                 <button
                 disabled={inCart}
-                  onClick={()=>setVariant(variant)}
+                  onClick={()=>setSelectedVariant(variant)}
                   key={i}
-                 className="h-8 text-sm font-semibold flex items-center justify-center border-2 rounded-md cursor-pointer px-3 bg-white hover:bg-primary hover:text-white transition-smooth hover:border-transparent disabled:opacity-35 disabled:bg-primary disabled:border-transparent disabled:text-white disabled:cursor-not-allowed disabled:pointer-events-none"
+                 className={cn("h-8 text-sm font-semibold flex items-center justify-center border-2 rounded-md cursor-pointer px-3 bg-white hover:bg-primary hover:text-white transition-smooth hover:border-transparent disabled:opacity-35 disabled:bg-primary disabled:border-transparent disabled:text-white disabled:cursor-not-allowed disabled:pointer-events-none", variant === selectedVariant && "bg-primary text-white border-transparent")}
                 >
                   {variant}
                 </button>

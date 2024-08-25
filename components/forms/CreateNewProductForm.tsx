@@ -25,7 +25,7 @@ const formSchema = z.object({
   quantity: z.string(),
   deliveryInfo: z.string(),
   sku: z.string(),
-  price: z.string().min(2, "please add a price"),
+  price: z.coerce.number({message:"please add a price"}).nonnegative("please add a valid price"),
 });
 
 // export type FormType = z.infer<typeof formSchema>
@@ -68,7 +68,7 @@ export default function EditProductForm({ categories, product }: PropType) {
       gender: product?.gender || "male",
       quantity: product?.quantity || "1",
       deliveryInfo: product?.deliveryInfo || "",
-      price: product?.price || "",
+      price: product?.price || 1,
       sku: product?.sku || "",
     },
   });
