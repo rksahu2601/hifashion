@@ -27,9 +27,9 @@ export default function CartItem({cartItem}:{cartItem: TCartItem}) {
           </div>
           <div className="md:flex item-center gap-12">
             <SetQtyBtns cartItem={cartItem} />
-            <div className='font-semibold mt-3 md:mt-0 text-right'><NairaSvg />{cartItem.price?.toFixed(2)}</div>
+            <div className='font-semibold mt-3 md:mt-0 text-right text-sm flex items-center gap-1'><NairaSvg />{cartItem.price?.toFixed(2)}</div>
           </div>
-          <div className='font-semibold hidden md:block'><NairaSvg />{(cartItem?.price! * cartItem.qty).toFixed(2)}</div>
+          <div className='font-semibold hidden md:flex text-sm items-center gap-1'><NairaSvg />{(cartItem?.price! * cartItem.qty).toFixed(2)}</div>
         </article>
   )
 }
