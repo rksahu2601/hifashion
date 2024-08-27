@@ -4,6 +4,8 @@ import { motion } from "framer-motion";
 import { Dispatch, SetStateAction, useState } from "react";
 import Button from "@/components/Button";
 import CardPaymentForm from "@/components/forms/CardPaymentForm";
+import { useCartStore } from "@/store/cart-store";
+import NairaSvg from "@/components/NairaSvg";
 
 type PropsType={
   setOpenPopUp: Dispatch<SetStateAction<boolean>>;
@@ -30,6 +32,12 @@ export default function CheckoutOrderSummary({setOpenPopUp}:PropsType) {
     initial: { opacity: 0, y: 40 },
     animate: { opacity: 1, y: 0, transition: { duration: 0.5 } },
   };
+
+  const cart = useCartStore(state => state.cart)
+  const cartTotal = cart.reduce((acc, currVal)=>{
+    return acc + (currVal.qty * currVal.price!)
+  }, 0)
+
   return (
     <motion.section
       variants={variants}
@@ -64,23 +72,23 @@ export default function CheckoutOrderSummary({setOpenPopUp}:PropsType) {
       <div className="mt-6 md:mt-8">
         <div className="flex items-center justify-between mb-3 opacity-70">
           <p className="font-semibold">Sub Total</p>
-          <p className="font-semibold">$547.00</p>
+          <p className="font-semibold text-sm flex items-center gap-1"><NairaSvg />{cartTotal.toFixed(2)}</p>
         </div>
         <div className="flex items-center justify-between mb-3 opacity-70">
           <p className="font-semibold">Coupon Discount</p>
-          <p className="font-semibold">$-50.00</p>
+          <p className="font-semibold text-sm flex items-center gap-1"><NairaSvg />0.00</p>
         </div>
         <div className="flex items-center justify-between mb-3 opacity-70">
           <p className="font-semibold">Shipping Cost</p>
-          <p className="font-semibold">$50.00</p>
+          <p className="font-semibold text-sm flex items-center gap-1"><NairaSvg />0.00</p>
         </div>
       </div>
       <div className="mt-6 md:mt-8">
         <div className="flex items-center justify-between mb-3">
           <p className="font-semibold">Total</p>
-          <p className="font-semibold">$547.00</p>
+          <p className="font-semibold text-sm flex items-center gap-1"><NairaSvg/>{cartTotal.toFixed(2)}</p>
         </div>
-        <Button onClick={()=>setOpenPopUp(true)} label="Pay $547.00" solid className="w-full" />
+        <Button onClick={()=>setOpenPopUp(true)} label="Proceed" solid className="w-full" />
       </div>
     </motion.section>
   );

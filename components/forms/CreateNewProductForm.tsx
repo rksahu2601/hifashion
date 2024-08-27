@@ -22,7 +22,7 @@ const formSchema = z.object({
   productDescription: z.string().min(2, "minimum of 2 characters"),
   category: z.string(),
   gender: z.string(),
-  quantity: z.string(),
+  quantity: z.coerce.number({message:"please add quantity"}).nonnegative("please add a valid quantity"),
   deliveryInfo: z.string(),
   sku: z.string(),
   price: z.coerce.number({message:"please add a price"}).nonnegative("please add a valid price"),

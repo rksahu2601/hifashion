@@ -4,6 +4,8 @@ import Link from "next/link";
 import Button from "@/components/Button";
 
 import { motion } from "framer-motion";
+import { useCartStore } from "@/store/cart-store";
+import NairaSvg from "@/components/NairaSvg";
 
 export default function CartOrderSummary() {
   const selectOptions = [
@@ -15,6 +17,11 @@ export default function CartOrderSummary() {
     initial: { opacity: 0, y: 40 },
     animate: { opacity: 1, y: 0, transition: { duration: 0.5 } },
   };
+  
+  const cart = useCartStore(state => state.cart)
+  const cartTotal = cart.reduce((acc, currVal)=>{
+    return acc + (currVal.qty * currVal.price!)
+  }, 0)
 
   return (
     <motion.section
@@ -27,8 +34,8 @@ export default function CartOrderSummary() {
         <h1 className="text-2xl md:text-3xl font-semibold ">Order Summary</h1>
         <hr className="my-4 md:my-6 bg-gray-600" />
         <div className="flex items-center justify-between font-semibold md:text-lg uppercase mb-4 md:mb-8">
-          <h2>Items 3</h2>
-          <p>$457.98</p>
+          <h2>Items {cart.length}</h2>
+          <p className="text-sm flex items-center gap-1"><NairaSvg />{cartTotal}</p>
         </div>
 
         <div className="flex flex-col gap-3 mb-8">
@@ -59,7 +66,7 @@ export default function CartOrderSummary() {
         <Button solid label="APPLY" className="my-6 w-fit" />
         <div className="flex items-center justify-between font-semibold md:text-lg uppercase mb-4 md:mb-8">
           <h2 className="uppercase">Total cost</h2>
-          <p>$457.98</p>
+          <p className="text-sm flex items-center gap-1"><NairaSvg />{cartTotal}</p>
         </div>
         <Link
           href="/checkout"

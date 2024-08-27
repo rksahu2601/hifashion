@@ -33,7 +33,7 @@ export const useCartStore = create<TState & TAction>()((set)=>({
             return {cart: state.cart}
         }
             
-         updatedCart = state.cart.map((item)=>item.itemId === itemId ? {...item, qty: item.qty < +item.quantity! ? item.qty + 1 : +item.quantity!} : item)          
+         updatedCart = state.cart.map((item)=>item.itemId === itemId ? {...item, qty: item.qty < item.quantity! ? item.qty + 1 : item.quantity!} : item)          
         return {cart: updatedCart}
     }),
     decreaseCartQuantity: (itemId: string)=>set((state)=>{
@@ -56,5 +56,6 @@ export const useCartStore = create<TState & TAction>()((set)=>({
         updatedCart = state.cart.filter((item)=>item.itemId !== itemId)
         return {cart: updatedCart}
     }),
+    
     clearCart: ()=>set({cart: []}),
 }))

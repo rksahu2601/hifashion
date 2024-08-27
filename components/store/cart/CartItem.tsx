@@ -1,5 +1,6 @@
 "use client"
 
+import NairaSvg from '@/components/NairaSvg'
 import SetQtyBtns from '@/components/store/SetQtyBtns'
 import { Badge } from '@/components/ui/badge'
 import { TCartItem, useCartStore } from '@/store/cart-store'
@@ -26,9 +27,9 @@ export default function CartItem({cartItem}:{cartItem: TCartItem}) {
           </div>
           <div className="md:flex item-center gap-12">
             <SetQtyBtns cartItem={cartItem} />
-            <div  className='font-semibold mt-3 md:mt-0 text-right '>${cartItem.price?.toFixed(2)}</div>
+            <div className='font-semibold mt-3 md:mt-0 text-right'><NairaSvg />{cartItem.price?.toFixed(2)}</div>
           </div>
-          <div className='font-semibold hidden md:block'>${(cartItem?.price! * cartItem.qty).toFixed(2)}</div>
+          <div className='font-semibold hidden md:block'><NairaSvg />{(cartItem?.price! * cartItem.qty).toFixed(2)}</div>
         </article>
   )
 }

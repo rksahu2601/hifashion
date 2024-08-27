@@ -49,7 +49,7 @@ export type Database = {
           images: string[]
           name: string | null
           price: number | null
-          quantity: string | null
+          quantity: number | null
           sku: string | null
           status: string | null
           variants: string[]
@@ -66,7 +66,7 @@ export type Database = {
           images?: string[]
           name?: string | null
           price?: number | null
-          quantity?: string | null
+          quantity?: number | null
           sku?: string | null
           status?: string | null
           variants?: string[]
@@ -83,7 +83,7 @@ export type Database = {
           images?: string[]
           name?: string | null
           price?: number | null
-          quantity?: string | null
+          quantity?: number | null
           sku?: string | null
           status?: string | null
           variants?: string[]

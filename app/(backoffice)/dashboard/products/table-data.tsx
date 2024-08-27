@@ -137,7 +137,7 @@ export const columns: ColumnDef<TProducts>[] = [
       <DataTableColumnHeader column={column} title="Stock" />
     ),
     cell: ({ row }) => {
-      return <div className="">{(row.original.quantity)?.padStart(3,"0")}</div>;
+      return <div className="">{(row.original.quantity)?.toString().padStart(3,"0")}</div>;
     },
   },
   {
