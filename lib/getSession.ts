@@ -1,4 +1,9 @@
+import { TProfile } from "@/types/supabaseTypes";
 import { createClient } from "./supabase/server"
+
+export interface TUserSession extends TProfile {
+    email: string | undefined;
+  }
 
 export const getUserSession = async ()=>{
     const supabase = createClient()
@@ -12,9 +17,7 @@ export const getUserSession = async ()=>{
     const {data: profile, error}=await supabase.from("profiles").select().eq("id", user.id).single()
     if(error) throw new Error("Could not fetch user Profile!")
         return {
-            email: user.email,
-            role: profile.role,
-            firstname: profile.firstname,
-            lastname: profile.lastname,
+            ...profile, email: user.email
+            
     }
 }

@@ -6,18 +6,29 @@ import Button from "../Button";
 import { motion } from "framer-motion";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { TUserSession } from "@/lib/getSession";
+import { useCheckoutStore } from "@/store/checkout-details-store";
+import { editProfile } from "@/actions/profileAction";
+import toast from "react-hot-toast";
 
 const formSchema = z.object({
-  firstName: z.string().min(2, "minimum of 2 characters"),
-  lastName: z.string().min(2, "minimum of 2 characters"),
+  firstname: z.string().min(2, "minimum of 2 characters"),
+  lastname: z.string().min(2, "minimum of 2 characters"),
   address: z.string().min(2, "minimum of 2 characters"),
   city: z.string().min(2, "minimum of 2 characters"),
-  zipcode: z.string().min(2, "minimum of 2 characters"),
-  phone: z.string().min(2, "minimum of 2 characters"),
+  zipcode: z.string().optional(),
+  phone: z.coerce.number({message: "please add a valid phone number"}),
   email: z.string().email(),
 });
+export type CheckOutDetailsFormType = z.infer< typeof formSchema>
 
-export default function CheckoutDetailsForm() {
+type PropType = {
+  user: TUserSession | null;
+};
+
+export default function CheckoutDetailsForm({user}: PropType) {
+  
+
   const variants = {
     initial: { opacity: 0, y: 40 },
     animate: { opacity: 1, y: 0, transition: { duration: 0.5 } },
@@ -31,15 +42,36 @@ export default function CheckoutDetailsForm() {
   } = useForm<FieldValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      categoryName: "",
-      categoryDescription: "",
+      firstname: user?.firstname || "",
+      lastname: user?.lastname || "",
+      address: user?.address || "",
+      city: user?.city || "",
+      zipcode: user?.zipcode || "",
+      phone: user?.phone || "",
+      email: user?.email || "",
     },
   });
 
+  const setDeliveryDetails = useCheckoutStore(state=>state.setDeliveryDetails)
+  const isLoading = useCheckoutStore(state=>state.isLoading)
+  const setIsLoading = useCheckoutStore(state=>state.setIsLoading)
+
   const onSubmit = (data: FieldValues)=>{
-    console.log(data)
-    reset()
+    setIsLoading(true)
+    setDeliveryDetails(data)
+    editProfile(data).then((res)=>{
+      if(!res.success){
+       toast.error(res.message)
+       setIsLoading(false)
+       return
+      } 
+      toast.success(res.message)
+    }).finally(()=>{
+      setIsLoading(false)
+    })
 }
+
+// console.log("[STORE DELIVERY DETAILS]", )
 
   return (
     <motion.div
@@ -52,7 +84,7 @@ export default function CheckoutDetailsForm() {
         <h2 className="text-xl md:text-3xl font-semibold mb-3 md:mb-5">
           Delivery information
         </h2>
-        <Button label="Save information" className="text-xs px-2 py-1" />
+        
       </div>
       <form
       onSubmit={handleSubmit(onSubmit)}
@@ -60,7 +92,7 @@ export default function CheckoutDetailsForm() {
         <div className="w-full flex flex-col md:flex-row gap-4 md:items-center my-4">
           <CustomInput
             label="First Name"
-            name="firstName"
+            name="firstname"
             placeholder="John"
             required
             register={register}
@@ -68,7 +100,7 @@ export default function CheckoutDetailsForm() {
           />
           <CustomInput
             label="Last Name"
-            name="lastName"
+            name="lastname"
             placeholder="Doe"
             required
             register={register}
@@ -90,7 +122,6 @@ export default function CheckoutDetailsForm() {
             label="Zip code"
             name="zipcode"
             placeholder="129874"
-            required
             register={register}
             errors={errors}
           />
@@ -114,7 +145,7 @@ export default function CheckoutDetailsForm() {
             errors={errors}
           />
         </div>
-        <button>submit</button>
+        <Button loading={isLoading} type="submit" label={isLoading ? "Saving information" :"Save information"} className="text-xs px-2 py-1" />
       </form>
     </motion.div>
   );

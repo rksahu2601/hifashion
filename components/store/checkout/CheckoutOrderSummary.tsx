@@ -6,28 +6,20 @@ import Button from "@/components/Button";
 import CardPaymentForm from "@/components/forms/CardPaymentForm";
 import { useCartStore } from "@/store/cart-store";
 import NairaSvg from "@/components/NairaSvg";
+import { useCheckoutStore } from "@/store/checkout-details-store";
+import toast from "react-hot-toast";
 
 type PropsType={
   setOpenPopUp: Dispatch<SetStateAction<boolean>>;
 }
 
-enum PaymentTypes {
-  CASH = "Cash on Delivery",
-  PAYPAL = "Paypal",
-  CARD = "Credit or Debit card",
-}
+export type TPaymentType = "Cash on Delivery" | "Stripe";
 
-const PaymentTypesArr = [
-  PaymentTypes.CASH,
-  PaymentTypes.CARD,
-  PaymentTypes.PAYPAL,
-];
+export const PaymentTypesArr = [
+  "Cash on Delivery", "Stripe"
+] as const
 
 export default function CheckoutOrderSummary({setOpenPopUp}:PropsType) {
-  const [paymentType, setPaymentType] = useState<PaymentTypes>(
-    PaymentTypes.CASH
-  );
-
   const variants = {
     initial: { opacity: 0, y: 40 },
     animate: { opacity: 1, y: 0, transition: { duration: 0.5 } },
@@ -37,6 +29,36 @@ export default function CheckoutOrderSummary({setOpenPopUp}:PropsType) {
   const cartTotal = cart.reduce((acc, currVal)=>{
     return acc + (currVal.qty * currVal.price!)
   }, 0)
+
+  const setPaymentType = useCheckoutStore(state=>state.setPaymentType)
+  const paymentType = useCheckoutStore(state=>state.paymentType)
+  const isLoading = useCheckoutStore(state=>state.isLoading)
+
+  const checkoutState = useCheckoutStore(state=>({
+    firstname: state.firstname,
+  lastname: state.lastname,
+  address: state.address,
+  city: state.city,
+  email: state.email,
+  zipcode: state.zipcode,
+  phone: state.phone,
+  paymentType: state.paymentType,
+  }))
+
+  const handleOrderProcessing = ()=>{
+    if(!checkoutState.firstname || !checkoutState.lastname || !checkoutState.address || !checkoutState.city || !checkoutState.email || !checkoutState.paymentType || !checkoutState.phone){
+      toast.error("Please fill the delivery information.")
+      return
+    }
+    if(!cart.length){
+      toast.error("Your cart is empty.")
+      return
+    }
+    const orderData = {...checkoutState, checkoutItems: cart}
+    console.log("[ORDER PROCESSING]", orderData)
+
+    // create order 
+  }
 
   return (
     <motion.section
@@ -66,8 +88,9 @@ export default function CheckoutOrderSummary({setOpenPopUp}:PropsType) {
           ))}
         </div>
       </div>
-      {paymentType === PaymentTypes.CARD && (
-        <CardPaymentForm />
+      {paymentType === "Stripe" && (
+        // <CardPaymentForm />
+        <div>Coming sonn...</div>
       )}
       <div className="mt-6 md:mt-8">
         <div className="flex items-center justify-between mb-3 opacity-70">
@@ -88,8 +111,8 @@ export default function CheckoutOrderSummary({setOpenPopUp}:PropsType) {
           <p className="font-semibold">Total</p>
           <p className="font-semibold text-sm flex items-center gap-1"><NairaSvg/>{cartTotal.toFixed(2)}</p>
         </div>
-        <Button onClick={()=>setOpenPopUp(true)} label="Proceed" solid className="w-full" />
-      </div>
+        <Button loading={isLoading} onClick={handleOrderProcessing} label="Proceed" solid className="w-full" />
+      </div>  
     </motion.section>
   );
 }

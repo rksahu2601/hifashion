@@ -5,14 +5,16 @@ type PropType = {
   label: string;
   solid?: boolean;
   className?: string;
+  type?: "button" | "submit" | "reset" | undefined;
   disabled?: boolean;
   loading?: boolean;
   onClick?: ()=>void;
 };
 
-export default function Button({ label, solid, className,disabled,loading, onClick }: PropType) {
+export default function Button({type="button", label, solid, className,disabled,loading, onClick }: PropType) {
   return (
     <button
+    type={type}
     onClick={onClick}
     disabled={disabled}
       className={cn(

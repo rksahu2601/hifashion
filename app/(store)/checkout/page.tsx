@@ -1,7 +1,10 @@
 import Checkout from "@/components/store/checkout/Checkout";
+import { getUserSession } from "@/lib/getSession";
 
-export default function CheckoutPage() {
+export default async function CheckoutPage() {
+  const user = await getUserSession()
+
   return (
-    <Checkout />
+    <Checkout user={user} />
   )
 }
