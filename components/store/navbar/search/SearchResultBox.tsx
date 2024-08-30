@@ -49,7 +49,7 @@ export default function SearchResultBox({
         page: null
     }
   
-    const url = queryString.stringifyUrl({url: "/store", query: updatedQuery}, {skipNull: true})
+    const url = queryString.stringifyUrl({url: "/store", query: updatedQuery}, {skipNull: true, skipEmptyString: true})
     router.push(url)
     setOpenSearchDropdown(false)
   }
@@ -63,8 +63,9 @@ export default function SearchResultBox({
       className="md:w-[33rem] p-4 bg-white border h-fit rounded absolute top-[3.2rem] right-0 shadow-md"
     >
       <div className="flex justify-between items-center mb-2">
-        {products && products?.length > 0 && searchInput && <button className="bg-primary/10 hover:bg-primary/40 transition-smooth px-3 text-sm rounded-full py-1" onClick={handleSearch}>See all</button>}
-        <X onClick={()=>setOpenSearchDropdown(false)} className="cursor-pointer"/></div>
+        {products && products?.length > 0 && searchInput && <button className="bg-primary/10 hover:bg-primary/40 transition-smooth px-3 text-sm rounded-full py-1" onClick={handleSearch}>See all results</button>}
+        <X onClick={()=>setOpenSearchDropdown(false)} className="cursor-pointer"/>
+      </div>
       <div>
         {products && products.length > 0 && searchInput ? products.slice(0, 5).map((product)=>(
           <SearchResultBoxItem key={product?.id} product={product} setOpenSearchDropdown={setOpenSearchDropdown} />

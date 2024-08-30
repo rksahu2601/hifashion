@@ -11,7 +11,7 @@ type PropType = {
   onClick?: ()=>void;
 };
 
-export default function Button({type="button", label, solid, className,disabled,loading, onClick }: PropType) {
+export default function Button({type, label, solid, className,disabled,loading, onClick }: PropType) {
   return (
     <button
     type={type}

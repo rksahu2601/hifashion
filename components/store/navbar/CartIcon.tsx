@@ -3,9 +3,14 @@
 import { useCartStore } from "@/store/cart-store";
 import {  ShoppingBagIcon } from "lucide-react";
 import Link from "next/link";
+import { useEffect } from "react";
 
 export default function CartIcon() {
 const cart = useCartStore(state=>state.cart)
+
+useEffect(() => {
+  useCartStore.persist.rehydrate();
+}, [])
 
   return (
     <Link href="/cart" className="relative">

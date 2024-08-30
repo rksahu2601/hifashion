@@ -3,6 +3,7 @@
 import CartItem from '@/components/store/cart/CartItem'
 import { useCartStore } from '@/store/cart-store';
 import { motion } from 'framer-motion';
+import { useEffect } from 'react';
 
 export default function CartItems() {
     const variants = {
@@ -12,6 +13,12 @@ export default function CartItems() {
 
       const cart = useCartStore(state=>state.cart)
       console.log("CARTITEM:", cart)
+
+      // hydrate persisted store after on mount
+  useEffect(() => {
+    useCartStore.persist.rehydrate();
+  }, [])
+
     
   return (
     <motion.section

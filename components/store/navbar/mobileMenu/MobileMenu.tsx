@@ -57,13 +57,13 @@ export default function MobileMenu({ user, categories }: PropType) {
         <div className="my-6">
             {categories && categories.map((cat) => {
               return (
-                <button onClick={()=>handleCategory(cat?.slug)} key={cat.id} className={cn("px-2 py-1 text-sm text-left rounded-md block w-full hover:bg-slate-100 transition-smooth", params.get("categorySlug") === cat.slug && "bg-slate-100 ")}>
+                <button onClick={()=>handleCategory(cat?.slug)} key={cat.id} className={cn("px-2 py-2 text-left rounded-md block w-full hover:bg-slate-100 transition-smooth", params.get("categorySlug") === cat.slug && "bg-slate-100 ")}>
                   {cat.name}
                 </button>
               );
             })}
         </div>
-        <div className="mb-[150px]">
+        <div className="mb-[100px]">
         {user ? (
         <button
           onClick={() => signout()}

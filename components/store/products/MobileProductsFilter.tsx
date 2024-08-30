@@ -27,16 +27,12 @@ export const priceRange = [
 const variants = {
   initial: {
     opacity: 0,
-    y: 150,
+    y: 300,
   },
   animate: {
     opacity: 1,
     y: 0,
   },
-};
-
-type PropType = {
-  categories: TCategory[] | null;
 };
 
 export default function MobileProductsFilter() {
@@ -124,11 +120,11 @@ export default function MobileProductsFilter() {
             variants={variants}
             initial="initial"
             animate={openFilter ? "animate" : "initial"}
-            transition={{ duration: 0.5 }}
-            className="w-full  h-[80vh] bg-gray-100 rounded-[1rem_1rem_0_0] shadow-lg border p-4 inse z-[1001]"
+            transition={{ duration: 0.3 }}
+            className="w-full h-[60vh] shadow-lg bg-gray-100 p-4 z-[1001]"
           >
             <button onClick={() => setOpenFilter(false)}>
-              <X />
+              <X className="w-4 h-4 text-muted-foreground"/>
             </button>
             <div className="my-3">
               <h2 className="uppercase font-medium mb-3 border-b-2 border-gray-200">
@@ -191,7 +187,7 @@ export default function MobileProductsFilter() {
           </div>
             <Link
               onClick={() => setOpenFilter(false)}
-              className="uppercase underline text-sm"
+              className="uppercase underline text-xs"
               href={`?${new URLSearchParams({})}`}
             >
               Reset

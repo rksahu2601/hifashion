@@ -4,7 +4,7 @@ import React from 'react'
 
 export default function ProfileIcon() {
   return (
-    <Link href="/" >
+    <Link href="/dashboard/overview" >
         <User2Icon className="w-6 h-6 opacity-60" />
     </Link>
   )

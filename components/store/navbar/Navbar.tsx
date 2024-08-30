@@ -18,7 +18,7 @@ export default async function Navbar() {
         <div className="flex items-center gap-6">
           <Logo />
           <div className='hidden md:block'>
-          <NavCategories categories={categories}/>
+          {/* <NavCategories categories={categories}/> */}
           </div>
         </div>
  
