@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowUpDown, X } from "lucide-react";
+import { Filter, X } from "lucide-react";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { ColorVariant, genderOptions } from "@/components/constants";
@@ -112,7 +112,7 @@ export default function MobileProductsFilter() {
         onClick={() => setOpenFilter((prev) => !prev)}
         className="text-muted-foreground flex items-center text-sm border border-gray-300 px-2 py-1 rounded-full hover:text-black hover:border-gray-400 outline-none cursor-pointer "
       >
-        <span>Filter</span> <ArrowUpDown className="w-4 h-4 ml-2" />
+        <span>Filter</span> <Filter className="w-4 h-4 ml-2" />
       </div>
       {openFilter && (
         <div className="fixed top-0 left-0 right-0 bottom-0 bg-neutral-900 bg-opacity-60 grid place-items-end z-[1000]">

@@ -67,9 +67,6 @@ export default async function page({
   const supabase = createClient();
   const {data: categories} = await supabase.from("categories").select()
 
-console.log("search", search);
-
-
   const {data:products,count  } = await supabase
     .from("products")
     .select("*", { count: "exact" })
@@ -88,6 +85,9 @@ console.log("search", search);
         categorySlug={categorySlug}
         products={products}
         categories={categories}
+        gender={gender}
+        search={search}
+        color={color}
       />
     </main>
   );

@@ -8,14 +8,6 @@ import SearchResultBox from "./SearchResultBox";
 import { createClient } from "@/lib/supabase/client";
 import { TProducts } from "@/types/supabaseTypes";
 
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
 import MobileSearchResultBox from "./MobileSearchResultBox";
 
 export default function Searchbar() {
@@ -77,38 +69,7 @@ export default function Searchbar() {
       </div>
 
       {/* for smaller screens */}
-      <div className="flex md:hidden items-center">
-        <Sheet>
-          <SheetTrigger asChild>
-            <button>
-              <Search className=" w-6 h-6 text-muted-foreground" />
-            </button>
-          </SheetTrigger>
-          <SheetContent side="bottom" className="h-[60vh] ">
-          <SheetHeader>
-      <SheetTitle></SheetTitle>
-      <SheetDescription>
-        
-      </SheetDescription>
-    </SheetHeader>
-            <div className="flex items-center gap-3 bg-gray-100 mb-3 px-3 py-1 rounded-full mt-4">
-              <input
-                onChange={(e) => setSearchInput(e.target.value)}
-                className="bg-transparent outline-none w-full transition placeholder:text-xs"
-                placeholder="Search products..."
-                type="search"
-              />
-              <button>
-                <Search className="w-4 h-4 opacity-40" />
-              </button>
-            </div>
-            <MobileSearchResultBox
-              searchInput={searchInput}
-              products={products}
-            />
-          </SheetContent>
-        </Sheet>
-      </div>
+      <MobileSearchResultBox setSearchInput={setSearchInput} products={products} searchInput={searchInput} />
     </div>
   );
 }

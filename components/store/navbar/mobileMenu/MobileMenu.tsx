@@ -27,7 +27,8 @@ export default function MobileMenu({ user, categories }: PropType) {
   
     const updatedQuery:any = {
       ...currentQuery, 
-        categorySlug: value
+        categorySlug: value,
+        page: null
     }
   
     if(params?.get("categorySlug") === value){
