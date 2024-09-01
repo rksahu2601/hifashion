@@ -36,6 +36,54 @@ export type Database = {
         }
         Relationships: []
       }
+      orders: {
+        Row: {
+          address: string | null
+          city: string | null
+          created_at: string
+          email: string | null
+          firstname: string | null
+          id: number
+          lastname: string | null
+          orderId: string | null
+          orderItems: Json[]
+          paymentType: string | null
+          phone: number | null
+          status: string
+          zipcode: string | null
+        }
+        Insert: {
+          address?: string | null
+          city?: string | null
+          created_at?: string
+          email?: string | null
+          firstname?: string | null
+          id?: number
+          lastname?: string | null
+          orderId?: string | null
+          orderItems: Json[]
+          paymentType?: string | null
+          phone?: number | null
+          status?: string
+          zipcode?: string | null
+        }
+        Update: {
+          address?: string | null
+          city?: string | null
+          created_at?: string
+          email?: string | null
+          firstname?: string | null
+          id?: number
+          lastname?: string | null
+          orderId?: string | null
+          orderItems?: Json[]
+          paymentType?: string | null
+          phone?: number | null
+          status?: string
+          zipcode?: string | null
+        }
+        Relationships: []
+      }
       products: {
         Row: {
           category: string | null

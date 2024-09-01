@@ -81,7 +81,7 @@ export function DataTableToolbar<TData>({
       </div>
       <div className="flex items-center gap-3 max-sm:mt-2">
         {selectedFields.length > 0 && (
-          <Button
+         deleteAction && <Button
             disabled={loading}
             onClick={handleDelete}
             className="h-8 px-2 lg:px-3 bg-rose-600 text-white hover:bg-rose-600/70 transition-smooth"

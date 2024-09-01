@@ -19,7 +19,7 @@ export default function ProductDetails({ product }: PropType) {
   const addToCart = useCartStore((state) => state.addToCart);
   const cart = useCartStore((state) => state.cart);
 
-  const handleAddToCart = (product: TProducts)=>{
+  const addItemWithVariantToCart = (product: TProducts)=>{
       if(!selectedVariant){
         toast.error("Select a variant")
         return;
@@ -27,9 +27,15 @@ export default function ProductDetails({ product }: PropType) {
 
       addToCart(product, selectedVariant)
       setSelectedVariant(null)
+      toast.success(`Size ${selectedVariant} added to cart.`)
   }
 
-  
+  const addItemToCart = (product: TProducts | null)=>{
+    if(product){
+      addToCart(product)
+      toast.success("Item added to cart.")
+    }
+  }
 
   return (
     <div className="w-full">
@@ -95,7 +101,7 @@ export default function ProductDetails({ product }: PropType) {
             <Button           
             label="Buy Now" solid className="flex-1" />
             <Button
-            onClick={()=>handleAddToCart(product)}
+            onClick={()=>addItemWithVariantToCart(product)}
             label="Add To Cart" className="flex-1" />
           </>
         ) : (
@@ -103,7 +109,7 @@ export default function ProductDetails({ product }: PropType) {
             <Button label="Buy Now" solid className="flex-1" />
             <Button
               disabled={cart.some((item) => item.id === product?.id)}
-              onClick={() => addToCart(product as TProducts)}
+              onClick={() => addItemToCart(product)}
               label="Add To Cart"
               className="flex-1"
             />

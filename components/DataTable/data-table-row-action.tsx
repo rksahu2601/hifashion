@@ -22,10 +22,11 @@ import Link from "next/link"
 
 interface DataTableRowActionsProps<TData> {
   editPageUrl: string;
-  deleteFunction: ()=>void
+  editPageLabel?: string;
+  deleteFunction?: ()=>void;
 }
 
-export function DataTableRowActions<TData>({editPageUrl,deleteFunction }:DataTableRowActionsProps<TData>) {
+export function DataTableRowActions<TData>({editPageUrl, editPageLabel="Edit" ,deleteFunction }:DataTableRowActionsProps<TData>) {
 
   return (
     <DropdownMenu>
@@ -40,12 +41,12 @@ export function DataTableRowActions<TData>({editPageUrl,deleteFunction }:DataTab
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[160px]">
         <DropdownMenuItem asChild>
-            <Link href={editPageUrl}>Edit</Link>
+            <Link href={editPageUrl}>{editPageLabel}</Link>
         </DropdownMenuItem>
-        <DropdownMenuItem className="text-red-600 hover:text-red-600" onClick={deleteFunction}>
+       {deleteFunction && <DropdownMenuItem className="text-red-600 hover:text-red-600" onClick={deleteFunction}>
           Delete
           <DropdownMenuShortcut>⌫</DropdownMenuShortcut>
-        </DropdownMenuItem>
+        </DropdownMenuItem>}
       </DropdownMenuContent>
     </DropdownMenu>
   )

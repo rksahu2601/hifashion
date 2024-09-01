@@ -8,6 +8,7 @@ import { TProducts } from "@/types/supabaseTypes";
 import NairaSvg from "@/components/NairaSvg";
 import Button from "@/components/Button";
 import { useCartStore } from "@/store/cart-store";
+import toast from "react-hot-toast";
 
 type PropType = {
   product: TProducts | null;
@@ -20,7 +21,15 @@ export default function ProductCard({ product }: PropType) {
   const cart = useCartStore((state)=>state.cart)
   const addToCart = useCartStore((state)=>state.addToCart)
 
-
+const addItemToCart = (product: TProducts | null, variant?: string)=>{
+  if(product && variant){
+    addToCart(product, variant)
+    toast.success(`Size ${variant} added to cart.`)
+  }else{
+    addToCart(product as TProducts)
+    toast.success("Item added to cart.")
+  }
+}
 
   return (
     <motion.article
@@ -28,7 +37,7 @@ export default function ProductCard({ product }: PropType) {
       whileInView={{ opacity: 1, scale: 1 }}
       transition={{ type: "tween" }}
       viewport={{ once: true }}
-      className=" overflow-hidden border border-slate-300"
+      className=" overflow-hidden border border-slate-100"
     >
       <Link href={`product/${product?.id}`}>
         <div
@@ -66,7 +75,7 @@ export default function ProductCard({ product }: PropType) {
               return (
                 <button
                   disabled={inCart}
-                  onClick={()=>addToCart(product, variant)}
+                  onClick={()=>addItemToCart(product, variant)}
                   key={i}
                   className="h-8 text-sm font-semibold flex items-center justify-center border-2 rounded-md cursor-pointer px-3 bg-white hover:bg-primary hover:text-white transition-smooth hover:border-transparent disabled:bg-primary disabled:border-transparent disabled:text-white disabled:cursor-not-allowed disabled:pointer-events-none"
                 >
@@ -97,7 +106,7 @@ export default function ProductCard({ product }: PropType) {
             ) : (
               <Button
                 disabled={cart.some((item)=>item.id === product?.id)}
-                onClick={()=>addToCart(product as TProducts)}
+                onClick={()=>addItemToCart(product)}
                 label="Add to cart"
                 className="border-gray-400 py-1.5 rounded-none text-gray-900 max-md:mt-2 max-md:text-xs max-md:w-full"
               />

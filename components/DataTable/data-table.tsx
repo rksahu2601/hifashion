@@ -31,6 +31,7 @@ import { DataTableToolbar } from "./data-table-toolbar"
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  showPagination?: boolean;
   filterField: string;
   facetedFilterValue?: string;
   facetedFilterTitle?: string;
@@ -49,6 +50,7 @@ export function DataTable<TData, TValue>({
   facetedFilterValue,
   facetedFilterTitle,
   facetedFilterOptions,
+  showPagination=true,
   deleteAction
 }: DataTableProps<TData, TValue>) {
   const [rowSelection, setRowSelection] = React.useState({})
@@ -138,7 +140,7 @@ export function DataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
-      <DataTablePagination table={table} />
+      {showPagination && <DataTablePagination table={table} />}
     </div>
   )
 }
