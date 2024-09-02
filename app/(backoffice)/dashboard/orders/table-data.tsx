@@ -69,7 +69,7 @@ export const columns: ColumnDef<TOrder>[] = [
     cell: ({ row }) => {
       return (
 
-          <h2 className="font-semibold">
+          <h2 className="font-semibold w-full">
             {row.original.firstname} {row.original.lastname}
           </h2>
 
@@ -135,7 +135,7 @@ export const columns: ColumnDef<TOrder>[] = [
     cell: ({ row }) => {
       return (
 
-          <p className="text-gray-600">
+          <p className="text-gray-600 text-xs">
             {formatDateTime(row.original.created_at)}
           </p>
 

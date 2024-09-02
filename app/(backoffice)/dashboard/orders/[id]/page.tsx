@@ -2,9 +2,9 @@ import NewHeader from "@/components/backoffice/NewHeader";
 import { DataTable } from "@/components/DataTable/data-table";
 import { formatDateTime } from "@/lib/formatDate";
 import { createClient } from "@/lib/supabase/server";
-import Orders from "../page";
 import { TCartItem } from "@/store/cart-store";
 import { columns } from "./table-data";
+import SetOrderAsCompletedBtn from "@/components/backoffice/orders/SetOrderAsCompletedBtn";
 
 export default async function OrderPage({
   params,
@@ -17,14 +17,13 @@ export default async function OrderPage({
     .select()
     .eq("id", params.id)
     .single();
-
     const orderItems = order?.orderItems.map((items)=>JSON.parse(items as string))
 
   return (
-    <main>
+    <main className="max-w-6xl mx-auto">
       <NewHeader title={`Order ${order?.orderId}`} subTitle="Order List" />
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-        <div className="border shadow rounded-md p-3 md:p-4 flex flex-col justify-between gap-6">
+        <div className="border shadow rounded-md p-3 md:p-4 max-md:min-h-[12rem] flex flex-col justify-between gap-6">
           <div className="flex justify-between items-center">
             <div>
               <h2 className="font-semibold text-xl">{`Order ${order?.orderId}`}</h2>
@@ -40,9 +39,7 @@ export default async function OrderPage({
                 )}
               </p>
             </div>
-            <button className="text-sm bg-secondary rounded-md px-3 py-1.5 text-white hover:opacity-60 transition-smooth">
-              Set as completed
-            </button>
+            <SetOrderAsCompletedBtn id={params.id} />
           </div>
           <div className="bg-gray-600/10 px-4 py-1 rounded-md text-gray-600 flex items-center justify-between gap-1">
             <p className="font-semibold">placed on:</p>{" "}
@@ -99,7 +96,7 @@ export default async function OrderPage({
             </div>
           </div>
         </div>
-        <div className="border shadow rounded-md p-3 md:p-4">
+        <div className="border shadow rounded-md p-3 md:p-4 max-md:min-h-[12rem]">
         <h2 className="font-semibold text-lg mb-3">SHIPPING ADDRESS</h2>
         <p className="text-gray-600">{order?.address}</p>
         </div>

@@ -122,7 +122,7 @@ export default function CheckoutOrderSummary({
       </div>
       {paymentType === "Stripe" && (
         // <CardPaymentForm />
-        <div>Coming sonn...</div>
+        <div>Coming soon...</div>
       )}
       <div className="mt-6 md:mt-8">
         <div className="flex items-center justify-between mb-3 opacity-70">
