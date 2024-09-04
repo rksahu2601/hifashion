@@ -99,10 +99,10 @@ export default function MobileMenu({ user, categories }: PropType) {
           </DialogHeader>
           <div className="flex items-end gap-3 justify-center">
             <DialogClose asChild>
-              <Link className="bg-primary px-3 py-2 rounded-md shadow-sm text-white font-semibold text-sm" href="/signin?role=admin">Log in as Admin</Link>
+              <Link onClick={()=> setShowNav(false)} className="bg-primary px-3 py-2 rounded-md shadow-sm text-white font-semibold text-sm" href="/signin?role=admin">Log in as Admin</Link>
             </DialogClose>
             <DialogClose asChild>
-              <Link className="bg-white border border-primary px-3 py-2 rounded-md shadow-sm text-primary font-semibold text-sm" href="/signin?role=user">Log in as User</Link>
+              <Link onClick={()=> setShowNav(false)} className="bg-white border border-primary px-3 py-2 rounded-md shadow-sm text-primary font-semibold text-sm" href="/signin?role=user">Log in as User</Link>
             </DialogClose>
           </div>
         </DialogContent>
