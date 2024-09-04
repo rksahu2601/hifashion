@@ -114,7 +114,7 @@ export const setOrderAsCompleted = async (id: number) => {
     const { error } = await supabase
       .from("orders")
       .update({ status: "completed" })
-      .eq("id", id);
+      .eq("orderId", id);
     if (error) {
       return {
         success: false,
