@@ -59,7 +59,7 @@ export default function ProductsPaginaton({
         onClick={()=>handlePagination("minus")}
       >
         <ChevronLeft className="w-4 h-4" />
-        <span>Previous</span>
+        <span className="max-md:sr-only">Previous</span>
       </button>
       <div className="flex items-center justify-center gap-2">
       {
@@ -79,7 +79,7 @@ export default function ProductsPaginaton({
         onClick={()=>handlePagination("plus")}
         className="h-8 px-3 rounded-md flex items-center justify-center border border-slate-400 hover:bg-secondary hover:border-transparent hover:text-white transition-smooth disabled:cursor-not-allowed disabled:opacity-40 disabled:pointer-events-none"
       >
-                <span>Next</span>
+                <span className="max-md:sr-only">Next</span>
         <ChevronRight className="w-4 h-4" />
       </button>
     </div>

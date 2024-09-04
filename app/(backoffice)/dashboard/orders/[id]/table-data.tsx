@@ -8,8 +8,9 @@ import { TCartItem } from "@/store/cart-store";
 import { DataTableColumnHeader } from "@/components/DataTable/data-table-column-header";
 import Image from "next/image";
 import NairaSvg from "@/components/NairaSvg";
+import { TOrder, TOrderProduct } from "@/types/supabaseTypes";
 
-export const columns: ColumnDef<TCartItem>[] = [
+export const columns: ColumnDef<TOrderProduct>[] = [
   {
     accessorKey: "name",
     header: ({ column }) => (
@@ -20,7 +21,7 @@ export const columns: ColumnDef<TCartItem>[] = [
         <div className="flex gap-2 items-center">
           <Image
             className="w-[50px] bg-gray-100 aspect-square rounded-md object-cover"
-            src={row.original.images[0]}
+            src={row.original.image as string}
             width={400}
             height={400}
             alt="Product Image"
@@ -39,7 +40,7 @@ export const columns: ColumnDef<TCartItem>[] = [
       return (
 
           <p className="font-semibold">
-            {row.original.qty}
+            {row.original.quantity}
           </p>
 
       );
@@ -51,7 +52,7 @@ export const columns: ColumnDef<TCartItem>[] = [
     cell: ({ row }) => {
       return <div className="flex gap-1 items-center">
         <NairaSvg />
-        <span>{row.original.price && row.original?.price.toFixed(2)}</span>
+        <span>{row.original.price && row.original?.price}</span>
         </div>;
     },
   },
@@ -61,7 +62,7 @@ export const columns: ColumnDef<TCartItem>[] = [
     cell: ({ row }) => {
       return <div className="flex gap-1 items-center">
         <NairaSvg />
-        <span>{row.original.price && row.original.qty && (row.original?.price * row.original.qty).toFixed(2)}</span>
+        <span>{row.original.price && row.original.quantity && (row.original?.price * row.original.quantity)}</span>
         </div>;
     },
   },

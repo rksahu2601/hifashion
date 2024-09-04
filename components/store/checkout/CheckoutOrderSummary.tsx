@@ -69,11 +69,10 @@ export default function CheckoutOrderSummary({
     }
     setIsLoading(true);
 
-    const JsonCartItems = cart.map((cartItems) => JSON.stringify(cartItems));
     const orderId = generateOrderId();
     const orderData = {
       ...checkoutState,
-      checkoutItems: JsonCartItems,
+      checkoutItems: cart,
       orderId,
     };
     createOrder(orderData)

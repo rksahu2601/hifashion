@@ -51,7 +51,8 @@ export default function MobileProductsFilter() {
   
     const updatedQuery:any = {
       ...currentQuery, 
-        gender: gen
+        gender: gen,
+        page: null
     }
   
     if(params?.get("gender") === gen){
@@ -73,7 +74,8 @@ export default function MobileProductsFilter() {
   
     const updatedQuery:any = {
       ...currentQuery, 
-        sort: value
+        sort: value,
+        page: null
     }
   
     if(params?.get("sort") === value){
@@ -94,7 +96,8 @@ export default function MobileProductsFilter() {
   
     const updatedQuery:any = {
       ...currentQuery, 
-        color: value
+        color: value,
+        page: null
     }
   
     if(params?.get("color") === value){

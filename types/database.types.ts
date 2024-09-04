@@ -36,6 +36,56 @@ export type Database = {
         }
         Relationships: []
       }
+      orderProduct: {
+        Row: {
+          buyerId: string | null
+          created_at: string
+          id: number
+          image: string | null
+          itemId: string
+          name: string | null
+          orderId: string
+          price: number | null
+          productId: number | null
+          quantity: number | null
+          variant: string | null
+        }
+        Insert: {
+          buyerId?: string | null
+          created_at?: string
+          id?: number
+          image?: string | null
+          itemId: string
+          name?: string | null
+          orderId?: string
+          price?: number | null
+          productId?: number | null
+          quantity?: number | null
+          variant?: string | null
+        }
+        Update: {
+          buyerId?: string | null
+          created_at?: string
+          id?: number
+          image?: string | null
+          itemId?: string
+          name?: string | null
+          orderId?: string
+          price?: number | null
+          productId?: number | null
+          quantity?: number | null
+          variant?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "orderProduct_orderId_fkey"
+            columns: ["orderId"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["orderId"]
+          },
+        ]
+      }
       orders: {
         Row: {
           address: string | null
@@ -45,11 +95,12 @@ export type Database = {
           firstname: string | null
           id: number
           lastname: string | null
-          orderId: string | null
-          orderItems: Json[]
+          noOfProducts: number | null
+          orderId: string
           paymentType: string | null
           phone: number | null
           status: string
+          totalPrice: number | null
           zipcode: string | null
         }
         Insert: {
@@ -60,11 +111,12 @@ export type Database = {
           firstname?: string | null
           id?: number
           lastname?: string | null
-          orderId?: string | null
-          orderItems: Json[]
+          noOfProducts?: number | null
+          orderId: string
           paymentType?: string | null
           phone?: number | null
           status?: string
+          totalPrice?: number | null
           zipcode?: string | null
         }
         Update: {
@@ -75,11 +127,12 @@ export type Database = {
           firstname?: string | null
           id?: number
           lastname?: string | null
-          orderId?: string | null
-          orderItems?: Json[]
+          noOfProducts?: number | null
+          orderId?: string
           paymentType?: string | null
           phone?: number | null
           status?: string
+          totalPrice?: number | null
           zipcode?: string | null
         }
         Relationships: []

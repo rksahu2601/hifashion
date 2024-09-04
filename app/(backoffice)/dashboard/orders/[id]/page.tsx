@@ -5,6 +5,8 @@ import { createClient } from "@/lib/supabase/server";
 import { TCartItem } from "@/store/cart-store";
 import { columns } from "./table-data";
 import SetOrderAsCompletedBtn from "@/components/backoffice/orders/SetOrderAsCompletedBtn";
+import { TOrder } from "@/types/supabaseTypes";
+import toast from "react-hot-toast";
 
 export default async function OrderPage({
   params,
@@ -12,12 +14,17 @@ export default async function OrderPage({
   params: { id: number };
 }) {
   const supabase = createClient();
-  const { data: order } = await supabase
+  const { error, data: order } = await supabase
     .from("orders")
     .select()
     .eq("id", params.id)
     .single();
-    const orderItems = order?.orderItems.map((items)=>JSON.parse(items as string))
+
+  if(error){
+    return
+  }
+
+    const {data: orderProducts} = await supabase.from("orderProduct").select().eq("orderId", order?.orderId)
 
   return (
     <main className="max-w-6xl mx-auto">
@@ -39,7 +46,7 @@ export default async function OrderPage({
                 )}
               </p>
             </div>
-            <SetOrderAsCompletedBtn id={params.id} />
+            {order.status!=="completed" && <SetOrderAsCompletedBtn id={params.id} />}
           </div>
           <div className="bg-gray-600/10 px-4 py-1 rounded-md text-gray-600 flex items-center justify-between gap-1">
             <p className="font-semibold">placed on:</p>{" "}
@@ -103,7 +110,7 @@ export default async function OrderPage({
       </div>
       <div className="border shadow rounded-md mt-4 p-3">
       <h2 className="font-semibold text-lg mb-3">ITEMS ORDERED</h2>
-        <DataTable showPagination={false} filterField="name" data={orderItems as TCartItem[]} columns={columns} />
+{   orderProducts &&   <DataTable showPagination={false} filterField="name" data={orderProducts} columns={columns} />}
       </div>
     </main>
   );

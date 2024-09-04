@@ -94,7 +94,7 @@ const addItemToCart = (product: TProducts | null, variant?: string)=>{
               </span>
               <h2 className="text-xl font-semibold flex gap-1 items-center ">
                 <NairaSvg />
-                <span>{product?.price?.toFixed(2)}</span>
+                <span>{product?.price}</span>
               </h2>
             </div>
             {product?.variants.length ? (

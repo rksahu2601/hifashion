@@ -5,7 +5,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 
 import { DataTableColumnHeader } from "@/components/DataTable/data-table-column-header";
 
-import {  TOrder } from "@/types/supabaseTypes";
+import {  TOrder, TOrderProduct } from "@/types/supabaseTypes";
 import { DataTableRowActions } from "@/components/DataTable/data-table-row-action";
 import { Ellipsis, SquareCheckBig } from "lucide-react";
 import { formatDateTime } from "@/lib/formatDate";
@@ -83,7 +83,7 @@ export const columns: ColumnDef<TOrder>[] = [
       return (
 
           <p className="">
-            {row.original.orderItems.length}
+            {row.original.noOfProducts}
           </p>
 
       );
@@ -115,16 +115,11 @@ export const columns: ColumnDef<TOrder>[] = [
     accessorKey: "price",
     header: "Total Price",
     cell: ({ row }) => {
-  
-      const orderItems = row.original.orderItems.map((items)=>JSON.parse(items as string)) as TCartItem[]
-      const totalPrice = orderItems.reduce((acc, val)=>{
-        
-        return acc + (val.price! * val.qty)
-      }, 0)
+
       return (
         <div className="flex gap-1 items-center">
           <NairaSvg />
-          <span>{totalPrice}</span>
+          <span>{row.original.totalPrice}</span>
         </div>
       );
     },
@@ -147,7 +142,7 @@ export const columns: ColumnDef<TOrder>[] = [
     cell: ({ row }) => {
       return <DataTableRowActions
         editPageLabel="View Order details"
-        editPageUrl={`/dashboard/orders/${row.original.id}`}
+        editPageUrl={`/dashboard/orders/${row.original.orderId}`}
       />;
     },
   },

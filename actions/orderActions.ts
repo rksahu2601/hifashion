@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { createClient } from "../lib/supabase/server";
 import { getUserSession } from "@/lib/getSession";
 import { FieldValues } from "react-hook-form";
+import { TCartItem } from "@/store/cart-store";
 
 type DataType =
   | {
@@ -25,7 +26,7 @@ type TOrderData = {
   phone: number;
   paymentType: "Cash on Delivery" | "Stripe";
   orderId: string;
-  checkoutItems: string[];
+  checkoutItems: TCartItem[];
 };
 
 export async function createOrder(orderData: TOrderData) {
@@ -41,6 +42,11 @@ export async function createOrder(orderData: TOrderData) {
     orderId,
     checkoutItems,
   } = orderData;
+
+  const cartTotal = checkoutItems.reduce((acc, currVal) => {
+    return acc + currVal.qty * currVal.price!;
+  }, 0);
+
   const supabase = createClient();
 
   const user = await getUserSession();
@@ -61,7 +67,8 @@ export async function createOrder(orderData: TOrderData) {
         phone,
         paymentType,
         orderId,
-        orderItems: checkoutItems,
+        noOfProducts: checkoutItems.length,
+        totalPrice: cartTotal
       });
     if (error) {
       console.log("create order error", error);
@@ -69,6 +76,22 @@ export async function createOrder(orderData: TOrderData) {
         success: false,
       };
     }
+
+// create order products
+    checkoutItems.map(async (item)=>{
+      await supabase.from("orderProduct").insert({
+        name: item.name,
+        itemId: item.itemId, //unique cart item id
+        quantity: item.qty,
+        variant: item.variant,
+        price: item.price,
+        image: item.images[0],
+        productId: item.id, //product supabase id (not unique since there could be multiple cart Products with same id but different variants)
+        orderId,
+        buyerId: user.id
+      })
+    })
+
     return {
       success: true,
     };
