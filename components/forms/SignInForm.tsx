@@ -18,13 +18,17 @@ export const signInFormSchema = z.object({
     password: z.string().min(6, "minimum of 6 characters!")
 })
 
-export default function SignInForm({message}:{message: string | undefined}) {
+export default function SignInForm({message, role}:{message: string | undefined, role: string | undefined}) {
     const [loading, setLoading] = useState(false);
 
 const router = useRouter()
 
 const {register, reset, handleSubmit, formState: {errors}} = useForm<FieldValues>({
-    resolver: zodResolver(signInFormSchema)
+    resolver: zodResolver(signInFormSchema),
+    defaultValues: {
+      email: role === "admin" ? "admin@gmail.com" : role === "user" ? "johndoe@gmail.com" : "",
+      password: role ? "111111"  : ""
+    }
 })
 
 const onSubmit = async (data: FieldValues)=>{

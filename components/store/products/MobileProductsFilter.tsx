@@ -118,7 +118,7 @@ export default function MobileProductsFilter() {
         <span>Filter</span> <Filter className="w-4 h-4 ml-2" />
       </div>
       {openFilter && (
-        <div className="fixed top-0 left-0 right-0 bottom-0 bg-neutral-900 bg-opacity-60 grid place-items-end z-[1000]">
+        <div className="fixed top-0 left-0 right-0 bottom-0 bg-black/10 backdrop-blur-[2px] grid place-items-end z-[1000]">
           <motion.div
             variants={variants}
             initial="initial"

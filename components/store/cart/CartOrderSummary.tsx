@@ -70,7 +70,7 @@ export default function CartOrderSummary() {
         </div>
         <Link
           href="/checkout"
-          className="px-4 py-2 text-white bg-secondary hover:bg-secondary/80 text-sm md:text-base font-semibold text-center rounded-full active:scale-75 transition duration-500"
+          className="px-4 py-2 text-white bg-secondary hover:bg-secondary/80 text-sm md:text-base font-semibold text-center rounded-md active:scale-75 transition duration-500"
         >
           CHECKOUT
         </Link>

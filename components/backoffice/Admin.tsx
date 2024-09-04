@@ -4,12 +4,12 @@ import { useState } from 'react';
 import Navbar from '../../components/backoffice/navbar/Navbar';
 import Sidebar from './sidebar/Sidebar';
 import { cn } from '@/lib/utils';
+import { getUserSession } from '@/lib/getSession';
 
 export default function Admin({children}: {
   children: React.ReactNode;
 }) {
 const [showSideBar, setShowSideBar] = useState(false)
-
   return (
     <div className="">
       <Navbar setShowSideBar={setShowSideBar}/>
