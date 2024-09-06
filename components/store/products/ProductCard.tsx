@@ -147,9 +147,9 @@ export default function ProductCard({ product }: PropType) {
                   <DialogTitle>Select a variant</DialogTitle>
                   <DialogDescription>{product.name}</DialogDescription>
                 </DialogHeader>
-                <div className="my-3 flex  items-start justify-between gap-2">
+                <div className="my-3 grid grid-cols-2 items-start justify-between gap-2">
                   {product.images.map((image, i)=>(
-                      <Image key={i} src={image} alt={product.name as string} width={500} height={500} className="w-1/2 aspect-square rounded-md object-cover bg-slate-100"  />
+                      <Image key={i} src={image} alt={product.name as string} width={500} height={500} className="aspect-square rounded-md object-cover bg-slate-100"  />
 
                   ))}
                 </div>
