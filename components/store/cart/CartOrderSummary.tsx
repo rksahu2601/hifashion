@@ -28,14 +28,14 @@ export default function CartOrderSummary() {
       variants={variants}
       initial="initial"
       whileInView="animate"
-      className="border shadow rounded-md p-3 md:p-4 col-span-4"
+      className=" bg-primary text-gray-200 rounded-md p-3 md:p-4 max-md:mt-3 col-span-4"
     >
       <div className="p-2 md:py-8 md:px-4 flex flex-col justify-center">
         <h1 className="text-2xl md:text-3xl font-semibold ">Order Summary</h1>
-        <hr className="my-4 md:my-6 bg-gray-600" />
+        <hr className="my-4 md:my-6 bg-primary-70" />
         <div className="flex items-center justify-between font-semibold md:text-lg uppercase mb-4 md:mb-8">
           <h2>Items {cart.length}</h2>
-          <p className="text-sm flex items-center gap-1"><NairaSvg />{cartTotal}</p>
+          <p className="text-sm flex items-center gap-1">${cartTotal}</p>
         </div>
 
         <div className="flex flex-col gap-3 mb-8">
@@ -44,7 +44,7 @@ export default function CartOrderSummary() {
           </label>
           <select
             id="deliveryOption"
-            className="w-full border p-2 rounded focus:outline-none focus:border-secondary placeholder:text-sm bg-transparent"
+            className="w-full border p-2 rounded focus:outline-none focus:border-secondary placeholder:text-sm text-gray-200 bg-primary"
           >
             {selectOptions.map((option) => (
               <option key={option} className="">
@@ -60,13 +60,13 @@ export default function CartOrderSummary() {
           <input
             id="promoCode"
             placeholder="Enter your code"
-            className="w-full border border-slate-300 p-2 rounded focus:outline-none focus:border-secondary placeholder:text-sm"
+            className="w-full border border-slate-300 bg-primary/20 p-2 rounded focus:outline-none focus:border-secondary placeholder:text-sm"
           />
         </div>
-        <Button solid label="APPLY" className="my-6 w-fit" />
+        <Button solid label="APPLY" className="my-6 w-fit bg-white text-primary" />
         <div className="flex items-center justify-between font-semibold md:text-lg uppercase mb-4 md:mb-8">
           <h2 className="uppercase">Total cost</h2>
-          <p className="text-sm flex items-center gap-1"><NairaSvg />{cartTotal}</p>
+          <p className="text-sm flex items-center gap-1">${cartTotal}</p>
         </div>
         <Link
           href="/checkout"
