@@ -12,7 +12,6 @@ import toast from "react-hot-toast";
 
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogDescription,
   DialogHeader,
@@ -26,7 +25,6 @@ type PropType = {
 
 export default function ProductCard({ product }: PropType) {
   const [imgUrl, setImgUrl] = useState(product?.images[0]);
-  const [showVariants, setShowVariants] = useState(false);
 
   const cart = useCartStore((state) => state.cart);
   const addToCart = useCartStore((state) => state.addToCart);
@@ -76,53 +74,6 @@ export default function ProductCard({ product }: PropType) {
         <h2 className="text-base md:text-lg font-semibold truncate">
           {product?.name}
         </h2>
-        {/* {showVariants ? (
-          <div className="w-full h-full flex gap-2 items-end justify-between mt-auto">
-            <div className="w-full flex flex-wrap gap-2 items-end justify-start">
-            {product?.variants.map((variant, i) => {
-              const inCart = cart.some((item)=>item.id === product.id && item.variant === variant)
-
-              return (
-                <button
-                  disabled={inCart}
-                  onClick={()=>addItemToCart(product, variant)}
-                  key={i}
-                  className="h-8 text-sm font-semibold flex items-center justify-center border-2 rounded-md cursor-pointer px-3 bg-white hover:bg-primary hover:text-white transition-smooth hover:border-transparent disabled:bg-primary disabled:border-transparent disabled:text-white disabled:cursor-not-allowed disabled:pointer-events-none"
-                >
-                  {variant}
-                </button>
-              );
-            })}
-          </div>
-          <button onClick={()=>setShowVariants(false)} className="w-7 aspect-square rounded-full border grid place-items-center hover:opacity-60 transition-smooth"><X className="w-4 h-4"/></button>
-          </div>
-        ) : (
-          <div className="md:flex justify-between items-end">
-            <div>
-              <span className="text-muted-foreground text-xs">
-                {product?.category}
-              </span>
-              <h2 className="text-xl font-semibold flex gap-1 items-center ">
-                <NairaSvg />
-                <span>{product?.price}</span>
-              </h2>
-            </div>
-            {product?.variants.length ? (
-              <Button 
-                onClick={()=>setShowVariants(true)}
-                label="Add to cart"
-                className="border-gray-400 py-1.5 rounded-none text-gray-900 max-md:mt-2 max-md:text-xs max-md:w-full"
-              />
-            ) : (
-              <Button
-                disabled={cart.some((item)=>item.id === product?.id)}
-                onClick={()=>addItemToCart(product)}
-                label="Add to cart"
-                className="border-gray-400 py-1.5 rounded-none text-gray-900 max-md:mt-2 max-md:text-xs max-md:w-full"
-              />
-            )}
-          </div>
-        )} */}
         <div className="md:flex justify-between items-end">
           <div>
             <span className="text-muted-foreground text-xs">
@@ -147,10 +98,16 @@ export default function ProductCard({ product }: PropType) {
                   <DialogTitle>Select a variant</DialogTitle>
                   <DialogDescription>{product.name}</DialogDescription>
                 </DialogHeader>
-                <div className="my-3 grid grid-cols-2 items-start justify-between gap-2">
-                  {product.images.map((image, i)=>(
-                      <Image key={i} src={image} alt={product.name as string} width={500} height={500} className="aspect-square rounded-md object-cover bg-slate-100"  />
-
+                <div className="my-3 grid grid-cols-2 md:grid-cols-4 items-start justify-between gap-2">
+                  {product.images.map((image, i) => (
+                    <Image
+                      key={i}
+                      src={image}
+                      alt={product.name as string}
+                      width={500}
+                      height={500}
+                      className="aspect-square rounded-md object-cover bg-slate-100"
+                    />
                   ))}
                 </div>
                 <div className="w-full flex flex-wrap gap-2 items-end justify-start">
@@ -175,7 +132,6 @@ export default function ProductCard({ product }: PropType) {
               </DialogContent>
             </Dialog>
           ) : (
-            
             <Button
               disabled={cart.some((item) => item.id === product?.id)}
               onClick={() => addItemToCart(product)}

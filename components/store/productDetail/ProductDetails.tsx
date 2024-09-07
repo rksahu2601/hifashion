@@ -3,16 +3,18 @@
 import { LucideTruck, Star } from "lucide-react";
 import React, { useState } from "react";
 import Button from "@/components/Button";
-import { TProducts } from "@/types/supabaseTypes";
+import { TProducts, TReviews } from "@/types/supabaseTypes";
 import { cn } from "@/lib/utils";
 import { useCartStore } from "@/store/cart-store";
 import toast from "react-hot-toast";
+import CustomStarRating from "@/components/custom-star-rating";
 
 type PropType = {
   product: TProducts | null;
+  reviews: TReviews[] | null;
 };
 
-export default function ProductDetails({ product }: PropType) {
+export default function ProductDetails({ product, reviews }: PropType) {
   const [showFullDesc, setShowFullDesc] = useState(false);
   const [selectedVariant, setSelectedVariant] = useState<string | null>(null);
 
@@ -37,6 +39,13 @@ export default function ProductDetails({ product }: PropType) {
     }
   }
 
+  const averageRating = reviews?.reduce((acc, item)=>{
+    return acc + (item.rating ?? 0)/reviews.length
+  }, 0) ?? 0
+  const ratingValue = Math.ceil(averageRating)
+
+  console.log(ratingValue)
+
   return (
     <div className="w-full">
       <div className="mb-4 md:mb-6">
@@ -55,13 +64,7 @@ export default function ProductDetails({ product }: PropType) {
         >
           {showFullDesc ? "show less" : "show more"}
         </button>
-        <div className="flex items-center gap-2">
-          <Star className="w-4 h-4 text-primary" />
-          <Star className="w-4 h-4 text-primary" />
-          <Star className="w-4 h-4 text-primary" />
-          <Star className="w-4 h-4 text-primary" />
-          <Star className="w-4 h-4 text-primary" />
-        </div>
+        <CustomStarRating readonly rating={ratingValue} />
       </div>
       <p className="my-6 text-2xl md:text-3xl font-bold">${product?.price}</p>
       <div className="flex gap-3 items-center w-full">
