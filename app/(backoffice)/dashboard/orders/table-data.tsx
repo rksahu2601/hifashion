@@ -3,14 +3,10 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { Checkbox } from "@/components/ui/checkbox";
 
-import { DataTableColumnHeader } from "@/components/DataTable/data-table-column-header";
-
-import {  TOrder, TOrderProduct } from "@/types/supabaseTypes";
+import {  TOrder } from "@/types/supabaseTypes";
 import { DataTableRowActions } from "@/components/DataTable/data-table-row-action";
 import { Ellipsis, SquareCheckBig } from "lucide-react";
 import { formatDateTime } from "@/lib/formatDate";
-import { TCartItem } from "@/store/cart-store";
-import NairaSvg from "@/components/NairaSvg";
 
 export const statuses = [
   {
@@ -117,9 +113,8 @@ export const columns: ColumnDef<TOrder>[] = [
     cell: ({ row }) => {
 
       return (
-        <div className="flex gap-1 items-center">
-          <NairaSvg />
-          <span>{row.original.totalPrice}</span>
+        <div className="">
+          <span>${row.original.totalPrice && row.original.totalPrice.toFixed(2)}</span>
         </div>
       );
     },

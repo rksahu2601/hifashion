@@ -5,7 +5,6 @@ import Link from "next/link";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { TProducts } from "@/types/supabaseTypes";
-import NairaSvg from "@/components/NairaSvg";
 import Button from "@/components/Button";
 import { useCartStore } from "@/store/cart-store";
 import toast from "react-hot-toast";
@@ -79,9 +78,9 @@ export default function ProductCard({ product }: PropType) {
             <span className="text-muted-foreground text-xs">
               {product?.category}
             </span>
-            <h2 className="text-xl font-semibold flex gap-1 items-center ">
-              <NairaSvg />
-              <span>{product?.price}</span>
+            <h2 className="text-xl font-semibold">
+              
+              {product?.price && <span>${product?.price.toFixed(2)}</span>}
             </h2>
           </div>
           {product?.variants.length ? (

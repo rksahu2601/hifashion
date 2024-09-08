@@ -50,9 +50,8 @@ export const columns: ColumnDef<TOrderProduct>[] = [
     accessorKey: "price",
     header: "PRICE",
     cell: ({ row }) => {
-      return <div className="flex gap-1 items-center">
-        <NairaSvg />
-        <span>{row.original.price && row.original?.price}</span>
+      return <div className="">
+        <span>${row.original.price && row.original?.price.toFixed(2)}</span>
         </div>;
     },
   },
@@ -60,9 +59,8 @@ export const columns: ColumnDef<TOrderProduct>[] = [
     accessorKey: "total",
     header: "TOTAL",
     cell: ({ row }) => {
-      return <div className="flex gap-1 items-center">
-        <NairaSvg />
-        <span>{row.original.price && row.original.quantity && (row.original?.price * row.original.quantity)}</span>
+      return <div className="">
+        <span>${row.original.price && row.original.quantity && (row.original?.price * row.original.quantity).toFixed(2)}</span>
         </div>;
     },
   },

@@ -66,7 +66,7 @@ export default function ProductDetails({ product, reviews }: PropType) {
         </button>
         <CustomStarRating readonly rating={ratingValue} />
       </div>
-      <p className="my-6 text-2xl md:text-3xl font-bold">${product?.price}</p>
+      <p className="my-6 text-2xl md:text-3xl font-bold">${product?.price?.toFixed(2)}</p>
       <div className="flex gap-3 items-center w-full">
         <p className="text-xs">
           Only{" "}

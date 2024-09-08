@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { ColumnDef } from "@tanstack/react-table";
 import { Checkbox } from "@/components/ui/checkbox";
 
@@ -12,7 +11,6 @@ import Image from "next/image";
 import { deleteProduct } from "@/actions/productActions";
 import { DataTableRowActions } from "@/components/DataTable/data-table-row-action";
 import { Badge } from "@/components/ui/badge";
-import NairaSvg from "@/components/NairaSvg";
 
 const handleDelete = async (product: TProducts) => {
   await deleteProduct(product);
@@ -126,9 +124,8 @@ export const columns: ColumnDef<TProducts>[] = [
       <DataTableColumnHeader column={column} title="Price" />
     ),
     cell: ({ row }) => {
-      return <div className="flex gap-1 items-center">
-        <NairaSvg />
-        <span>{row.original.price && row.original?.price.toFixed(2)}</span>
+      return <div className="">
+        <span>${row.original.price && row.original?.price.toFixed(2)}</span>
         </div>;
     },
   },
