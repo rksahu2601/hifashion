@@ -16,7 +16,7 @@ export default function Button({type, label, solid, className,disabled,loading, 
     <button
     type={type}
     onClick={onClick}
-    disabled={disabled}
+    disabled={disabled || loading}
       className={cn(
         "px-4 py-2 rounded-md border border-primary text-sm font-semibold hover:opacity-70 transition duration-500 active:scale-75 disabled:pointer-events-none disabled:opacity-50 flex gap-3 justify-center items-center",
         solid ? "bg-primary text-white" : "bg-white text-primary",
