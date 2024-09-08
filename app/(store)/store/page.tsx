@@ -60,7 +60,7 @@ export default async function page({
       }
     }
     
-  const ITEMS_PER_PAGE = 6;
+  const ITEMS_PER_PAGE = 12;
   const startIndex = ITEMS_PER_PAGE * (page - 1);
   const endIndex = ITEMS_PER_PAGE * page - 1;
 

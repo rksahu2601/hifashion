@@ -7,9 +7,10 @@ import Reviews from "./Reviews";
 type PropType = {
   product: TProducts | null;
   reviews : TReviews[] | null;
+  hasBoughtProduct: boolean | null;
 };
 
-export default function Details({ product, reviews }: PropType) {
+export default function Details({ product, reviews, hasBoughtProduct }: PropType) {
   const TabOptions = [
     {
       tabValue: "productDetails",
@@ -19,7 +20,7 @@ export default function Details({ product, reviews }: PropType) {
     {
       tabValue: "productReviews",
       tabLabel: "Reviews",
-      tabContent: <Reviews productId={product?.id!} reviews={reviews} />,
+      tabContent: <Reviews hasBoughtProduct={hasBoughtProduct} productId={product?.id!} reviews={reviews} />,
     },
   ];
 

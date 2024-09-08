@@ -55,21 +55,19 @@ export async function createOrder(orderData: TOrderData) {
   }
 
   try {
-    const { error } = await supabase
-      .from("orders")
-      .insert({
-        firstname,
-        lastname,
-        city,
-        address,
-        zipcode,
-        email,
-        phone,
-        paymentType,
-        orderId,
-        noOfProducts: checkoutItems.length,
-        totalPrice: cartTotal
-      });
+    const { error } = await supabase.from("orders").insert({
+      firstname,
+      lastname,
+      city,
+      address,
+      zipcode,
+      email,
+      phone,
+      paymentType,
+      orderId,
+      noOfProducts: checkoutItems.length,
+      totalPrice: cartTotal,
+    });
     if (error) {
       console.log("create order error", error);
       return {
@@ -77,8 +75,8 @@ export async function createOrder(orderData: TOrderData) {
       };
     }
 
-// create order products
-    checkoutItems.map(async (item)=>{
+    // create order products
+    checkoutItems.map(async (item) => {
       await supabase.from("orderProduct").insert({
         name: item.name,
         itemId: item.itemId, //unique cart item id
@@ -88,9 +86,9 @@ export async function createOrder(orderData: TOrderData) {
         image: item.images[0],
         productId: item.id, //product supabase id (not unique since there could be multiple cart Products with same id but different variants)
         orderId,
-        buyerId: user.id
-      })
-    })
+        buyerId: user.id,
+      });
+    });
 
     return {
       success: true,
@@ -111,18 +109,19 @@ export const setOrderAsCompleted = async (id: number) => {
   }
 
   try {
-    const { error } = await supabase
-      .from("orders")
-      .update({ status: "completed" })
-      .eq("orderId", id);
-    if (error) {
+    const [orderData, orderProductData] = await Promise.all([
+      supabase.from("orders").update({ status: "completed" }).eq("orderId", id),
+      supabase.from("orderProduct").update({ status: "completed" }).eq("orderId", id),
+    ]);
+
+    if (orderData.error || orderProductData.error) {
       return {
         success: false,
       };
     }
 
-    revalidatePath("/dashboard/orders")
-    revalidatePath(`/dashboard/orders/${id}`)
+    revalidatePath("/dashboard/orders");
+    revalidatePath(`/dashboard/orders/${id}`);
     return {
       success: true,
     };

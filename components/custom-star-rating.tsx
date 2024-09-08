@@ -12,6 +12,7 @@ type TCustomStarRating = {
   setRating?: React.Dispatch<React.SetStateAction<number>>;
   readonly?: boolean;
   className?: string;
+  small?: boolean;
 };
 
 export default function CustomStarRating({
@@ -20,6 +21,7 @@ export default function CustomStarRating({
   setRating,
   readonly=false,
   className,
+  small,
 }: TCustomStarRating) {
   const [hovered, setHovered] = useState<number>(0);
 
@@ -46,7 +48,7 @@ export default function CustomStarRating({
                   onMouseLeave={() => {
                     setHovered(0);
                   }}
-                  className={cn("w-5 h-5 cursor-pointer")}
+                  className={cn("w-5 h-5 cursor-pointer", small && "w-3 h-3")}
                 />
               </label>
             );
@@ -62,7 +64,7 @@ export default function CustomStarRating({
               <FaStar
                 color={starValue <= (rating || 0) ? starColor : "#D3D3D3"}
                 key={index}
-                className={cn("w-5 h-5")}
+                className={cn("w-5 h-5", small && "w-3 h-3")}
               />
             );
           })}

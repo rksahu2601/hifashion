@@ -16,13 +16,16 @@ import toast from "react-hot-toast";
 import { CreateReview } from "@/actions/reviewActions";
 import { TReviews } from "@/types/supabaseTypes";
 import Button from "@/components/Button";
+import { getTimeAgo } from "@/lib/getTimeAgo";
 
 export default function Reviews({
   productId,
   reviews,
+  hasBoughtProduct,
 }: {
   productId: number;
   reviews: TReviews[] | null;
+  hasBoughtProduct: boolean | null;
 }) {
   const [rating, setRating] = useState<number>(0);
   const [comment, setComment] = useState("");
@@ -31,7 +34,7 @@ export default function Reviews({
   const handleReview = () => {
     if (!rating) {
       toast.error("Please add a rating");
-      
+      return
     }
     if (!comment) {
       toast.error("Please add a comment");
@@ -67,10 +70,10 @@ export default function Reviews({
               key={i}
               className="border border-slate-200 p-2 rounded-md flex items-start justify-between"
             >
-              <CustomStarRating className="my-2" rating={review.rating as number} readonly />
+              
               <article className="flex items-center gap-2 max-w-[80%]">
                 <Image
-                  src={review.userImage || "/test1.jpg"}
+                  src={review.userImage || "/profile.png"}
                   width={500}
                   height={500}
                   alt="user image"
@@ -81,14 +84,19 @@ export default function Reviews({
                   <p className="text-slate-600 text-sm ">{review.comment}</p>
                 </div>
               </article>
-              <p className="text-xs text-slate-500">1 week ago</p>
+              <div>
+              <CustomStarRating className="my-2" small rating={review.rating as number} readonly />
+              <p className="text-xs text-slate-500">{getTimeAgo(review.created_at)}</p>
+              </div>
             </div>
           ))
         ) : (
           <p>This product has no review yet.</p>
         )}
       </div>
-      <Dialog >
+      {
+        hasBoughtProduct ? (
+          <Dialog >
         <DialogTrigger className="mt-3" asChild>
           <button className="font-medium text-lg border-b">Add a review</button>
         </DialogTrigger>
@@ -117,6 +125,10 @@ export default function Reviews({
           </div>
         </DialogContent>
       </Dialog>
+        ) : (
+          <p className="text-sm mt-2 text-gray-600">You need to purchase this product to be able to give a review.</p>
+        )
+      }
     </div>
   );
 }

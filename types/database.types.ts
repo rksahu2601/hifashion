@@ -48,6 +48,7 @@ export type Database = {
           price: number | null
           productId: number | null
           quantity: number | null
+          status: string | null
           variant: string | null
         }
         Insert: {
@@ -61,6 +62,7 @@ export type Database = {
           price?: number | null
           productId?: number | null
           quantity?: number | null
+          status?: string | null
           variant?: string | null
         }
         Update: {
@@ -74,6 +76,7 @@ export type Database = {
           price?: number | null
           productId?: number | null
           quantity?: number | null
+          status?: string | null
           variant?: string | null
         }
         Relationships: [
@@ -250,48 +253,6 @@ export type Database = {
             foreignKeyName: "profiles_id_fkey"
             columns: ["id"]
             isOneToOne: true
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      review: {
-        Row: {
-          comment: string | null
-          created_at: string
-          id: number
-          productId: number
-          rating: number | null
-          userId: string
-        }
-        Insert: {
-          comment?: string | null
-          created_at?: string
-          id?: number
-          productId: number
-          rating?: number | null
-          userId: string
-        }
-        Update: {
-          comment?: string | null
-          created_at?: string
-          id?: number
-          productId?: number
-          rating?: number | null
-          userId?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "review_productId_fkey"
-            columns: ["productId"]
-            isOneToOne: false
-            referencedRelation: "products"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "review_userId_fkey"
-            columns: ["userId"]
-            isOneToOne: false
             referencedRelation: "users"
             referencedColumns: ["id"]
           },

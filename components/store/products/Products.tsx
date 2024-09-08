@@ -19,7 +19,7 @@ export default function Products({products, page,noOfPages}:PropType) {
           ))
         }
       </div> : <div>Nothing to see here!</div>}
-      <ProductsPaginaton noOfPages={noOfPages} page={page} />
+      {page && <ProductsPaginaton noOfPages={noOfPages} page={page} />}
     </div>
   );
 }
