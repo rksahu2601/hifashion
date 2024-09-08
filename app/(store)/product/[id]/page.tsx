@@ -18,7 +18,8 @@ export default async function page({params:{id}}:{params:{id:number}}) {
   const user = await getUserSession()
   const {data:boughtProducts} = await supabase.from("orderProduct").select().match({status: "completed", buyerId: user?.id, productId: id})
 
-  const {data:relatedProduct} = await supabase.from("products").select().eq("categorySlug", productsData.data?.categorySlug || "")
+  const relatedProductData = await supabase.from("products").select().eq("categorySlug", productsData.data?.categorySlug || "")
+  const relatedProduct = relatedProductData.data?.filter((product)=>product.id !== id) || null
 
   return (
     <div className='contain mt-[5rem]'>
@@ -27,7 +28,7 @@ export default async function page({params:{id}}:{params:{id:number}}) {
           <Details reviews={reviewsData.data} product={productsData.data} hasBoughtProduct={boughtProducts && boughtProducts?.length > 0} />
         </section>
     <section className='my-4 md:my-[6rem]'>
-        <h1 className='text-2xl md:text-3xl font-semibold'>Similar items you might like</h1>
+        <h1 className='text-2xl md:text-3xl font-semibold mb-3'>Similar items you might like</h1>
        <Products products={relatedProduct} />
     </section>
     </div>
