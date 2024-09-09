@@ -12,7 +12,7 @@ type PropType = {
 
 export default function AnalyticCard({currency, label, value, icon:Icon, iconColor, iconBg}:PropType) {
   return (
-    <article className="bg-white flex-1 rounded-xl p-3 shadow-md">
+    <article className="bg-white flex-1 rounded-xl p-3 py-6 shadow-md min-w-48">
       <div className="flex flex-col items-center gap-2">
         <div className={cn("w-10 aspect-square rounded-md flex items-center justify-center", iconBg)}>
           <Icon className={cn("w-6 h-6", iconColor)} />
