@@ -3,15 +3,56 @@ import { createClient } from '@/lib/supabase/server'
 import { columns, statuses } from './table-data'
 import { deleteProduct } from '@/actions/productActions'
 import PageHeader from '@/components/backoffice/PageHeader'
+import AnalyticCard from '@/components/backoffice/AnalyticCard'
+
+import { AiFillProduct } from 'react-icons/ai'
+import { VscIssueDraft } from "react-icons/vsc";
+import { IoMdCheckmarkCircleOutline } from "react-icons/io";
+import { GrSchedule } from "react-icons/gr";
 
 export default async function Products() {
   const supabase = createClient()
-  const {data: products} = await supabase.from("products").select().order("created_at", {ascending: false})
+  const {data: products, count} = await supabase.from("products").select("*", {count: "exact"}).order("created_at", {ascending: false})
+
+  const activeProducts = products?.filter(product=>product.status === "active")
+  const inactiveProducts = products?.filter(product=>product.status === "draft")
+  const scheduledProducts = products?.filter(product=>product.status === "scheduled")
 
   return (
     <div className='max-w-6xl mx-auto'>
       <PageHeader linkUrl='/dashboard/products/new' title='Products' />
-      {products && <DataTable deleteAction={deleteProduct} data={products} filterField="name" columns={columns} facetedFilterOptions={statuses} facetedFilterValue="status" facetedFilterTitle="Status"/>}
+      <div className="flex items-center flex-wrap gap-6 mb-8">
+        <AnalyticCard
+          label="Total Products"
+          value={count || 0}
+          icon={AiFillProduct}
+          iconColor="text-blue-600"
+          iconBg="bg-blue-600/10"
+        />
+        <AnalyticCard
+          label="Active Products"
+          value={activeProducts?.length || 0}
+          icon={IoMdCheckmarkCircleOutline}
+          iconColor="text-green-600"
+          iconBg="bg-green-600/10"
+        />
+        <AnalyticCard
+          label="Inactive Products"
+          value={inactiveProducts?.length || 0}
+          icon={VscIssueDraft}
+          iconColor="text-red-600"
+          iconBg="bg-red-600/10"
+        />
+        <AnalyticCard
+          label="Scheduled Products"
+          value={scheduledProducts?.length || 0}
+          icon={GrSchedule}
+          iconColor="text-purple-600"
+          iconBg="bg-purple-600/10"
+        />
+      </div>
+      {products && <div className='bg-white rounded-xl p-3 shadow-md'>
+        <DataTable deleteAction={deleteProduct} data={products} filterField="name" columns={columns} facetedFilterOptions={statuses} facetedFilterValue="status" facetedFilterTitle="Status"/></div>}
     </div>
   )
 }

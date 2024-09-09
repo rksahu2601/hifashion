@@ -1,7 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { BadgePlus, Component, LayoutDashboard, ReceiptText, ShoppingBasket, } from "lucide-react";
+import { LayoutDashboard, ReceiptText, ShoppingBasket, } from "lucide-react";
+import { RiCoupon2Line } from "react-icons/ri";
+import { MdCategory } from "react-icons/md";
 import { Dispatch, ReactElement, SetStateAction } from "react";
 import SidebarLink from "./SidebarLink";
 
@@ -39,10 +41,6 @@ const sideBarLinks = [
         label: "Orders",
         href: "/dashboard/orders",
       },
-      {
-        label: "Customers",
-        href: "/dashboard/customers",
-      },
     ],
     href: "#",
     icon: <ShoppingBasket />,
@@ -51,7 +49,7 @@ const sideBarLinks = [
     label: "Categories",
     subLinks: null,
     href: "/dashboard/categories",
-    icon: <Component />,
+    icon: <MdCategory className="w-6 h-6" />,
   },
   {
     label: "Orders",
@@ -63,7 +61,7 @@ const sideBarLinks = [
     label: "Coupons",
     subLinks: null,
     href: "/dashboard/coupons",
-    icon: <BadgePlus />,
+    icon: <RiCoupon2Line className="w-6 h-6" />,
   },
 ];
 
@@ -85,7 +83,7 @@ export default function Sidebar({ showSideBar, setShowSideBar }: SideBarType) {
       variants={variants}
       initial="close"
       animate={showSideBar ? "open" : "close"}
-      className="h-screen w-80 bg-gray-100 border-r z-[990] fixed top-16 left-0 p-5"
+      className="h-screen w-80 bg-white border-r z-[990] fixed top-16 left-0 p-5"
     >
       <ul>
         {sideBarLinks.map((link, i) => (
