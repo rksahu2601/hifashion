@@ -26,7 +26,7 @@ export default function ProfileIcon({ user }: { user: TUserSession | null }) {
 
   return isAdmin ? (
     <Link
-      className="flex items-center gap-2 border border-secondary justify-center bg-secondary/10 px-3 py-1.5 rounded-md "
+      className="flex items-center gap-2 border border-secondary/50 justify-center bg-secondary/10 px-3 py-1.5 rounded-md "
       href="/dashboard/overview"
     >
       <LayoutDashboard className="w-4 h-4 text-secondary" />
@@ -36,7 +36,7 @@ export default function ProfileIcon({ user }: { user: TUserSession | null }) {
     <Dialog>
       <DialogTrigger asChild>
       <button
-      className="flex items-center gap-2 border border-secondary justify-center bg-secondary/10 px-3 py-1.5 rounded-md "
+      className="flex items-center gap-2 border border-secondary/50 justify-center bg-secondary/10 px-3 py-1.5 rounded-md "
     >
       <LayoutDashboard className="w-4 h-4 text-secondary" />
       <span className="text-secondary font-semibold text-sm">Dashboard</span>
