@@ -19,7 +19,7 @@ export default function CustomStarRating({
   starColor = "#FFA500",
   rating,
   setRating,
-  readonly=false,
+  readonly = false,
   className,
   small,
 }: TCustomStarRating) {
@@ -31,7 +31,7 @@ export default function CustomStarRating({
         <div className={cn("flex", className)}>
           {[...Array(5)].map((_, index) => {
             const starValue = index + 1;
-            
+
             return (
               <label key={index}>
                 <input
@@ -41,7 +41,11 @@ export default function CustomStarRating({
                   onClick={() => setRating(starValue)}
                 />
                 <FaStar
-                  color={starValue <= (hovered || rating || 0) ? starColor : "#D3D3D3"}
+                  color={
+                    starValue <= (hovered || rating || 0)
+                      ? starColor
+                      : "#D3D3D3"
+                  }
                   onMouseEnter={() => {
                     setHovered(starValue);
                   }}
@@ -55,6 +59,7 @@ export default function CustomStarRating({
           })}
         </div>
       )}
+      
       {readonly && (
         <div className={cn("flex", className)}>
           {[...Array(5)].map((_, index) => {

@@ -11,7 +11,7 @@ export default function Admin({children}: {
 }) {
 const [showSideBar, setShowSideBar] = useState(false)
   return (
-    <div className="bg-[#f6f9ff]">
+    <div className="">
       <Navbar setShowSideBar={setShowSideBar}/>
       <div className='mt-16 flex gap-6'>
         <Sidebar setShowSideBar={setShowSideBar} showSideBar={showSideBar} />
