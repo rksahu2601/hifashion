@@ -102,7 +102,7 @@ export default async function Overview() {
           }
         />
       </div>
-      {/* <OverviewChart<TWeekRevenue> data={weekRevenueArr} /> */}
+      <OverviewChart<TWeekRevenue> data={weekRevenueArr} />
     </div>
   );
 }

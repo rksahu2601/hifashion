@@ -1,8 +1,4 @@
-"use server"
-
 import { createClient } from "../supabase/server";
-
-const supabase = createClient();
 
 const currYear = new Date().getFullYear();
 const currMonth = new Date().getMonth();
@@ -24,6 +20,7 @@ const getDayOfWeek = (day: number, month: number, year: number): string => {
   }
 
 export const getDataThisWeek = async ( table: tableType) => {
+  const supabase = createClient();
     let dataArr = [];
 
   for (let i = 0; i < 7; i++) {
@@ -51,6 +48,8 @@ export const getDataThisWeek = async ( table: tableType) => {
 };
 
 export const getTotalToday = async (table: tableType)=>{
+  const supabase = createClient();
+
   const {data, error} = await supabase
   .from(table)
   .select('*')
@@ -63,6 +62,7 @@ export const getTotalToday = async (table: tableType)=>{
 }
 
 export const getRevenueThisWeek = async () => {
+  const supabase = createClient();
     let dataArr = [];
 
   for (let i = 0; i < 7; i++) {
@@ -90,6 +90,8 @@ export const getRevenueThisWeek = async () => {
 };
 
 export const getRevenueToday = async ()=>{
+  const supabase = createClient();
+  
   const {data, error} = await supabase
   .from("orders")
   .select('*')
