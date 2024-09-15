@@ -24,28 +24,28 @@ export default async function Products() {
       <div className="flex items-center flex-wrap gap-6 mb-8">
         <AnalyticCard
           label="Total Products"
-          value={count || 0}
+          totalvalue={count || 0}
           icon={AiFillProduct}
           iconColor="text-blue-600"
           iconBg="bg-blue-600/10"
         />
         <AnalyticCard
           label="Active Products"
-          value={activeProducts?.length || 0}
+          totalvalue={activeProducts?.length || 0}
           icon={IoMdCheckmarkCircleOutline}
           iconColor="text-green-600"
           iconBg="bg-green-600/10"
         />
         <AnalyticCard
           label="Inactive Products"
-          value={inactiveProducts?.length || 0}
+          totalvalue={inactiveProducts?.length || 0}
           icon={VscIssueDraft}
           iconColor="text-red-600"
           iconBg="bg-red-600/10"
         />
         <AnalyticCard
           label="Scheduled Products"
-          value={scheduledProducts?.length || 0}
+          totalvalue={scheduledProducts?.length || 0}
           icon={GrSchedule}
           iconColor="text-purple-600"
           iconBg="bg-purple-600/10"

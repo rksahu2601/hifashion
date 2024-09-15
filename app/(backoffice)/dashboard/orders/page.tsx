@@ -20,21 +20,21 @@ export default async function Orders() {
         <div className="flex flex-wrap gap-6 items-center mb-8">
         <AnalyticCard
           label="Total Orders"
-          value={count || 0}
+          totalvalue={count || 0}
           icon={FaBagShopping}
           iconColor="text-purple-600"
           iconBg="bg-purple-600/10"
         />
         <AnalyticCard
           label="Completed Orders"
-          value={completedOrders?.length || 0}
+          totalvalue={completedOrders?.length || 0}
           icon={IoMdCheckmarkCircleOutline}
           iconColor="text-red-600"
           iconBg="bg-red-600/10"
         />
         <AnalyticCard
           label="Pending Orders"
-          value={pendingOrders?.length || 0}
+          totalvalue={pendingOrders?.length || 0}
           icon={MdOutlineBusAlert}
           iconColor="text-red-600"
           iconBg="bg-red-600/10"

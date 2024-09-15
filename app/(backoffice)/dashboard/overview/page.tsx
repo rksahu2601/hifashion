@@ -1,56 +1,108 @@
 import AnalyticCard from "@/components/backoffice/AnalyticCard";
+import OverviewChart from "@/components/backoffice/OverviewChart";
+import {
+  getDataThisWeek,
+  getRevenueThisWeek,
+  getRevenueToday,
+  getTotalToday,
+} from "@/lib/analytics/analyticsData";
 import { createClient } from "@/lib/supabase/server";
 
-import { AiFillProduct, AiTwotoneMoneyCollect } from "react-icons/ai";
-import { FaBagShopping, FaUsers } from "react-icons/fa6";
+type TWeekRevenue = {
+  key: string;
+  value: number;
+}
 
 export default async function Overview() {
   const supabase = createClient();
 
   const [productsData, orderData, profilesData] = await Promise.all([
     supabase.from("products").select("*", { count: "exact" }),
-    supabase.from("orders").select("*", { count: "exact" }).eq("status", "completed"),
+    supabase.from("orders").select("*", { count: "exact" }),
     supabase.from("profiles").select("*", { count: "exact" }),
   ]);
 
-  const totalIncome = orderData.data?.reduce((acc, order) => {
+  const completedOrders = orderData.data?.filter(
+    (order) => order.status === "completed"
+  );
+  const totalRevenue = completedOrders?.reduce((acc, order) => {
     return acc + order.totalPrice!;
   }, 0);
+
+  // Daily Analytics
+  const totalRevenueToday = await getRevenueToday();
+  const totalOrdersToday = await getTotalToday("orders");
+  const totalProductsToday = await getTotalToday("products");
+
+  // Revenue in the last seven days
+  const totalRevenueThisWeekArr = await getRevenueThisWeek();
+  // restructure array
+  const weekRevenueArr = totalRevenueThisWeekArr.map((obj) => {
+    return Object.keys(obj).map((key) => {
+      const value = obj[key].reduce((acc, curr) => {
+        return acc + curr.totalPrice!;
+      }, 0);
+
+      return {
+        key,
+        value
+      };
+    })[0];
+  });
+
+  console.log("Array", weekRevenueArr)
+
+  const totalRevenueThisWeek = weekRevenueArr.reduce((acc, curr) => {
+    return acc + curr.value;
+  }, 0);
+  const avgRevenueThisWeek = totalRevenueThisWeek / 7;
+
+  // Orders in the last seven days
+  const ordersThisWeek = await getDataThisWeek("orders");
+  const totalOrdersThisWeek = ordersThisWeek.reduce((acc, curr) => {
+    return acc + curr.dataPerDay.length;
+  }, 0);
+  const avgOrderThisWeek = totalOrdersThisWeek / 7;
+
+  // Products in the last seven days
+  const productsThisWeek = await getDataThisWeek("products");
+  const totalProductsThisWeek = productsThisWeek.reduce((acc, curr) => {
+    return acc + curr.dataPerDay.length;
+  }, 0);
+  const avgProductsThisWeek = totalProductsThisWeek / 7;
 
   return (
     <div className="max-w-[75rem] mx-auto">
       <h1 className="text-2xl md:text-3xl font-semibold mb-8 mt-6">Overview</h1>
       <div className="flex flex-wrap gap-6 items-center">
         <AnalyticCard
+          currency
+          label="Total Revenue"
+          totalvalue={totalRevenue || 0}
+          totalToday={totalRevenueToday}
+          weeklyAvg={avgRevenueThisWeek}
+          badgeValue={
+            ((totalRevenueToday - avgRevenueThisWeek) / avgRevenueThisWeek) *
+            100
+          }
+        />
+        <AnalyticCard
           label="Total Products"
-          value={productsData.count || 0}
-          icon={AiFillProduct}
-          iconColor="text-green-600"
-          iconBg="bg-green-600/10"
+          totalvalue={productsData.count || 0}
+          totalToday={totalProductsToday}
+          weeklyAvg={avgProductsThisWeek}
         />
         <AnalyticCard
           label="Total Orders"
-          value={orderData.count || 0}
-          icon={FaBagShopping}
-          iconColor="text-red-600"
-          iconBg="bg-red-600/10"
-        />
-        <AnalyticCard
-          label="Total Earnings"
-          currency
-          value={totalIncome || 0}
-          icon={AiTwotoneMoneyCollect}
-          iconColor="text-purple-600"
-          iconBg="bg-purple-600/10"
-        />
-        <AnalyticCard
-          label="Custormers"
-          value={profilesData.count || 0}
-          icon={FaUsers}
-          iconColor="text-blue-600"
-          iconBg="bg-blue-600/10"
+          totalvalue={orderData.count || 0}
+          totalToday={totalOrdersToday}
+          weeklyAvg={avgOrderThisWeek}
+          badgeValue={
+            ((totalOrdersToday - avgOrderThisWeek) / avgOrderThisWeek) * 100
+          }
         />
       </div>
+      <OverviewChart<TWeekRevenue> data={weekRevenueArr} />
     </div>
   );
 }
