@@ -31,7 +31,7 @@ export default function AnalyticCard({
         <div className="flex flex-col">
           <p className=" text-gray-400 mb-1.5">{label}</p>
           {currency ? (
-            <h2 className="text-3xl font-medium mb-2">${totalvalue}</h2>
+            <h2 className="text-3xl font-medium mb-2">${totalvalue.toFixed(1)}</h2>
           ) : (
             <h2 className="text-3xl font-medium mb-2">
               {totalvalue.toString().padStart(2, "0")}
