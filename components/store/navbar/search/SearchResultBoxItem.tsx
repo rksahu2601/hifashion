@@ -21,7 +21,7 @@ export default function SearchResultBoxItem({setOpenSearchDropdown, product}:Pro
         </div>
         <h2 className='line-clamp-1 mr-8 text-xs font-semibold'>{product?.name}</h2>
 
-        <p className="ml-auto font-semibold text-sm">${product?.price}</p>
+        <p className="ml-auto font-semibold text-sm">${product?.price?.toFixed(2)}</p>
     </Link>
   )
 }

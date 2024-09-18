@@ -15,7 +15,7 @@ type tableType  =
 const getDayOfWeek = (day: number, month: number, year: number): string => {
       // Create a Date object from the provided day, month, and year
       const date = new Date(year, month, day); // remember month is 0-indexed
-      const options: Intl.DateTimeFormatOptions = { weekday: 'long' };
+      const options: Intl.DateTimeFormatOptions = { weekday: 'short' };
       return new Intl.DateTimeFormat('en-US', options).format(date);
   }
 
@@ -81,8 +81,11 @@ export const getRevenueThisWeek = async () => {
     const dayOfWeek = getDayOfWeek(currDay+i, currMonth, currYear)
     if (data) {
         dataArr.push({
-          [`${dayOfWeek}`]: data,
+          [`${dayOfWeek}"-"${i+currDay}`]: data,
       });
+      // [...dataArr, {
+      //      [`${dayOfWeek}`]: data,
+      //  }]
     }
   }
 

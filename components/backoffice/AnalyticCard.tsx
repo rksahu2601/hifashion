@@ -9,6 +9,7 @@ type PropType = {
   totalToday?: number;
   weeklyAvg?: number;
   badgeValue?: number;
+  className?: string;
   icon?: IconType;
     iconColor?: string;
     iconBg?: string;
@@ -18,16 +19,19 @@ export default function AnalyticCard({
   currency,
   label,
   totalvalue,
-  totalToday,
+  totalToday=0,
   badgeValue,
   weeklyAvg,
   icon: Icon,
   iconBg,
-  iconColor
+  iconColor,
+  className
 }: PropType) {
   return (
-    <article className="bg-white flex-1 rounded-xl p-3 py-6 border shadow min-w-48">
-      <div className="flex justify-between items-start gap-2">
+    <article className={cn("bg-white rounded-xl p-3 py-6 border shadow w-full h-full", className)}>
+
+      <div className="max-md:flex justify-between items-start gap-2">
+      <div className="hidden md:block mb-3 w-fit">{badgeValue && <Badge value={badgeValue} />}</div>
         <div className="flex flex-col">
           <p className=" text-gray-400 mb-1.5">{label}</p>
           {currency ? (
@@ -37,7 +41,7 @@ export default function AnalyticCard({
               {totalvalue.toString().padStart(2, "0")}
             </h2>
           )}
-          {totalToday && <div className="flex gap-2 items-center">
+          {totalToday !== undefined && <div className="flex gap-2 items-center">
             <h2 className="text-xl font-medium">{totalToday.toString().padStart(2, "0")}</h2>
             <p className="text-sm text-gray-400">Today</p>
           </div>}
@@ -50,7 +54,7 @@ export default function AnalyticCard({
             </div>
           )}
         </div>
-        {badgeValue && <Badge value={badgeValue} />}
+        <div className="md:hidden">{badgeValue && <Badge value={badgeValue} />}</div>
         {Icon && <div className={cn("w-10 aspect-square rounded-md flex items-center justify-center", iconBg)}>
           <Icon className={cn("w-6 h-6", iconColor)} />
         </div>}

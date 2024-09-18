@@ -23,6 +23,7 @@ export default async function Products() {
       <PageHeader linkUrl='/dashboard/products/new' title='Products' />
       <div className="flex items-center flex-wrap gap-6 mb-8">
         <AnalyticCard
+        className="flex-1"
           label="Total Products"
           totalvalue={count || 0}
           icon={AiFillProduct}
@@ -30,6 +31,7 @@ export default async function Products() {
           iconBg="bg-blue-600/10"
         />
         <AnalyticCard
+className="flex-1"
           label="Active Products"
           totalvalue={activeProducts?.length || 0}
           icon={IoMdCheckmarkCircleOutline}
@@ -37,6 +39,7 @@ export default async function Products() {
           iconBg="bg-green-600/10"
         />
         <AnalyticCard
+        className="flex-1"
           label="Inactive Products"
           totalvalue={inactiveProducts?.length || 0}
           icon={VscIssueDraft}
@@ -44,6 +47,7 @@ export default async function Products() {
           iconBg="bg-red-600/10"
         />
         <AnalyticCard
+        className="flex-1"
           label="Scheduled Products"
           totalvalue={scheduledProducts?.length || 0}
           icon={GrSchedule}

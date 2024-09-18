@@ -19,6 +19,7 @@ export default async function Orders() {
         <h1 className="text-2xl md:text-3xl font-semibold mb-8">Your Orders</h1>
         <div className="flex flex-wrap gap-6 items-center mb-8">
         <AnalyticCard
+        className="flex-1"
           label="Total Orders"
           totalvalue={count || 0}
           icon={FaBagShopping}
@@ -26,6 +27,7 @@ export default async function Orders() {
           iconBg="bg-purple-600/10"
         />
         <AnalyticCard
+        className="flex-1"
           label="Completed Orders"
           totalvalue={completedOrders?.length || 0}
           icon={IoMdCheckmarkCircleOutline}
@@ -33,6 +35,7 @@ export default async function Orders() {
           iconBg="bg-red-600/10"
         />
         <AnalyticCard
+        className="flex-1"
           label="Pending Orders"
           totalvalue={pendingOrders?.length || 0}
           icon={MdOutlineBusAlert}
