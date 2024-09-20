@@ -157,11 +157,13 @@ export default async function Overview() {
               />
           </div>
 
-          <div className="w-full h-[20rem] border shadow p-2 rounded-lg mt-6">
+          <div className="w-full h-full border shadow p-2 rounded-lg mt-6">
             <h2 className="text-2xl mb-4 font-semibold">
               Earnings in the last seven days
             </h2>
+            <div className="w-full h-[18rem]">
             <OverviewBarChart<TWeekRevenue> data={weekRevenueArr.reverse()} />
+            </div>
           </div>
         </div>
         <div className="col-span-full md:col-span-3 mb-4">
