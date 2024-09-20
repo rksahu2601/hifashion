@@ -280,7 +280,7 @@ export default function EditProductForm({ categories, product }: PropType) {
           <div className=" border border-slate-300 p-4 rounded-md">
             <CustomInput
               label="Price"
-              placeholder="eg:2000"
+              placeholder="eg:199.99"
               name="price"
               mutedLabel
               isPrice
@@ -291,13 +291,13 @@ export default function EditProductForm({ categories, product }: PropType) {
         </section>
         <div className="w-full flex">
           {product ? (
-            <div className="flex items-center justify-end gap-2">
+            <div className="w-full flex items-center justify-end gap-2">
               <Button
                 type="button"
                 loading={loading}
                 disabled={loading}
                 label="Schedule"
-                className="border rounded bg-secondary border-none px-3 py-2 mt-4 text-xs md:text-sm"
+                className="rounded px-3 py-2 mt-4 text-xs md:text-sm"
               />
               {product.status !== "draft" && (
                 <Button
@@ -315,7 +315,7 @@ export default function EditProductForm({ categories, product }: PropType) {
                   disabled={loading}
                   label="Go Live"
                   solid
-                  className="border rounded bg-primary border-none px-3 py-2 mt-4 text-xs md:text-sm"
+                  className="border rounded bg-green-600 border-none px-3 py-2 mt-4 text-xs md:text-sm"
                 />
               )}
               <Button
@@ -327,6 +327,22 @@ export default function EditProductForm({ categories, product }: PropType) {
               />
             </div>
           ) : (
+            <div className="w-full flex items-center justify-end gap-2">
+            <Button
+              type="button"
+              loading={loading}
+              disabled={loading}
+              label="Schedule"
+              className="rounded px-3 py-2 mt-4 text-xs md:text-sm"
+            />
+            <Button
+                onClick={() => setProductStatus("draft")}
+                loading={loading}
+                disabled={loading}
+                label="Draft"
+                solid
+                className="border rounded bg-primary border-none px-3 py-2 mt-4 text-xs md:text-sm"
+              />
             <Button
               loading={loading}
               disabled={loading}
@@ -334,6 +350,8 @@ export default function EditProductForm({ categories, product }: PropType) {
               solid
               className="border rounded bg-secondary border-none px-3 py-2 mt-4 text-xs md:text-sm"
             />
+          </div>
+            
           )}
         </div>
       </div>

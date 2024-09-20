@@ -23,7 +23,7 @@ export const statuses = [
     icon: QuestionMarkCircledIcon,
   },
   {
-    value: "darft",
+    value: "draft",
     label: "Draft",
     icon: CircleIcon,
   },
