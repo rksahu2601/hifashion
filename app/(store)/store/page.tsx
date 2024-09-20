@@ -70,6 +70,7 @@ export default async function page({
   const {data:products,count  } = await supabase
     .from("products")
     .select("*", { count: "exact" })
+    .eq("status", "active")
     .match(matchObj)
     .ilike("name", `%${search || ""}%`)
     .order(orderObj.column, orderObj.option)

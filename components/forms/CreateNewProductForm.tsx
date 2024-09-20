@@ -12,7 +12,11 @@ import toast from "react-hot-toast";
 import Button from "../Button";
 import ProductVariants from "./../backoffice/products/ProductVariants";
 import ProductImages from "../backoffice/products/ProductImages";
-import { createProduct, editProduct } from "@/actions/productActions";
+import {
+  createProduct,
+  editProduct,
+  setProductAsDraft,
+} from "@/actions/productActions";
 import { TCategory, TProducts } from "@/types/supabaseTypes";
 import { useRouter } from "next/navigation";
 import { ColorVariant } from "../constants";
@@ -22,10 +26,14 @@ const formSchema = z.object({
   productDescription: z.string().min(2, "minimum of 2 characters"),
   category: z.string(),
   gender: z.string(),
-  quantity: z.coerce.number({message:"please add quantity"}).nonnegative("please add a valid quantity"),
+  quantity: z.coerce
+    .number({ message: "please add quantity" })
+    .nonnegative("please add a valid quantity"),
   deliveryInfo: z.string(),
   sku: z.string(),
-  price: z.coerce.number({message:"please add a price"}).nonnegative("please add a valid price"),
+  price: z.coerce
+    .number({ message: "please add a price" })
+    .nonnegative("please add a valid price"),
 });
 
 // export type FormType = z.infer<typeof formSchema>
@@ -48,6 +56,9 @@ export default function EditProductForm({ categories, product }: PropType) {
   const [showVariantInput, setShowVariantInput] = useState(false);
 
   const [imageUrls, setImageUrls] = useState<String[]>(product?.images || []);
+  const [productStatus, setProductStatus] = useState<"active" | "draft">(
+    "active"
+  );
 
   const categorySelectOptions = categories
     ? categories.map((cat) => cat.name)
@@ -76,6 +87,7 @@ export default function EditProductForm({ categories, product }: PropType) {
   const onSubmit = async (data: FieldValues) => {
     data.color = selectedColor;
     data.variants = variants;
+    data.status = productStatus;
 
     if (imageUrls.length < 1) {
       toast.error("Upload at least one image");
@@ -92,7 +104,7 @@ export default function EditProductForm({ categories, product }: PropType) {
     console.log(data);
 
     if (product) {
-      console.log("edit")
+      console.log("edit");
       try {
         setLoading(true);
         await editProduct(data);
@@ -101,6 +113,7 @@ export default function EditProductForm({ categories, product }: PropType) {
         setImageUrls([]);
         setVariants([]);
         setSelectedColor("");
+        setProductStatus("active");
         toast.success("Product edited succesfully!.");
         router.push("/dashboard/products");
       } catch (error) {
@@ -109,7 +122,7 @@ export default function EditProductForm({ categories, product }: PropType) {
         toast.error("Something went wrong");
       }
     } else {
-      console.log("create")
+      console.log("create");
       try {
         setLoading(true);
         await createProduct(data);
@@ -118,6 +131,7 @@ export default function EditProductForm({ categories, product }: PropType) {
         setImageUrls([]);
         setVariants([]);
         setSelectedColor("");
+        setProductStatus("active");
         toast.success("Product created succesfully!.");
         router.push("/dashboard/products");
       } catch (error) {
@@ -277,20 +291,48 @@ export default function EditProductForm({ categories, product }: PropType) {
         </section>
         <div className="w-full flex">
           {product ? (
-            <Button
-              loading={loading}
-              disabled={loading}
-              label={loading ? "Please wait..." : "Edit Product"}
-              solid
-              className="border rounded bg-secondary border-none px-3 py-2 mt-4 ml-auto"
-            />
+            <div className="flex items-center justify-end gap-2">
+              <Button
+                type="button"
+                loading={loading}
+                disabled={loading}
+                label="Schedule"
+                className="border rounded bg-secondary border-none px-3 py-2 mt-4 text-xs md:text-sm"
+              />
+              {product.status !== "draft" && (
+                <Button
+                  onClick={() => setProductStatus("draft")}
+                  loading={loading}
+                  disabled={loading}
+                  label="Draft"
+                  solid
+                  className="border rounded bg-primary border-none px-3 py-2 mt-4 text-xs md:text-sm"
+                />
+              )}
+              {product.status === "draft" && (
+                <Button
+                  loading={loading}
+                  disabled={loading}
+                  label="Go Live"
+                  solid
+                  className="border rounded bg-primary border-none px-3 py-2 mt-4 text-xs md:text-sm"
+                />
+              )}
+              <Button
+                loading={loading}
+                disabled={loading}
+                label={loading ? "Please wait..." : "Edit Product"}
+                solid
+                className="border rounded bg-secondary border-none px-3 py-2 mt-4 text-xs md:text-sm"
+              />
+            </div>
           ) : (
             <Button
               loading={loading}
               disabled={loading}
               label={loading ? "Please wait..." : "Add Product"}
               solid
-              className="border rounded bg-secondary border-none px-3 py-2 mt-4 ml-auto"
+              className="border rounded bg-secondary border-none px-3 py-2 mt-4 text-xs md:text-sm"
             />
           )}
         </div>

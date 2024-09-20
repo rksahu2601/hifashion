@@ -17,6 +17,7 @@ type DataType =
       sku: string;
       price: string;
       color: string;
+      status: "active" | "draft";
       categorySlug: string;
       deliveryInfo: string;
       gender: string;
@@ -43,6 +44,7 @@ export async function createProduct(data: DataType) {
       sku: data.sku,
       price: data.price,
       color: data.color,
+      status: data.status,
       variants: data.variants,
       categorySlug: data.categorySlug,
       gender: data.gender,
@@ -56,12 +58,11 @@ export async function createProduct(data: DataType) {
   }
 
   revalidatePath("/dashboard/products");
+  revalidatePath("/store");
 }
 
 export async function editProduct(data: DataType) {
   const supabase = createClient();
-
-  console.log("EDIT", data)
 
   const user = await getUserSession();
   if (!user || user.role !== "admin") {
@@ -78,6 +79,7 @@ export async function editProduct(data: DataType) {
       sku: data.sku,
       price: data.price,
       color: data.color,
+      status: data.status,
       variants: data.variants,
       categorySlug: data.categorySlug,
       gender: data.gender,
@@ -92,6 +94,7 @@ export async function editProduct(data: DataType) {
   }
 
   revalidatePath("/dashboard/products");
+  revalidatePath("/store");
 }
 
 export async function deleteProduct(data: TProducts) {
@@ -119,4 +122,35 @@ export async function deleteProduct(data: TProducts) {
   }
 
   revalidatePath("/dashboard/products");
+  revalidatePath("/store");
+}
+
+export  async function setProductAsDraft(id: number){
+  const supabase = createClient();
+
+  const user = await getUserSession();
+  if (!user || user.role !== "admin") {
+    throw new Error("Unathorized Access!");
+  }
+
+  try {
+    const {error} = await supabase.from("products").update({status: "draft"}).eq("id", id)
+    if (error) {
+      console.log("Product to draft error", error);
+      return {
+        success: false
+      }
+    }
+    revalidatePath("/dashboard/products");
+    revalidatePath("/store");
+
+    return {
+      success: true
+    }
+  } catch (error) {
+    console.log(error);
+    return {
+      success: false
+    }
+  }
 }

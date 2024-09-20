@@ -23,8 +23,8 @@ export const statuses = [
     icon: QuestionMarkCircledIcon,
   },
   {
-    value: "not active",
-    label: "Not Active",
+    value: "darft",
+    label: "Draft",
     icon: CircleIcon,
   },
   {
@@ -102,9 +102,9 @@ export const columns: ColumnDef<TProducts>[] = [
             <span className="bg-green-600/10 px-4 py-1 rounded-md text-green-600">
               Active
             </span>
-          ) : row.original.status === "not active" ? (
+          ) : row.original.status === "draft" ? (
             <span className="bg-red-600/10 px-4 py-1 rounded-md text-red-600">
-              Not Active
+              Draft
             </span>
           ) : (
             <span className="bg-purple-600/10 px-4 py-1 rounded-md text-purple-600">
