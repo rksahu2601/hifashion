@@ -157,7 +157,7 @@ export default async function Overview() {
               />
           </div>
 
-          <div className="w-full h-fit border shadow p-2 rounded-lg my-6">
+          <div className="w-full h-fit border shadow p-2 rounded-lg mt-6">
             <h2 className="text-2xl mb-4 font-semibold">
               Earnings in the last seven days
             </h2>
