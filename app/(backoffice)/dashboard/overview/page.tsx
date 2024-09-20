@@ -58,7 +58,7 @@ export default async function Overview() {
 
       return {
         key,
-        value,
+        value: Number(value.toFixed(2)),
       };
     })[0];
   });
