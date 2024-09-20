@@ -124,8 +124,9 @@ export default async function Overview() {
       <p className="mb-6 text-muted-foreground">Here&apos;s what your store is saying today</p>
       <div className="grid grid-cols-12 gap-6">
         <div className="col-span-full md:col-span-9">
-          <div className="md:grid grid-cols-3 gap-6 items-start">
+          <div className="grid grid-cols-3 gap-6 items-start">
             <AnalyticCard
+            className="col-span-full md:col-span-1"
               currency
               label="Total Revenue"
               totalvalue={totalRevenue || 0}
@@ -138,12 +139,7 @@ export default async function Overview() {
               }
             />
             <AnalyticCard
-              label="Total Products"
-              totalvalue={productsData.count || 0}
-              totalToday={totalProductsToday}
-              weeklyAvg={avgProductsThisWeek}
-            />
-            <AnalyticCard
+             className="col-span-full md:col-span-1"
               label="Total Orders"
               totalvalue={orderData.count || 0}
               totalToday={totalOrdersToday}
@@ -152,6 +148,13 @@ export default async function Overview() {
                 ((totalOrdersToday - avgOrderThisWeek) / avgOrderThisWeek) * 100
               }
             />
+              <AnalyticCard
+               className="col-span-full md:col-span-1"
+                label="Total Products"
+                totalvalue={productsData.count || 0}
+                totalToday={totalProductsToday}
+                weeklyAvg={avgProductsThisWeek}
+              />
           </div>
 
           <div className="w-full h-[20rem] border shadow p-2 rounded-lg mt-6">
@@ -164,7 +167,7 @@ export default async function Overview() {
         <div className="col-span-full md:col-span-3 mb-4">
           <div className="border shadow rounded-lg p-2">
             <h2 className="text-xl mb-4 font-semibold">Top selling products</h2>
-              <div className="relative flex w-full h-[12rem] justify-center items-center mb-4 ">
+              <div className="relative flex w-full h-[12rem] justify-center items-center mb-4">
                 <OverviewPieChart<TCountArr> data={countArr.slice(0, 5)} />
               </div>
               

@@ -33,7 +33,7 @@ export default function SetOrderAsCompletedBtn({id}:{id:number}) {
       loading={isLoading}
       solid
       className="text-sm bg-secondary border-none"
-      label="Set as completed"
+      label={isLoading ? "Loading...":"Set as completed"}
     />
   );
 }

@@ -127,22 +127,20 @@ export default function CheckoutOrderSummary({
         <div className="flex items-center justify-between mb-3 opacity-70">
           <p className="font-semibold">Sub Total</p>
           <p className="font-semibold text-sm flex items-center gap-1">
-            <NairaSvg />
-            {cartTotal.toFixed(2)}
+            ${cartTotal.toFixed(2)}
           </p>
         </div>
         <div className="flex items-center justify-between mb-3 opacity-70">
           <p className="font-semibold">Coupon Discount</p>
           <p className="font-semibold text-sm flex items-center gap-1">
-            <NairaSvg />
-            0.00
+           $0.00
           </p>
         </div>
         <div className="flex items-center justify-between mb-3 opacity-70">
           <p className="font-semibold">Shipping Cost</p>
           <p className="font-semibold text-sm flex items-center gap-1">
-            <NairaSvg />
-            0.00
+            
+            $0.00
           </p>
         </div>
       </div>
@@ -150,8 +148,8 @@ export default function CheckoutOrderSummary({
         <div className="flex items-center justify-between mb-3">
           <p className="font-semibold">Total</p>
           <p className="font-semibold text-sm flex items-center gap-1">
-            <NairaSvg />
-            {cartTotal.toFixed(2)}
+            
+            ${cartTotal.toFixed(2)}
           </p>
         </div>
         <Button

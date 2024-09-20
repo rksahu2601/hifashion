@@ -31,8 +31,8 @@ export default async function Orders() {
           label="Completed Orders"
           totalvalue={completedOrders?.length || 0}
           icon={IoMdCheckmarkCircleOutline}
-          iconColor="text-red-600"
-          iconBg="bg-red-600/10"
+          iconColor="text-green-600"
+          iconBg="bg-green-600/10"
         />
         <AnalyticCard
         className="flex-1"

@@ -10,6 +10,7 @@ import { TUserSession } from "@/lib/getSession";
 import { useCheckoutStore } from "@/store/checkout-details-store";
 import { editProfile } from "@/actions/profileAction";
 import toast from "react-hot-toast";
+import { useCartStore } from "@/store/cart-store";
 
 const formSchema = z.object({
   firstname: z.string().min(2, "minimum of 2 characters"),
@@ -55,6 +56,7 @@ export default function CheckoutDetailsForm({user}: PropType) {
   const setDeliveryDetails = useCheckoutStore(state=>state.setDeliveryDetails)
   const isLoading = useCheckoutStore(state=>state.isLoading)
   const setIsLoading = useCheckoutStore(state=>state.setIsLoading)
+  const clearCart = useCartStore(state=>state.clearCart)
 
   const onSubmit = (data: FieldValues)=>{
     setIsLoading(true)
@@ -64,7 +66,8 @@ export default function CheckoutDetailsForm({user}: PropType) {
        toast.error(res.message)
        setIsLoading(false)
        return
-      } 
+      }
+      clearCart() 
       toast.success(res.message)
     }).finally(()=>{
       setIsLoading(false)

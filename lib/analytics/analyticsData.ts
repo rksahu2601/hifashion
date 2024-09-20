@@ -78,10 +78,11 @@ export const getRevenueThisWeek = async () => {
         new Date(currYear, currMonth, currDay - i + 1).toISOString()
       ).eq("status", "completed")
 
-    const dayOfWeek = getDayOfWeek(currDay+i, currMonth, currYear)
+    // const dayOfWeek = getDayOfWeek(currDay+i, currMonth, currYear)
+    const dayOfWeek = currDay - i === currDay ? "Today" : currDay - i === currDay - 1 ? "Yesterday" : `${currDay - i}/${(currMonth + 1).toString().padStart(2, "0")}`
     if (data) {
         dataArr.push({
-          [`${dayOfWeek}"-"${i+currDay}`]: data,
+          [dayOfWeek]: data,
       });
       // [...dataArr, {
       //      [`${dayOfWeek}`]: data,

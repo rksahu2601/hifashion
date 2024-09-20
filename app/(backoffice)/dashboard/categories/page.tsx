@@ -9,7 +9,7 @@ export default async function Products() {
   const {data: categories} = await supabase.from("categories").select().order("created_at", {ascending: false})
 
   return (
-    <div>
+    <div className="max-w-6xl mx-auto">
       <PageHeader linkUrl='/dashboard/categories/new' title='Categories' />
       {categories && <DataTable deleteAction={deleteCategory} data={categories} filterField="name" columns={columns} />}
     </div>
