@@ -35,11 +35,10 @@ export default function AnalyticCard({
       )}
     >
       <div className="flex justify-between items-start gap-2">
-   
         <div className="flex flex-col">
-        <div className="hidden md:block mb-3 w-fit">
-          {badgeValue && <Badge value={badgeValue} />}
-        </div>
+          {badgeValue && <div className="hidden md:block mb-3 w-fit">
+            <Badge value={badgeValue} />
+          </div>}
           <p className=" text-gray-400 mb-1.5">{label}</p>
           {currency ? (
             <h2 className="text-3xl font-medium mb-2">
@@ -67,9 +66,11 @@ export default function AnalyticCard({
             </div>
           )}
         </div>
-        {badgeValue && <div className="md:hidden">
-          <Badge value={badgeValue} />
-        </div>}
+        {badgeValue && (
+          <div className="md:hidden">
+            <Badge value={badgeValue} />
+          </div>
+        )}
         {Icon && (
           <div
             className={cn(

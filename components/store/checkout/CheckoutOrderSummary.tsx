@@ -5,7 +5,6 @@ import { Dispatch, SetStateAction, useState } from "react";
 import Button from "@/components/Button";
 import CardPaymentForm from "@/components/forms/CardPaymentForm";
 import { useCartStore } from "@/store/cart-store";
-import NairaSvg from "@/components/NairaSvg";
 import { useCheckoutStore } from "@/store/checkout-details-store";
 import toast from "react-hot-toast";
 import { generateOrderId } from "@/lib/genOrderId";
@@ -38,6 +37,7 @@ export default function CheckoutOrderSummary({
   const paymentType = useCheckoutStore((state) => state.paymentType);
   const isLoading = useCheckoutStore((state) => state.isLoading);
   const setIsLoading = useCheckoutStore((state) => state.setIsLoading);
+  const clearCart = useCartStore(state=>state.clearCart)
 
   const checkoutState = useCheckoutStore((state) => ({
     firstname: state.firstname,
@@ -79,6 +79,7 @@ export default function CheckoutOrderSummary({
       .then((res) => {
         if (res?.success) {
           console.log("Success");
+          clearCart() 
           setIsLoading(false);
         }
         setOrderId(orderId);

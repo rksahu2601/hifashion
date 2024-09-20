@@ -56,7 +56,6 @@ export default function CheckoutDetailsForm({user}: PropType) {
   const setDeliveryDetails = useCheckoutStore(state=>state.setDeliveryDetails)
   const isLoading = useCheckoutStore(state=>state.isLoading)
   const setIsLoading = useCheckoutStore(state=>state.setIsLoading)
-  const clearCart = useCartStore(state=>state.clearCart)
 
   const onSubmit = (data: FieldValues)=>{
     setIsLoading(true)
@@ -67,7 +66,6 @@ export default function CheckoutDetailsForm({user}: PropType) {
        setIsLoading(false)
        return
       }
-      clearCart() 
       toast.success(res.message)
     }).finally(()=>{
       setIsLoading(false)
