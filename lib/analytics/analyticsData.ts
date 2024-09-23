@@ -77,9 +77,7 @@ export const getRevenueThisWeek = async () => {
         "created_at",
         new Date(currYear, currMonth, currDay - i + 1).toISOString()
       )
-      .eq("status", "completed")
-      .eq("PaymentStatus", "completed")
-
+      .eq("status", "completed");
 
     const dayOfWeek =
       currDay - i === currDay
@@ -105,8 +103,7 @@ export const getRevenueToday = async () => {
     .select("*")
     .gte("created_at", new Date(currYear, currMonth, currDay).toISOString())
     .lt("created_at", new Date(currYear, currMonth, currDay + 1).toISOString())
-    .eq("status", "completed")
-    .eq("PaymentStatus", "completed")
+    .eq("status", "completed");
 
   if (error) return 0;
 
