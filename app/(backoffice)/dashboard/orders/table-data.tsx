@@ -113,7 +113,7 @@ export const columns: ColumnDef<TOrder>[] = [
     cell: ({ row }) => {
       return (
         <div className="flex w-[100px] items-center">
-          {row.original.status === "completed" ? (
+          {row.original.PaymentStatus === "completed" ? (
             <span className="bg-green-600/10 px-4 py-1 rounded-md text-green-600">
               Completed
             </span>
