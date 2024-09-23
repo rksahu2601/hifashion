@@ -100,6 +100,8 @@ export type Database = {
           lastname: string | null
           noOfProducts: number | null
           orderId: string
+          paymentIntentId: string | null
+          PaymentStatus: string
           paymentType: string | null
           phone: number | null
           status: string
@@ -116,6 +118,8 @@ export type Database = {
           lastname?: string | null
           noOfProducts?: number | null
           orderId: string
+          paymentIntentId?: string | null
+          PaymentStatus?: string
           paymentType?: string | null
           phone?: number | null
           status?: string
@@ -132,6 +136,8 @@ export type Database = {
           lastname?: string | null
           noOfProducts?: number | null
           orderId?: string
+          paymentIntentId?: string | null
+          PaymentStatus?: string
           paymentType?: string | null
           phone?: number | null
           status?: string

@@ -108,6 +108,25 @@ export const columns: ColumnDef<TOrder>[] = [
     },
   },
   {
+    accessorKey: "PaymentStatus",
+    header: "Payment Status",
+    cell: ({ row }) => {
+      return (
+        <div className="flex w-[100px] items-center">
+          {row.original.status === "completed" ? (
+            <span className="bg-green-600/10 px-4 py-1 rounded-md text-green-600">
+              Completed
+            </span>
+          ) :  (
+            <span className="bg-red-600/10 px-4 py-1 rounded-md text-red-600">
+              Pending
+            </span>
+          )}
+        </div>
+      );
+    },
+  },
+  {
     accessorKey: "price",
     header: "Total Price",
     cell: ({ row }) => {

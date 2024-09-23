@@ -1,14 +1,14 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import Button from "@/components/Button";
-import CardPaymentForm from "@/components/forms/CardPaymentForm";
 import { useCartStore } from "@/store/cart-store";
 import { useCheckoutStore } from "@/store/checkout-details-store";
 import toast from "react-hot-toast";
 import { generateOrderId } from "@/lib/genOrderId";
 import { createOrder } from "@/actions/orderActions";
+import StripePayment from "./StripePayment";
 
 type PropsType = {
   setOpenPopUp: Dispatch<SetStateAction<boolean>>;
@@ -37,7 +37,7 @@ export default function CheckoutOrderSummary({
   const paymentType = useCheckoutStore((state) => state.paymentType);
   const isLoading = useCheckoutStore((state) => state.isLoading);
   const setIsLoading = useCheckoutStore((state) => state.setIsLoading);
-  const clearCart = useCartStore(state=>state.clearCart)
+  const clearCart = useCartStore((state) => state.clearCart);
 
   const checkoutState = useCheckoutStore((state) => ({
     firstname: state.firstname,
@@ -79,7 +79,7 @@ export default function CheckoutOrderSummary({
       .then((res) => {
         if (res?.success) {
           console.log("Success");
-          clearCart() 
+          clearCart();
           setIsLoading(false);
         }
         setOrderId(orderId);
@@ -121,8 +121,7 @@ export default function CheckoutOrderSummary({
         </div>
       </div>
       {paymentType === "Stripe" && (
-        // <CardPaymentForm />
-        <div>Coming soon...</div>
+        <StripePayment />
       )}
       <div className="mt-6 md:mt-8">
         <div className="flex items-center justify-between mb-3 opacity-70">
@@ -133,33 +132,27 @@ export default function CheckoutOrderSummary({
         </div>
         <div className="flex items-center justify-between mb-3 opacity-70">
           <p className="font-semibold">Coupon Discount</p>
-          <p className="font-semibold text-sm flex items-center gap-1">
-           $0.00
-          </p>
+          <p className="font-semibold text-sm flex items-center gap-1">$0.00</p>
         </div>
         <div className="flex items-center justify-between mb-3 opacity-70">
           <p className="font-semibold">Shipping Cost</p>
-          <p className="font-semibold text-sm flex items-center gap-1">
-            
-            $0.00
-          </p>
+          <p className="font-semibold text-sm flex items-center gap-1">$0.00</p>
         </div>
       </div>
       <div className="mt-6 md:mt-8">
         <div className="flex items-center justify-between mb-3">
           <p className="font-semibold">Total</p>
           <p className="font-semibold text-sm flex items-center gap-1">
-            
             ${cartTotal.toFixed(2)}
           </p>
         </div>
-        <Button
+        {paymentType == "Cash on Delivery" && <Button
           loading={isLoading}
           onClick={handleOrderProcessing}
           label="Proceed"
           solid
           className="w-full"
-        />
+        />}
       </div>
     </motion.section>
   );

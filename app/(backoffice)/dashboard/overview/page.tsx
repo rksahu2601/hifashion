@@ -17,10 +17,10 @@ type TWeekRevenue = {
   value: number;
 };
 type TCountArr = {
-  id: number |undefined;
-  image: string |undefined | null;
-  name: string |undefined | null;
-  price: number |undefined | null;
+  id: number | undefined;
+  image: string | undefined | null;
+  name: string | undefined | null;
+  price: number | undefined | null;
   count: number;
 };
 
@@ -63,7 +63,7 @@ export default async function Overview() {
     })[0];
   });
 
-  console.log("Array", weekRevenueArr);
+  console.log("Weekly revenue Array", weekRevenueArr);
 
   const totalRevenueThisWeek = weekRevenueArr.reduce((acc, curr) => {
     return acc + curr.value;
@@ -121,12 +121,14 @@ export default async function Overview() {
       <h1 className="text-2xl md:text-3xl font-medium mt-6">
         Welcome back, {user?.firstname} {user?.lastname}
       </h1>
-      <p className="mb-6 text-muted-foreground">Here&apos;s what your store is saying today</p>
+      <p className="mb-6 text-muted-foreground">
+        Here&apos;s what your store is saying today
+      </p>
       <div className="grid grid-cols-12 gap-6">
         <div className="col-span-full md:col-span-9">
           <div className="grid grid-cols-3 gap-6 items-start">
             <AnalyticCard
-            className="col-span-full md:col-span-1"
+              className="col-span-full md:col-span-1"
               currency
               label="Total Revenue"
               totalvalue={totalRevenue || 0}
@@ -139,7 +141,7 @@ export default async function Overview() {
               }
             />
             <AnalyticCard
-             className="col-span-full md:col-span-1"
+              className="col-span-full md:col-span-1"
               label="Total Orders"
               totalvalue={orderData.count || 0}
               totalToday={totalOrdersToday}
@@ -148,13 +150,13 @@ export default async function Overview() {
                 ((totalOrdersToday - avgOrderThisWeek) / avgOrderThisWeek) * 100
               }
             />
-              <AnalyticCard
-               className="col-span-full md:col-span-1"
-                label="Total Products"
-                totalvalue={productsData.count || 0}
-                totalToday={totalProductsToday}
-                weeklyAvg={avgProductsThisWeek}
-              />
+            <AnalyticCard
+              className="col-span-full md:col-span-1"
+              label="Total Products"
+              totalvalue={productsData.count || 0}
+              totalToday={totalProductsToday}
+              weeklyAvg={avgProductsThisWeek}
+            />
           </div>
 
           <div className="w-full h-fit border shadow p-2 rounded-lg mt-6">
@@ -162,39 +164,39 @@ export default async function Overview() {
               Earnings in the last seven days
             </h2>
             <div className="w-full h-[18rem]">
-            <OverviewBarChart<TWeekRevenue> data={weekRevenueArr.reverse()} />
+              <OverviewBarChart<TWeekRevenue> data={weekRevenueArr.reverse()} />
             </div>
           </div>
         </div>
         <div className="col-span-full md:col-span-3 mb-4">
           <div className="border shadow rounded-lg p-2">
             <h2 className="text-xl mb-4 font-semibold">Top selling products</h2>
-              <div className="relative flex w-full h-[12rem] justify-center items-center mb-4">
-                <OverviewPieChart<TCountArr> data={countArr.slice(0, 5)} />
-              </div>
-              
-              {countArr.slice(0, 5).map(({ name, image, id, price }) => (
-                <Link
-                  key={id}
-                  href={`/product/${id}`}
-                  className="h-10 w-full rounded-md pb-1 mb-2 flex items-center hover:bg-slate-100 transition px-1"
-                >
-                  <div className="relative h-full w-8 mr-4 rounded-full overflow-hidden bg-slate-200">
-                    <Image
-                      src={image as string}
-                      className="object-cover"
-                      alt={"product image"}
-                      fill
-                    />
-                  </div>
-                  <h2 className="line-clamp-1 mr-8 text-xs font-semibold">
-                    {name}
-                  </h2>
-                  <p className="ml-auto font-semibold text-sm">
-                    ${price!.toFixed(2)}
-                  </p>
-                </Link>
-              ))}
+            <div className="relative flex w-full h-[12rem] justify-center items-center mb-4">
+              <OverviewPieChart<TCountArr> data={countArr.slice(0, 5)} />
+            </div>
+
+            {countArr.slice(0, 5).map(({ name, image, id, price }) => (
+              <Link
+                key={id}
+                href={`/product/${id}`}
+                className="h-10 w-full rounded-md pb-1 mb-2 flex items-center hover:bg-slate-100 transition px-1"
+              >
+                <div className="relative h-full w-8 mr-4 rounded-full overflow-hidden bg-slate-200">
+                  <Image
+                    src={image as string}
+                    className="object-cover"
+                    alt={"product image"}
+                    fill
+                  />
+                </div>
+                <h2 className="line-clamp-1 mr-8 text-xs font-semibold">
+                  {name}
+                </h2>
+                <p className="ml-auto font-semibold text-sm">
+                  ${price!.toFixed(2)}
+                </p>
+              </Link>
+            ))}
           </div>
         </div>
       </div>

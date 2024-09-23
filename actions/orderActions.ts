@@ -110,7 +110,7 @@ export const setOrderAsCompleted = async (id: number) => {
 
   try {
     const [orderData, orderProductData] = await Promise.all([
-      supabase.from("orders").update({ status: "completed" }).eq("orderId", id),
+      supabase.from("orders").update({ status: "completed",PaymentStatus: "completed" }).eq("orderId", id),
       supabase.from("orderProduct").update({ status: "completed" }).eq("orderId", id),
     ]);
 
