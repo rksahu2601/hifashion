@@ -137,7 +137,7 @@ export default async function Overview() {
               badgeValue={
                 ((totalRevenueToday - avgRevenueThisWeek) /
                   avgRevenueThisWeek) *
-                100
+                100 || undefined
               }
             />
             <AnalyticCard
@@ -147,7 +147,7 @@ export default async function Overview() {
               totalToday={totalOrdersToday}
               weeklyAvg={avgOrderThisWeek}
               badgeValue={
-                ((totalOrdersToday - avgOrderThisWeek) / avgOrderThisWeek) * 100
+                ((totalOrdersToday - avgOrderThisWeek) / avgOrderThisWeek) * 100 || undefined
               }
             />
             <AnalyticCard
