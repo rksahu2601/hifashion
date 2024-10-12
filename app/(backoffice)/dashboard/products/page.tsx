@@ -1,7 +1,7 @@
 import { DataTable } from '@/components/DataTable/data-table'
 import { createClient } from '@/lib/supabase/server'
 import { columns, statuses } from './table-data'
-import { deleteProduct } from '@/actions/productActions'
+import { deleteProduct, editProduct, setProductAsActive } from '@/actions/productActions'
 import PageHeader from '@/components/backoffice/PageHeader'
 import AnalyticCard from '@/components/backoffice/AnalyticCard'
 
@@ -17,6 +17,20 @@ export default async function Products() {
   const activeProducts = products?.filter(product=>product.status === "active")
   const inactiveProducts = products?.filter(product=>product.status === "draft")
   const scheduledProducts = products?.filter(product=>product.status === "scheduled")
+
+  if(scheduledProducts && scheduledProducts.length){
+    
+    for (const product of scheduledProducts){
+      if(new Date(product.scheduleDate as string) > new Date()){
+        const time = new Date(product.scheduleDate as string).getTime() - new Date().getTime()
+
+        setTimeout(async ()=>{
+          await setProductAsActive(product.id)
+        }, time)
+      
+    }
+  }
+}
 
   return (
     <div className='max-w-6xl mx-auto'>

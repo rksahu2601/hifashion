@@ -9,7 +9,7 @@ import { deleteImage } from "./uploadThingActions";
 
 type DataType =
   | {
-    productId?: string; 
+      productId?: string;
       productName: string;
       productDescription: string;
       category: string;
@@ -17,7 +17,8 @@ type DataType =
       sku: string;
       price: string;
       color: string;
-      status: "active" | "draft";
+      status: "active" | "draft" | "scheduled";
+      scheduleDate?: Date | null;
       categorySlug: string;
       deliveryInfo: string;
       gender: string;
@@ -49,6 +50,7 @@ export async function createProduct(data: DataType) {
       categorySlug: data.categorySlug,
       gender: data.gender,
       deliveryInfo: data.deliveryInfo,
+      scheduleDate: data.scheduleDate,
     });
     if (error) {
       console.log("Product error", error);
@@ -70,25 +72,28 @@ export async function editProduct(data: DataType) {
   }
 
   try {
-    const { error } = await supabase.from("products").update({
-      name: data.productName,
-      description: data.productDescription,
-      images: data.images,
-      category: data.category,
-      quantity: data.quantity,
-      sku: data.sku,
-      price: data.price,
-      color: data.color,
-      status: data.status,
-      variants: data.variants,
-      categorySlug: data.categorySlug,
-      gender: data.gender,
-      deliveryInfo: data.deliveryInfo,
-    }).eq("id", data.productId)
+    const { error } = await supabase
+      .from("products")
+      .update({
+        name: data.productName,
+        description: data.productDescription,
+        images: data.images,
+        category: data.category,
+        quantity: data.quantity,
+        sku: data.sku,
+        price: data.price,
+        color: data.color,
+        status: data.status,
+        variants: data.variants,
+        categorySlug: data.categorySlug,
+        gender: data.gender,
+        deliveryInfo: data.deliveryInfo,
+        ...(data.status !== "scheduled" && { scheduleDate: null }),
+      })
+      .eq("id", data.productId);
     if (error) {
       console.log("Product edit error", error);
     }
-
   } catch (error) {
     console.log(error);
   }
@@ -101,16 +106,13 @@ export async function deleteProduct(data: TProducts) {
   const supabase = createClient();
 
   const user = await getUserSession();
-  console.log("User", user)
+  console.log("User", user);
   if (!user || user.role !== "admin") {
     throw new Error("Unathorized Access!");
   }
 
   try {
-    const res = await supabase
-      .from("products")
-      .delete()
-      .eq("id", data.id);
+    const res = await supabase.from("products").delete().eq("id", data.id);
 
     if (res.status === 204) {
       data.images.map(async (image: string) => {
@@ -125,7 +127,40 @@ export async function deleteProduct(data: TProducts) {
   revalidatePath("/store");
 }
 
-export  async function setProductAsDraft(id: number){
+// export async function setProductAsDraft(id: number) {
+//   const supabase = createClient();
+
+//   const user = await getUserSession();
+//   if (!user || user.role !== "admin") {
+//     throw new Error("Unathorized Access!");
+//   }
+
+//   try {
+//     const { error } = await supabase
+//       .from("products")
+//       .update({ status: "draft" })
+//       .eq("id", id);
+//     if (error) {
+//       console.log("Product to draft error", error);
+//       return {
+//         success: false,
+//       };
+//     }
+//     revalidatePath("/dashboard/products");
+//     revalidatePath("/store");
+
+//     return {
+//       success: true,
+//     };
+//   } catch (error) {
+//     console.log(error);
+//     return {
+//       success: false,
+//     };
+//   }
+// }
+
+export async function setProductAsActive(id: number) {
   const supabase = createClient();
 
   const user = await getUserSession();
@@ -134,23 +169,26 @@ export  async function setProductAsDraft(id: number){
   }
 
   try {
-    const {error} = await supabase.from("products").update({status: "draft"}).eq("id", id)
+    const { error } = await supabase
+      .from("products")
+      .update({ status: "active", scheduleDate: null })
+      .eq("id", id);
     if (error) {
-      console.log("Product to draft error", error);
+      console.log("Product to active error", error);
       return {
-        success: false
-      }
+        success: false,
+      };
     }
     revalidatePath("/dashboard/products");
     revalidatePath("/store");
 
     return {
-      success: true
-    }
+      success: true,
+    };
   } catch (error) {
     console.log(error);
     return {
-      success: false
-    }
+      success: false,
+    };
   }
 }

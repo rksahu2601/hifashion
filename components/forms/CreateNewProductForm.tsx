@@ -15,11 +15,11 @@ import ProductImages from "../backoffice/products/ProductImages";
 import {
   createProduct,
   editProduct,
-  setProductAsDraft,
 } from "@/actions/productActions";
 import { TCategory, TProducts } from "@/types/supabaseTypes";
 import { useRouter } from "next/navigation";
 import { ColorVariant } from "../constants";
+import ProductSchedule from "../backoffice/products/ProductSchedule";
 
 const formSchema = z.object({
   productName: z.string().min(2, "minimum of 2 characters"),
@@ -56,9 +56,11 @@ export default function EditProductForm({ categories, product }: PropType) {
   const [showVariantInput, setShowVariantInput] = useState(false);
 
   const [imageUrls, setImageUrls] = useState<String[]>(product?.images || []);
-  const [productStatus, setProductStatus] = useState<"active" | "draft">(
+  const [productStatus, setProductStatus] = useState<"active" | "draft" | "scheduled">(
     "active"
   );
+
+  const [dateTime, setDateTime] = useState<Date | null>(new Date());
 
   const categorySelectOptions = categories
     ? categories.map((cat) => cat.name)
@@ -101,6 +103,9 @@ export default function EditProductForm({ categories, product }: PropType) {
     if (categorySlug) data.categorySlug = categorySlug;
 
     if (product) data.productId = product.id;
+    
+    if (dateTime && dateTime > new Date())  data.scheduleDate = dateTime;
+
     console.log(data);
 
     if (product) {
@@ -143,9 +148,10 @@ export default function EditProductForm({ categories, product }: PropType) {
   };
 
   return (
+    <>
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col md:flex-row gap-6"
+      className={cn("flex flex-col md:flex-row gap-6",  dateTime && dateTime > new Date() && "mb-10")}
     >
       <div className="flex-1">
         <section className="w-full">
@@ -292,16 +298,10 @@ export default function EditProductForm({ categories, product }: PropType) {
         <div className="w-full flex">
           {product ? (
             <div className="w-full flex items-center justify-end gap-2">
-              <Button
-                type="button"
-                loading={loading}
-                disabled={loading}
-                label="Schedule"
-                className="rounded px-3 py-2 mt-4 text-xs md:text-sm"
-              />
+
               {product.status !== "draft" && (
                 <Button
-                  onClick={() => setProductStatus("draft")}
+                  onClick={() => {setProductStatus("draft"); setDateTime(null)}}
                   loading={loading}
                   disabled={loading}
                   label="Draft"
@@ -327,18 +327,16 @@ export default function EditProductForm({ categories, product }: PropType) {
               />
             </div>
           ) : (
-            <div className="w-full flex items-center justify-end gap-2">
+            <div className={cn("w-full flex items-center justify-end gap-2",)}>
+           <ProductSchedule
+           setProductStatus={setProductStatus}
+            dateTime={dateTime}
+            setDateTime={setDateTime}
+           />
             <Button
-              type="button"
-              loading={loading}
-              disabled={loading}
-              label="Schedule"
-              className="rounded px-3 py-2 mt-4 text-xs md:text-sm"
-            />
-            <Button
-                onClick={() => setProductStatus("draft")}
+                onClick={() => {setProductStatus("draft"); setDateTime(null)}}
                 loading={loading}
-                disabled={loading}
+                disabled={loading ||  !!( dateTime && dateTime > new Date())}
                 label="Draft"
                 solid
                 className="border rounded bg-primary border-none px-3 py-2 mt-4 text-xs md:text-sm"
@@ -356,5 +354,11 @@ export default function EditProductForm({ categories, product }: PropType) {
         </div>
       </div>
     </form>
+    {dateTime && dateTime > new Date() && <p className="text-center fixed bottom-0 left-0 w-screen text-sm py-2 bg-yellow-300 font-semibold">
+      This product will be scheduled to go live on {dateTime.toLocaleString()} </p>}
+    {product && product.scheduleDate && (new Date(product.scheduleDate) > new Date()) && <p className="text-center fixed bottom-0 left-0 w-screen text-sm py-2 bg-yellow-300 font-semibold">
+      This product is scheduled to go live on {new Date(product.scheduleDate).toLocaleString()}
+    </p>}
+    </>
   );
 }
