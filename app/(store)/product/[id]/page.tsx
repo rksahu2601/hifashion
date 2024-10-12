@@ -1,6 +1,5 @@
 import ProductImages from '@/components/store/productDetail/ProductImages'
 import React from 'react'
-import ProductCard from './../../../../components/store/products/ProductCard';
 import { createClient } from '@/lib/supabase/server';
 import Details from '@/components/store/productDetail/Details';
 import { getUserSession } from '@/lib/getSession';
@@ -18,8 +17,7 @@ export default async function page({params:{id}}:{params:{id:number}}) {
   const user = await getUserSession()
   const {data:boughtProducts} = await supabase.from("orderProduct").select().match({status: "completed", buyerId: user?.id, productId: id})
 
-  const relatedProductData = await supabase.from("products").select().eq("categorySlug", productsData.data?.categorySlug as string);
-  const relatedProduct = relatedProductData.data?.filter((product)=>product.id !== id) || null;
+  const {data:relatedProduct} = await supabase.from("products").select().eq("categorySlug", productsData.data?.categorySlug as string).eq("status", "active").neq("id",id)
 
   return (
     <div className='contain mt-[5rem]'>
