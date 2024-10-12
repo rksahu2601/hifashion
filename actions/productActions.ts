@@ -6,6 +6,7 @@ import { getUserSession } from "@/lib/getSession";
 import { FieldValues } from "react-hook-form";
 import { TProducts } from "@/types/supabaseTypes";
 import { deleteImage } from "./uploadThingActions";
+import { cache } from "react";
 
 type DataType =
   | {
@@ -160,31 +161,33 @@ export async function deleteProduct(data: TProducts) {
 //   }
 // }
 
-export async function setProductAsActive(id: number) {
+export async function setScheduledProductAsActive() {
   const supabase = createClient();
 
-  const user = await getUserSession();
-  if (!user || user.role !== "admin") {
-    throw new Error("Unathorized Access!");
-  }
-
   try {
-    const { error } = await supabase
+    const { error, data:scheduledProducts } = await supabase
       .from("products")
-      .update({ status: "active", scheduleDate: null })
-      .eq("id", id);
+      .select()
+      .eq("status", "scheduled")
+      .lte("scheduleDate", new Date().toISOString());
     if (error) {
       console.log("Product to active error", error);
-      return {
-        success: false,
-      };
+      return 
     }
-    revalidatePath("/dashboard/products");
-    revalidatePath("/store");
 
-    return {
-      success: true,
-    };
+    if(scheduledProducts.length){
+       const promise = scheduledProducts.map((product)=>{
+        return supabase.from("products").update({status:"active", scheduleDate: null}).eq("id", product.id)
+       })
+
+       await Promise.all(promise)
+    }
+    // revalidatePath("/dashboard/products");
+    // revalidatePath("/store");
+
+    // return {
+    //   success: true,
+    // };
   } catch (error) {
     console.log(error);
     return {
