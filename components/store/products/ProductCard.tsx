@@ -87,7 +87,6 @@ export default function ProductCard({ product }: PropType) {
             <Dialog>
               <DialogTrigger asChild>
                 <Button
-                  // onClick={()=>setShowVariants(true)}
                   label="Add to cart"
                   className="border-gray-400 py-1.5 rounded-none text-gray-900 max-md:mt-2 max-md:text-xs max-md:w-full"
                 />
