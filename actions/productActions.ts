@@ -177,21 +177,14 @@ export async function setScheduledProductAsActive() {
 
     if(scheduledProducts.length){
        const promise = scheduledProducts.map((product)=>{
+        console.log("setting producs to active");
+        
         return supabase.from("products").update({status:"active", scheduleDate: null}).eq("id", product.id)
        })
 
        await Promise.all(promise)
     }
-    // revalidatePath("/dashboard/products");
-    // revalidatePath("/store");
-
-    // return {
-    //   success: true,
-    // };
   } catch (error) {
     console.log(error);
-    return {
-      success: false,
-    };
   }
 }

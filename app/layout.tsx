@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
 import { Toaster } from 'react-hot-toast';
 import "./globals.css";
-import runCronJob from "@/lib/cron/cronJob";
 import { createClient } from "@/lib/supabase/server";
+import { setScheduledProductAsActive } from "@/actions/productActions";
 
 const dmsans = DM_Sans({ subsets: ["latin"] });
 
@@ -19,7 +19,7 @@ export default async function RootLayout({
 }>) {
  const supabase = createClient()
  const {data, error} = await supabase.from("products").select().eq("status", "scheduled")
- if(data?.length) runCronJob()
+ if(data?.length) await setScheduledProductAsActive()
 
   return (
     <html lang="en">
