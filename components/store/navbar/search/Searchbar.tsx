@@ -2,25 +2,30 @@
 
 import { Search } from "lucide-react";
 import { motion } from "framer-motion";
-import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import SearchResultBox from "./SearchResultBox";
 import { createClient } from "@/lib/supabase/client";
 import { TProducts } from "@/types/supabaseTypes";
 
 import MobileSearchResultBox from "./MobileSearchResultBox";
+import { useDebounce } from "@/lib/useDebounce";
 
 export default function Searchbar() {
   const [openSearchDropdown, setOpenSearchDropdown] = useState(false);
   const [searchInput, setSearchInput] = useState<string | null>(null);
+  const debouncedInput = useDebounce(searchInput as string);
+
   const [products, setProducts] = useState<TProducts[] | null>([]);
   const inPutRef = useRef<HTMLInputElement>(null);
+  
 
   const supabase = createClient();
 
   useEffect(() => {
     const searchProduct = async () => {
-      if (searchInput) {
+      if (debouncedInput) {
+        console.log("debouncedInput", debouncedInput)
+        
         const { data: products } = await supabase
           .from("products")
           .select()
@@ -32,7 +37,7 @@ export default function Searchbar() {
       }
     };
     searchProduct();
-  }, [searchInput, supabase]);
+  }, [debouncedInput, supabase]);
 
   return (
     <div>
@@ -69,7 +74,7 @@ export default function Searchbar() {
       </div>
 
       {/* for smaller screens */}
-      <MobileSearchResultBox setSearchInput={setSearchInput} products={products} searchInput={searchInput} />
+      <MobileSearchResultBox setSearchInput={setSearchInput} products={products} searchInput={debouncedInput} />
     </div>
   );
 }
