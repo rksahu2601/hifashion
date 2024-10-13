@@ -9,6 +9,7 @@ import toast from "react-hot-toast";
 import { generateOrderId } from "@/lib/genOrderId";
 import { createOrder } from "@/actions/orderActions";
 import StripePayment from "./StripePayment";
+import { formatCurrency } from "@/lib/formatCurrency";
 
 type PropsType = {
   setOpenPopUp: Dispatch<SetStateAction<boolean>>;
@@ -127,7 +128,7 @@ export default function CheckoutOrderSummary({
         <div className="flex items-center justify-between mb-3 opacity-70">
           <p className="font-semibold">Sub Total</p>
           <p className="font-semibold text-sm flex items-center gap-1">
-            ${cartTotal.toFixed(2)}
+            ${formatCurrency(cartTotal)}
           </p>
         </div>
         <div className="flex items-center justify-between mb-3 opacity-70">
@@ -143,7 +144,7 @@ export default function CheckoutOrderSummary({
         <div className="flex items-center justify-between mb-3">
           <p className="font-semibold">Total</p>
           <p className="font-semibold text-sm flex items-center gap-1">
-            ${cartTotal.toFixed(2)}
+            ${formatCurrency(cartTotal)}
           </p>
         </div>
         {paymentType == "Cash on Delivery" && <Button

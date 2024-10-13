@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
 import { IconType } from "react-icons/lib";
 import Badge from "./Badge";
+import { formatCurrency } from "@/lib/formatCurrency";
 
 type PropType = {
   currency?: boolean;
@@ -42,7 +43,7 @@ export default function AnalyticCard({
           <p className=" text-gray-400 mb-1.5">{label}</p>
           {currency ? (
             <h2 className="text-3xl font-medium mb-2">
-              ${totalvalue.toFixed(2)}
+              ${formatCurrency(totalvalue)}
             </h2>
           ) : (
             <h2 className="text-3xl font-medium mb-2">

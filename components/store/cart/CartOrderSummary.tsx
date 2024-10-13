@@ -6,6 +6,7 @@ import Button from "@/components/Button";
 import { motion } from "framer-motion";
 import { useCartStore } from "@/store/cart-store";
 import NairaSvg from "@/components/NairaSvg";
+import { formatCurrency } from "@/lib/formatCurrency";
 
 export default function CartOrderSummary() {
   const selectOptions = [
@@ -35,7 +36,7 @@ export default function CartOrderSummary() {
         <hr className="my-4 md:my-6 bg-primary-70" />
         <div className="flex items-center justify-between font-semibold md:text-lg uppercase mb-4 md:mb-8">
           <h2>Items {cart.length}</h2>
-          <p className="text-sm flex items-center gap-1">${cartTotal}</p>
+          <p className="text-sm flex items-center gap-1">${formatCurrency(cartTotal)}</p>
         </div>
 
         <div className="flex flex-col gap-3 mb-8">
@@ -66,7 +67,7 @@ export default function CartOrderSummary() {
         <Button solid label="APPLY" className="my-6 w-fit bg-white text-primary" />
         <div className="flex items-center justify-between font-semibold md:text-lg uppercase mb-4 md:mb-8">
           <h2 className="uppercase">Total cost</h2>
-          <p className="text-sm flex items-center gap-1">${cartTotal}</p>
+          <p className="text-sm flex items-center gap-1">${formatCurrency(cartTotal)}</p>
         </div>
         <Link
           href="/checkout"
