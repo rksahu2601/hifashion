@@ -42,6 +42,14 @@
   scrollbar-color: #aab7cf transparent;
 }
 
+/* .react-datepicker__day--today */
+
+.react-datepicker__day--selected {
+  background: #e11d48 !important;
+}
+
+/* "" */
+
 @layer base {
   :root {
     --background: 0 0% 100%;

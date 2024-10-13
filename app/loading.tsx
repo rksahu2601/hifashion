@@ -1,9 +1,9 @@
-import { Loader2 } from 'lucide-react'
+import Loader from '@/components/Loader'
 
 export default function Loading() {
   return (
-    <div className='w-screen h-screen grid place-items-center'>
-        <Loader2 className="w-8 h-8 animate-spin text-secondary" />
+    <div className='w-screen h-screen flex items-center justify-center'>
+        <Loader />
     </div>
   )
 }
