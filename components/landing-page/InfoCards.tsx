@@ -1,4 +1,7 @@
-import { Bus, Container, ThumbsUp, Undo2, WalletCards } from "lucide-react";
+"use client"
+
+import { motion } from "framer-motion";
+import { Container, ThumbsUp, Undo2, WalletCards } from "lucide-react";
 
 const InfoCardsArr = [
   {
@@ -27,14 +30,14 @@ export default function InfoCards() {
   return (
     <section className="contain grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
       {
-        InfoCardsArr.map((info)=>(
-          <div key={info.label} className="flex gap-3 items-center">
+        InfoCardsArr.map((info, i)=>(
+          <motion.div initial={{y: 20, opacity: 0}} whileInView={{y:0, opacity: 1}} transition={{delay: i*0.2}} viewport={{margin: "-50px"}} key={info.label} className="flex gap-3 items-center">
             <span className="w-16 aspect-square rounded-md bg-gray-100 flex items-center justify-center">{info.icon}</span>
             <div>
               <h3 className="font-semibold">{info.label}</h3>
               <p className="opacity-80 text-sm">{info.subLabel}</p>
             </div>
-          </div>
+          </motion.div>
         ))
       }
     </section>

@@ -48,7 +48,7 @@ const slidesPerView = width > 1024 ? 4 : width > 640 ? 3 : 1
             disableOnInteraction: false,
           }}
         modules={[FreeMode, Pagination, Autoplay]}
-        className=" h-[400px]"
+        className="h-[400px]"
       >
         {categories?.map((category)=>(
             <SwiperSlide key={category.id} className='group'>

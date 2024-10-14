@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export default function SummerSale() {
   return (
-    <section className="contain mt-20 mb-10 h-[30rem] sm:h-[20rem] flex flex-col items-center sm:flex-row">
+    <section className="contain mt-10 sm:mt-20 mb-10 h-[30rem] sm:h-[20rem] flex flex-col items-center sm:flex-row">
         <div className="relative h-full w-full">
             <Image
                 className="object-top object-cover"
