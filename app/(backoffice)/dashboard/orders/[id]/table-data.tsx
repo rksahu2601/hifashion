@@ -1,14 +1,9 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-
-import { DataTableRowActions } from "@/components/DataTable/data-table-row-action";
-import { formatDateTime } from "@/lib/formatDate";
-import { TCartItem } from "@/store/cart-store";
 import { DataTableColumnHeader } from "@/components/DataTable/data-table-column-header";
 import Image from "next/image";
-import NairaSvg from "@/components/NairaSvg";
-import { TOrder, TOrderProduct } from "@/types/supabaseTypes";
+import {  TOrderProduct } from "@/types/supabaseTypes";
 
 export const columns: ColumnDef<TOrderProduct>[] = [
   {
