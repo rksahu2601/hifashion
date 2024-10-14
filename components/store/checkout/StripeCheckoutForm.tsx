@@ -2,7 +2,6 @@
 
 import Button from "@/components/Button";
 import { useCartStore } from "@/store/cart-store";
-import { useCheckoutStore } from "@/store/checkout-details-store";
 import {
   PaymentElement,
   useElements,

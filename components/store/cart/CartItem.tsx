@@ -1,6 +1,5 @@
 "use client"
 
-import NairaSvg from '@/components/NairaSvg'
 import SetQtyBtns from '@/components/store/SetQtyBtns'
 import { Badge } from '@/components/ui/badge'
 import { TCartItem, useCartStore } from '@/store/cart-store'

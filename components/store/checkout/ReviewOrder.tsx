@@ -3,7 +3,6 @@
 import ReviewItem from "./ReviewItem";
 import CheckoutDetailsForm from "@/components/forms/CheckoutDetailsForm";
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import { motion } from "framer-motion";
 import { useCartStore } from './../../../store/cart-store';
 import { TUserSession } from "@/lib/getSession";

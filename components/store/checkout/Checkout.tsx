@@ -5,8 +5,6 @@ import ReviewOrder from "@/components/store/checkout/ReviewOrder";
 import OrderPlacedPopup from "./OrderPlacedPopup";
 import { useEffect, useState } from "react";
 import { TUserSession } from "@/lib/getSession";
-import Stripe from "stripe";
-import { confirmStripePayment } from "@/actions/stripePaymentActions";
 import { useCartStore } from "@/store/cart-store";
 
 type PropType = {
