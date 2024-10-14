@@ -70,9 +70,9 @@ export default function Hero() {
               transition={{ repeat: Infinity, repeatType: "mirror", repeatDelay: 4, ease: "backInOut"}}
               className="absolute inset-0 w-full h-full">
             <Image 
-              className="object-center object-cover"
+              className="object-top object-cover"
               src="/women1.jpg"
-              alt="men image"
+              alt="women image"
               fill
             />
           </motion.div>
@@ -83,9 +83,9 @@ export default function Hero() {
             transition={{delay: 2, repeat: Infinity, repeatType: "mirror", repeatDelay: 4, ease: "backInOut"}}
             className="absolute inset-0 w-full h-full">
             <Image 
-              className="object-center object-cover"
+              className="object-top object-cover"
               src="/women2.jpg"
-              alt="men image"
+              alt="women image"
               fill
             />
           </motion.div>
@@ -98,7 +98,7 @@ export default function Hero() {
             <Image 
               className="object-cover object-center"
               src="/women3.jpg"
-              alt="men image"
+              alt="women image"
               fill
             />
           </motion.div>

@@ -37,17 +37,17 @@ export default function AuthBtns({ user }: PropType) {
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
-                <DialogTitle>Log in as either User or Admin</DialogTitle>
+                <DialogTitle>Log in as a user</DialogTitle>
                 <DialogDescription>
-                 You have to log in as an admin in order to view the admin dashboard or log in as a user to purchase a product.
+                 You can log in as a new user if you already have an account or as John doe for quick demo.
                 </DialogDescription>
               </DialogHeader>
               <div className="flex items-end gap-3 justify-end">
                 <DialogClose asChild>
-                  <Link className="bg-primary px-3 py-2 rounded-md shadow-sm text-white font-semibold text-sm" href="/signin?role=admin">Log in as Admin</Link>
+                  <Link className="bg-primary px-3 py-2 rounded-md shadow-sm text-white font-semibold text-sm" href="/signin">Log in</Link>
                 </DialogClose>
                 <DialogClose asChild>
-                  <Link className="bg-white border border-primary px-3 py-2 rounded-md shadow-sm text-primary font-semibold text-sm" href="/signin?role=user">Log in as User</Link>
+                  <Link className="bg-white border border-primary px-3 py-2 rounded-md shadow-sm text-primary font-semibold text-sm" href="/signin?role=user">Log in as John Doe</Link>
                 </DialogClose>
               </div>
             </DialogContent>

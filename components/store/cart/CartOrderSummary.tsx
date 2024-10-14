@@ -5,13 +5,12 @@ import Button from "@/components/Button";
 
 import { motion } from "framer-motion";
 import { useCartStore } from "@/store/cart-store";
-import NairaSvg from "@/components/NairaSvg";
 import { formatCurrency } from "@/lib/formatCurrency";
 
 export default function CartOrderSummary() {
   const selectOptions = [
-    "Standard Delivery - $5.00",
-    "Premium Delivery - $10.00",
+    "Free delivery",
+    // "Premium Delivery - $10.00",
   ];
 
   const variants = {

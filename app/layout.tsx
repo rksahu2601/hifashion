@@ -4,6 +4,7 @@ import { Toaster } from 'react-hot-toast';
 import "./globals.css";
 import { createClient } from "@/lib/supabase/server";
 import { setScheduledProductAsActive } from "@/actions/productActions";
+import Head from "next/head";
 
 const dmsans = DM_Sans({ subsets: ["latin"] });
 

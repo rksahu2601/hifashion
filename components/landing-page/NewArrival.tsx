@@ -7,7 +7,7 @@ export default function NewArrival() {
     <section className='mt-[16rem] sm:mt-[18rem] mb-10 sm:mb-20 max-w-[60rem] mx-auto px-2 flex gap-10 sm:gap-6 flex-col sm:flex-row'>
        <div className='w-full flex flex-col'>
             <Image
-                src="/image4.jpg"
+                src="/women333.jpg"
                 alt="fashion image"
                 width={500}
                 height={1000}

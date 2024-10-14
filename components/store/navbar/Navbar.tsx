@@ -1,12 +1,11 @@
 import { createClient } from '@/lib/supabase/server'
 import AuthBtns from './AuthBtns'
 import CartIcon from './CartIcon'
-import Logo from './Logo'
 import MobileMenu from './mobileMenu/MobileMenu'
-import NavCategories from './NavCategories'
 import ProfileIcon from './ProfileIcon'
 import Searchbar from './search/Searchbar'
 import { getUserSession } from '@/lib/getSession'
+import Logo from '@/components/Logo'
 
 export default async function Navbar() {
   const supabase = createClient()
@@ -21,7 +20,6 @@ export default async function Navbar() {
         <div className="flex items-center gap-6">
           <Logo />
           <div className='hidden md:block'>
-          {/* <NavCategories categories={categories}/> */}
           </div>
         </div>
  
