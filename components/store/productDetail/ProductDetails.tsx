@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 import { useCartStore } from "@/store/cart-store";
 import toast from "react-hot-toast";
 import CustomStarRating from "@/components/custom-star-rating";
+import { useRouter } from "next/navigation";
 
 type PropType = {
   product: TProducts | null;
@@ -18,8 +19,11 @@ export default function ProductDetails({ product, reviews }: PropType) {
   const [showFullDesc, setShowFullDesc] = useState(false);
   const [selectedVariant, setSelectedVariant] = useState<string | null>(null);
 
+  const router = useRouter()
+
   const addToCart = useCartStore((state) => state.addToCart);
   const cart = useCartStore((state) => state.cart);
+  const addSingleProductToCart = useCartStore((state) => state.addSingleProductToCart);
 
   const addItemWithVariantToCart = (product: TProducts)=>{
       if(!selectedVariant){
@@ -39,12 +43,25 @@ export default function ProductDetails({ product, reviews }: PropType) {
     }
   }
 
+  const handleBuyNow = (product: TProducts | null) => {
+      if(product?.variants.length && !selectedVariant){
+        toast.error("Select a variant")
+        return;
+      }
+
+      if(product?.variants.length && selectedVariant){
+        addSingleProductToCart(product, selectedVariant)
+      } else {
+        product && addSingleProductToCart(product)
+      }
+
+      router.push("/checkout")
+  }
+
   const averageRating = reviews?.reduce((acc, item)=>{
     return acc + (item.rating ?? 0)/reviews.length
   }, 0) ?? 0
   const ratingValue = Math.ceil(averageRating)
-
-  console.log(ratingValue)
 
   return (
     <div className="w-full">
@@ -86,10 +103,10 @@ export default function ProductDetails({ product, reviews }: PropType) {
 
               return (
                 <button
-                disabled={inCart}
+                  disabled={inCart}
                   onClick={()=>setSelectedVariant(variant)}
                   key={i}
-                 className={cn("h-8 text-sm font-semibold flex items-center justify-center border-2 rounded-md cursor-pointer px-3 bg-white hover:bg-primary hover:text-white transition-smooth hover:border-transparent disabled:opacity-35 disabled:bg-primary disabled:border-transparent disabled:text-white disabled:cursor-not-allowed disabled:pointer-events-none", variant === selectedVariant && "bg-primary text-white border-transparent")}
+                  className={cn("h-8 text-sm font-semibold flex items-center justify-center border-2 rounded-md cursor-pointer px-3 bg-white hover:bg-primary hover:text-white transition-smooth hover:border-transparent disabled:opacity-35 disabled:bg-primary disabled:border-transparent disabled:text-white disabled:cursor-not-allowed disabled:pointer-events-none", variant === selectedVariant && "bg-primary text-white border-transparent")}
                 >
                   {variant}
                 </button>
@@ -101,7 +118,8 @@ export default function ProductDetails({ product, reviews }: PropType) {
       <div className="flex items-center my-6 gap-3 lg:w-[60%]">
         {product?.variants.length ? (
           <>
-            <Button           
+            <Button
+            onClick={()=> handleBuyNow(product)}           
             label="Buy Now" solid className="flex-1" />
             <Button
             onClick={()=>addItemWithVariantToCart(product)}
@@ -109,7 +127,7 @@ export default function ProductDetails({ product, reviews }: PropType) {
           </>
         ) : (
           <>
-            <Button label="Buy Now" solid className="flex-1" />
+            <Button onClick={()=> handleBuyNow(product)}  label="Buy Now" solid className="flex-1" />
             <Button
               disabled={cart.some((item) => item.id === product?.id)}
               onClick={() => addItemToCart(product)}

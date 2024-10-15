@@ -85,8 +85,6 @@ export function DataTable<TData, TValue>({
 
   const selectedFields = Object.values(table.getSelectedRowModel().rowsById).map(item => item.original)
 
-  console.log(selectedFields)
-
   return (
     <div className="space-y-4">
       <DataTableToolbar deleteAction={deleteAction} selectedFields={selectedFields} filterField={filterField} table={table} facetedFilterOptions={facetedFilterOptions} facetedFilterTitle={facetedFilterTitle} facetedFilterValue={facetedFilterValue} />

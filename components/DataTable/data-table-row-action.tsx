@@ -17,7 +17,7 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { TProducts } from "@/types/supabaseTypes"
+
 import Link from "next/link"
 
 interface DataTableRowActionsProps<TData> {

@@ -19,6 +19,7 @@ type TState = {
 
 type TAction = {
     addToCart: (product: TProducts, variant?: string)=>void
+    addSingleProductToCart: (product: TProducts, variant?: string)=>void
     increaseCartQuantity: (itemId: string)=>void
     decreaseCartQuantity: (itemId: string)=>void
     removeFromCart: (itemId: string)=>void
@@ -30,6 +31,7 @@ export const useCartStore = create<TState & TAction>()(
         (set)=>({
             cart: [],
             addToCart: (product, variant)=>set((state)=>({cart: [...state.cart, {...product, variant: variant, qty: 1, itemId: uuidv4() }]})),
+            addSingleProductToCart: (product, variant)=>set((state)=>({cart: [{...product, variant: variant, qty: 1, itemId: uuidv4() }]})),
             increaseCartQuantity: (itemId: string)=>set((state)=>{
                 let updatedCart;
                 const itemInCart = state.cart.some((item)=>item.itemId === itemId)

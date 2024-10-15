@@ -4,6 +4,7 @@ import { Menu, Search, ShoppingBag } from "lucide-react";
 import Link from "next/link";
 import AdminSearchBox from "./AdminSearchBox";
 import { Dispatch, SetStateAction } from "react";
+import Logo from "@/components/Logo";
 
 type NavType = {
   setShowSideBar: Dispatch<SetStateAction<boolean>>;
@@ -15,7 +16,7 @@ export default function Navbar({setShowSideBar}:NavType) {
       <div className="dashboardContain flex justify-between h-full gap-4">
         <div className="flex items-center gap-4 w-full">
           <div className="w-full flex gap-2 items-center md:justify-between">
-            <span>Logo</span>
+            <Logo />
             <span onClick={()=>setShowSideBar(prev=>!prev)}>
               <Menu className="w-8 h-8 cursor-pointer" />
             </span>
