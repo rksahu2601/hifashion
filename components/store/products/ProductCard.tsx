@@ -46,7 +46,7 @@ export default function ProductCard({ product }: PropType) {
       viewport={{ once: true }}
       className=" overflow-hidden border border-slate-100"
     >
-      <Link href={`product/${product?.id}`}>
+      <Link href={`${process.env.NEXT_PUBLIC_WEBSITE_URL}/product/${product?.id}`}>
         <div
           onMouseOver={() =>
             setImgUrl(

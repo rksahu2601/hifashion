@@ -39,7 +39,7 @@ export default function AuthBtns({ user }: PropType) {
               <DialogHeader>
                 <DialogTitle>Log in as a user</DialogTitle>
                 <DialogDescription>
-                 You can log in as a new user if you already have an account or as John doe for quick demo.
+                 You can log in as a new user if you already have an account or sign up if not or as John doe for quick demo.
                 </DialogDescription>
               </DialogHeader>
               <div className="flex items-end gap-3 justify-end">

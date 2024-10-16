@@ -25,10 +25,10 @@ export default async function page({params:{id}}:{params:{id:number}}) {
           <ProductImages images={productsData.data?.images || []}/>
           <Details reviews={reviewsData.data} product={productsData.data} hasBoughtProduct={boughtProducts && boughtProducts?.length > 0} />
         </section>
-    <section className='my-4 md:my-[6rem]'>
-        <h1 className='text-2xl md:text-3xl font-semibold mb-3'>Similar items you might like</h1>
-       <Products products={relatedProduct} />
-    </section>
+        <section className='my-4 md:my-[6rem]'>
+            <h1 className='text-2xl md:text-3xl font-semibold mb-3'>Similar items you might like</h1>
+          <Products products={relatedProduct} />
+        </section>
     </div>
   )
 }

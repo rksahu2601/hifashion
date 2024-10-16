@@ -92,9 +92,9 @@ export default function MobileMenu({ user, categories }: PropType) {
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Log in as either User</DialogTitle>
+            <DialogTitle>Log in as a User</DialogTitle>
             <DialogDescription>
-            You can log in as a new user if you already have an account or as John doe for quick demo.
+            You can log in as a new user if you already have an account or sign up if not or log in as John doe for quick demo.
             </DialogDescription>
           </DialogHeader>
           <div className="flex items-end gap-3 justify-center">

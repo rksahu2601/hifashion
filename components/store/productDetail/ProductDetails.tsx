@@ -150,7 +150,7 @@ export default function ProductDetails({ product, reviews }: PropType) {
           </div>
         </div>
       )}
-      <button className="underline text-sm mt-6">Continue Shopping</button>
+      <button onClick={()=>router.back()} className="underline text-sm mt-6">Back</button>
     </div>
   );
 }
