@@ -103,6 +103,7 @@ export default function EditProductForm({ categories, product }: PropType) {
     if (categorySlug) data.categorySlug = categorySlug;
 
     if (product) data.productId = product.id;
+
     
     if (dateTime && dateTime > new Date())  data.scheduleDate = dateTime;
 
@@ -319,6 +320,7 @@ export default function EditProductForm({ categories, product }: PropType) {
                 />
               )}
               <Button
+                {...(product.status === "scheduled" && {onClick: ()=> setProductStatus("scheduled")})}
                 loading={loading}
                 disabled={loading}
                 label={loading ? "Please wait..." : "Edit Product"}
@@ -329,7 +331,7 @@ export default function EditProductForm({ categories, product }: PropType) {
           ) : (
             <div className={cn("w-full flex items-center justify-end gap-2",)}>
            <ProductSchedule
-           setProductStatus={setProductStatus}
+            setProductStatus={setProductStatus}
             dateTime={dateTime}
             setDateTime={setDateTime}
            />
