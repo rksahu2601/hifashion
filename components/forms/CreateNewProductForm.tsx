@@ -151,7 +151,7 @@ export default function EditProductForm({ categories, product }: PropType) {
     <>
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className={cn("flex flex-col md:flex-row gap-6",  dateTime && dateTime > new Date() && "mb-10")}
+      className={cn("flex flex-col md:flex-row gap-6",  dateTime && dateTime > new Date() && "mb-10", product?.scheduleDate && new Date(product.scheduleDate) > new Date() && "mb-10" )}
     >
       <div className="flex-1">
         <section className="w-full">
