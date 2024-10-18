@@ -132,10 +132,10 @@ export default async function Overview() {
               currency
               label="Total Revenue"
               totalvalue={totalRevenue || 0}
-              totalToday={totalRevenueToday}
+              totalToday={Number(totalRevenueToday)}
               weeklyAvg={avgRevenueThisWeek}
               badgeValue={
-                ((totalRevenueToday - avgRevenueThisWeek) /
+                ((Number(totalRevenueToday) - avgRevenueThisWeek) /
                   avgRevenueThisWeek) *
                 100 || undefined
               }

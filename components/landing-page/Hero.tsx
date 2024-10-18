@@ -18,7 +18,7 @@ export default function Hero() {
           <motion.div
             whileInView={{opacity: 1, }}
             transition={{ repeat: Infinity, repeatType: "mirror", repeatDelay: 6, ease: "backInOut"}}
-            className="absolute inset-0 w-full h-full">
+            className="absolute inset-0 w-full h-full bg-slate-100">
             <Image 
               className="object-top object-cover"
               src="/men1.jpg"
@@ -31,7 +31,7 @@ export default function Hero() {
             initial={{opacity: 0}}
             whileInView={{opacity: 1}}
             transition={{delay: 3, repeat: Infinity, repeatType: "mirror", repeatDelay: 6, ease: "backInOut"}}
-            className="absolute inset-0 w-full h-full">
+            className="absolute inset-0 w-full h-full bg-slate-100">
             <Image 
               className="object-center object-cover"
               src="/men2.jpg"
@@ -44,7 +44,7 @@ export default function Hero() {
             initial={{opacity: 0}}
             whileInView={{opacity: 1}}
             transition={{delay: 6, repeat: Infinity, repeatType: "mirror", repeatDelay: 6, ease: "backInOut"}}
-            className="absolute inset-0 w-full h-full">
+            className="absolute inset-0 w-full h-full bg-slate-100">
             <Image 
               className="object-cover object-center"
               src="/men3.jpg"
@@ -68,7 +68,7 @@ export default function Hero() {
           <motion.div
               whileInView={{opacity: 1, }}
               transition={{ repeat: Infinity, repeatType: "mirror", repeatDelay: 4, ease: "backInOut"}}
-              className="absolute inset-0 w-full h-full">
+              className="absolute inset-0 w-full h-full bg-slate-100">
             <Image 
               className="object-top object-cover"
               src="/women1.jpg"
@@ -81,7 +81,7 @@ export default function Hero() {
             initial={{opacity: 0}}
             whileInView={{opacity: 1}}
             transition={{delay: 2, repeat: Infinity, repeatType: "mirror", repeatDelay: 4, ease: "backInOut"}}
-            className="absolute inset-0 w-full h-full">
+            className="absolute inset-0 w-full h-full bg-slate-100">
             <Image 
               className="object-top object-cover"
               src="/women2.jpg"
@@ -94,7 +94,7 @@ export default function Hero() {
             initial={{opacity: 0}}
             whileInView={{opacity: 1}}
             transition={{delay: 4, repeat: Infinity, repeatType: "mirror", repeatDelay: 4, ease: "backInOut"}}
-            className="absolute inset-0 w-full h-full">
+            className="absolute inset-0 w-full h-full bg-slate-100">
             <Image 
               className="object-cover object-center"
               src="/women3.jpg"

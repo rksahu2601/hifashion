@@ -6,13 +6,15 @@ export default function NewArrival() {
   return (
     <section className='mt-[16rem] sm:mt-[18rem] mb-10 sm:mb-20 max-w-[60rem] mx-auto px-2 flex gap-10 sm:gap-6 flex-col sm:flex-row'>
        <div className='w-full flex flex-col'>
-            <Image
-                src="/women333.jpg"
-                alt="fashion image"
-                width={500}
-                height={1000}
-                className='object-cover object-top transition h-[25rem] w-full'
-            />
+            <div className='bg-slate-100'>
+              <Image
+                  src="/women333.jpg"
+                  alt="fashion image"
+                  width={500}
+                  height={1000}
+                  className='object-cover object-top transition h-[25rem] w-full'
+              />
+            </div>
         <div className='sm:mt-4 mb-2 sm:mb-0 max-sm:-order-1'>
           <h2 className='font-extrabold text-sm'>FASHION UP YOUR LOOK</h2>
           <p className='text-sm mt-2 opacity-70'>Step into fashion that merges elegance with ease, offering the ideal harmony of bold design and timeless trends. Shop today and make a statement with clothing that redefines the ordinary.</p>

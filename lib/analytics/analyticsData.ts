@@ -107,7 +107,9 @@ export const getRevenueToday = async () => {
 
   if (error) return 0;
 
-  return data?.reduce((acc, curr) => {
+  const totalToday = data?.reduce((acc, curr) => {
     return acc + curr.totalPrice!;
   }, 0);
+
+  return totalToday.toFixed(2)
 };
