@@ -59,14 +59,14 @@ export default function ProductCard({ product }: PropType) {
           className="relative bg-gray-100 h-[14rem] md:h-[20rem]"
         >
           <Image className="object-cover" src={imgUrl as string} alt="" fill />
-          <div className="absolute z-10 flex items-center justify-between w-full p-2 md:p-4">
+          {/* <div className="absolute z-10 flex items-center justify-between w-full p-2 md:p-4">
             <span className="uppercase bg-secondary/30 px-3 py-1 text-xs rounded-full text-secondary font-bold">
               New
             </span>
             <span className="text-muted-foreground cursor-pointer">
               <Heart />
             </span>
-          </div>
+          </div> */}
         </div>
       </Link>
       <div className="p-2 md:p-4">
