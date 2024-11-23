@@ -176,9 +176,8 @@ export default async function Overview() {
             </div>
 
             {countArr.slice(0, 5).map(({ name, image, id, price }) => (
-              <Link
+              <div
                 key={id}
-                href={`/product/${id}`}
                 className="h-10 w-full rounded-md pb-1 mb-2 flex items-center hover:bg-slate-100 transition px-1"
               >
                 <div className="relative h-full w-8 mr-4 rounded-full overflow-hidden bg-slate-200">
@@ -195,7 +194,7 @@ export default async function Overview() {
                 <p className="ml-auto font-semibold text-sm">
                   ${price!.toFixed(2)}
                 </p>
-              </Link>
+              </div>
             ))}
           </div>
         </div>
